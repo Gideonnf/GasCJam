@@ -51,6 +51,12 @@ public class MapManager : SingletonBase<MapManager>
         return (Vector2)(m_GameGrid.CellToWorld((Vector3Int)tilePos));
     }
 
+    public bool IsThereTileOnMap(Vector2 pos)
+    {
+        Vector2Int convertedToTilePos = GetWorldToTilePos(pos);
+        return m_Map.ContainsKey(convertedToTilePos);
+    }
+
     public bool IsThereTileOnMap(Vector2Int pos)
     {
         return m_Map.ContainsKey(pos);
