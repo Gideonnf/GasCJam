@@ -5,6 +5,7 @@ using UnityEngine;
 public class PreyMovement : MonoBehaviour
 {
     Rigidbody2D rigidBody;
+    bool isMoving = false;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,16 @@ public class PreyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isMoving)
+        {
+            // Move to the target vector
+            //TODO: Move to the target vector lol
+            // i finna sleep soon
+
+
+            //Set isMoving to false when it reaches the end
+
+        }
     }
 
     /// <summary>
@@ -31,6 +41,10 @@ public class PreyMovement : MonoBehaviour
         Vector2 targetVector;
         Detection.DIRECTIONS movingDir = dir;
         bool directionClear = false;
+
+        // if it is already moving then the theres no point checking
+        if (isMoving == true)
+            return;
 
         // Check the diection it wants to move in
         // if the opposite direction is not clear
@@ -74,10 +88,9 @@ public class PreyMovement : MonoBehaviour
         // Find the end tile position to move towards 
         targetVector = FindEndTile(movingDir);
 
-        // Move to the target vector
-        //TODO: Move to the target vector lol
-        // i finna sleep soon
-
+        //Toggle the isMoving flag to true 
+        // this is to start movement in update
+        isMoving = true;
 
         //switch (movingDir)
         //{
