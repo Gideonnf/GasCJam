@@ -61,4 +61,16 @@ public class MapManager : SingletonBase<MapManager>
     {
         return m_Map.ContainsKey(pos);
     }
+
+    public void AddToMap(Vector2Int tilePos)
+    {
+        if (!m_Map.ContainsKey(tilePos))
+            m_Map.Add(tilePos, true);
+    }
+
+    public void RemoveFromMap(Vector2Int tilePos)
+    {
+        if (m_Map.ContainsKey(tilePos))
+            m_Map.Remove(tilePos);
+    }
 }
