@@ -4,19 +4,43 @@ using UnityEngine;
 
 public class PreyBehaviour : Detection
 {
+    // Stores the target object
     GameObject targetObject = null;
+    // Stores the target's direction
     DIRECTIONS targetDir = DIRECTIONS.NONE;
+    PreyMovement preyMovement;
+    // Checks if the prey is running
+    bool isRunning = false;
+
+    [SerializeField] DIRECTIONS startingDir;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Start the coroutine at the start
+        // the prey will always be checking every second instead of every frame
         StartCoroutine("CheckForObjects");
+
+        preyMovement = GetComponent<PreyMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        // If they're running away        
+        if (isRunning)
+        {
+            // Move in the opposite direction first
+           
+            if (targetDir == DIRECTIONS.DOWN)
+                preyMovement.MovePrey(DIRECTIONS.UP, targetDir);
+            else if (targetDir == DIRECTIONS.UP)
+                preyMovement.MovePrey(DIRECTIONS.DOWN, targetDir);
+            else if (targetDir == DIRECTIONS.LEFT)
+                preyMovement.MovePrey(DIRECTIONS.LEFT, targetDir);
+            else if (targetDir == DIRECTIONS.RIGHT)
+                preyMovement.MovePrey(DIRECTIONS.RIGHT, targetDir);
+        }
     }
 
     public override bool DetectRadius()
@@ -38,6 +62,8 @@ public class PreyBehaviour : Detection
                     if (targetObject == null)
                         // Store the target object
                         targetObject = detectedObj;
+
+                    isRunning = true;
 
                     return true;
                 }
@@ -118,11 +144,11 @@ public class PreyBehaviour : Detection
         {
             if (Dir.x > 0.5f)
             {
-                return DIRECTIONS.LEFT;
+                return DIRECTIONS.RIGHT;
             }
             else if (Dir.x < -0.5f)
             {
-                return DIRECTIONS.RIGHT;
+                return DIRECTIONS.LEFT;
             }
         }
 
@@ -131,7 +157,7 @@ public class PreyBehaviour : Detection
     }
 
     // A couroutine to run for checking of objects
-    // Instead of checking every frame it checks every 10th
+    // Instead of checking every frame it checks every second
     IEnumerator CheckForObjects()
     {
         for(;;)
@@ -139,11 +165,15 @@ public class PreyBehaviour : Detection
             // If it successfully detected something in it's radius
             // Check for what direction it is in
             if (DetectRadius())
+            {
                 // Set the target direction here
                 targetDir = GetTargetDirection();
+
+            }
             yield return new WaitForSeconds(.5f);
         }
     }
+
 
     
 }

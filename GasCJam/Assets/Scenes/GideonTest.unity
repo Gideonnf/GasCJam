@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 1266565612}
   m_Layer: 0
   m_Name: TestPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -433,7 +433,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266565611}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.501, y: -0.24748597, z: 3.5798588}
+  m_LocalPosition: {x: -2.98, y: 0.28, z: 3.5798588}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 1856980160}
   - component: {fileID: 1856980159}
   - component: {fileID: 1856980161}
+  - component: {fileID: 1856980158}
   m_Layer: 0
   m_Name: TestMouse
   m_TagString: Untagged
@@ -457,6 +458,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1856980158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856980157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92b808816e939b4eb9ed96880da3ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &1856980159
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -538,3 +551,4 @@ MonoBehaviour:
   CircleRadius: 5
   SightDistance: 0
   testingBoolean: 0
+  startingDir: 0
