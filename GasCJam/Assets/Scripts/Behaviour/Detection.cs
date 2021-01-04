@@ -18,10 +18,10 @@ public class Detection : MonoBehaviour
 
     public enum DIRECTIONS
     {
-        LEFT,
-        RIGHT,
         UP,
         DOWN,
+        LEFT,
+        RIGHT,
         NONE
     }
 
