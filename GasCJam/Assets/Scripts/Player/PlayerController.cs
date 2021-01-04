@@ -25,11 +25,11 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = Vector3.zero;
         if (Input.GetButton("Vertical"))
         {
-            dir = new Vector3(0.0f, 1.0f);
+            dir = new Vector3(0.0f, Input.GetAxis("Vertical"));
         }
         else if (Input.GetButton("Horizontal"))
         {
-            dir = new Vector3(1.0f, 0.0f);
+            dir = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
         }
 
         dir.Normalize();
