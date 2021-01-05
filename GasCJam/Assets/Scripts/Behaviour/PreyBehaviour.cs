@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PreyBehaviour : Detection
 {
-    // Stores the target object
-    GameObject targetObject = null;
     // Stores the target's direction
-    DIRECTIONS targetDir = DIRECTIONS.NONE;
+    // DIRECTIONS targetDir = DIRECTIONS.NONE;
     PreyMovement preyMovement;
     // Checks if the prey is running
     public bool isRunning = false;
@@ -130,56 +128,6 @@ public class PreyBehaviour : Detection
        // Debug.Log("We'll get em next time");
     }
 
-    /// <summary>
-    /// Gets the direction of the target object
-    /// If the prey has to run, it will run in the opposite direction
-    /// </summary>
-    /// <returns>Returns the direction of the object</returns>
-    public DIRECTIONS GetTargetDirection()
-    {
-        // Get the two positions we need
-        Vector2 TargetPos = targetObject.transform.position;
-        Vector2 CurrentPos = transform.position;
-
-        // Get the direction of the target
-        Vector2 Dir = (TargetPos - CurrentPos).normalized;
-
-        //Debug.Log(targetDir);
-       // Debug.Log(Dir);
-
-        // Checking for Up and Down first
-        // if we're checking for up and down 
-        // the X dir will be within a small buffer
-        // 0.3f is just a number i used as a buffer
-        // anything more than that means its on a diagonal
-        // and player cant move in diagonal
-        if (Dir.x <= 0.3f || Dir.x >= -0.3f)
-        {
-            // 0.5f is a buffer i used
-            if (Dir.y > 0.5f)
-            {
-                return DIRECTIONS.UP;
-            }
-            else if (Dir.y < -0.5f)
-            {
-                return DIRECTIONS.DOWN;
-            }
-        }
-        if (Dir.y <= 0.3f || Dir.y >= -0.3f)
-        {
-            if (Dir.x > 0.5f)
-            {
-                return DIRECTIONS.RIGHT;
-            }
-            else if (Dir.x < -0.5f)
-            {
-                return DIRECTIONS.LEFT;
-            }
-        }
-
-
-        return DIRECTIONS.NONE;
-    }
 
     public override CHARACTERS CheckForCharacters(Vector2Int tilePosition)
     {
@@ -224,6 +172,7 @@ public class PreyBehaviour : Detection
                 if (isRunning == false)
                 {
                     // NOTE: I dont know if this gonna work yet lol
+                    // EDIT: i think this works already
                     targetObject = playerObject;
                     targetDir = GetTargetDirection();
                     isRunning = true;

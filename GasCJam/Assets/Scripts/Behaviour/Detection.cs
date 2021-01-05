@@ -31,6 +31,9 @@ public class Detection : MonoBehaviour
     [Tooltip("The character's view direction")]
     public DIRECTIONS viewDir = DIRECTIONS.NONE;
 
+    // Stores the target object
+    [System.NonSerialized] public GameObject targetObject = null;
+
     [Header("References to objects")]
     // idk if we should make a data manager to store the player, mouses and kitten
     // so for now i'll just use this to store a reference to the objects
@@ -39,10 +42,7 @@ public class Detection : MonoBehaviour
     [Tooltip("Reference to mouse object")]
     public GameObject ratObject = null;
 
-    
-
     protected List<GameObject> ObjectsInRange = new List<GameObject>();
-
 
     public virtual void Start()
     {
@@ -168,5 +168,56 @@ public class Detection : MonoBehaviour
         return CHARACTERS.NONE;
     }
 
+
+    /// <summary>
+    /// Gets the direction of the target object
+    /// If the prey has to run, it will run in the opposite direction
+    /// </summary>
+    /// <returns>Returns the direction of the object</returns>
+    public virtual DIRECTIONS GetTargetDirection()
+    {
+        // Get the two positions we need
+        Vector2 TargetPos = targetObject.transform.position;
+        Vector2 CurrentPos = transform.position;
+
+        // Get the direction of the target
+        Vector2 Dir = (TargetPos - CurrentPos).normalized;
+
+        //Debug.Log(targetDir);
+        // Debug.Log(Dir);
+
+        // Checking for Up and Down first
+        // if we're checking for up and down 
+        // the X dir will be within a small buffer
+        // 0.3f is just a number i used as a buffer
+        // anything more than that means its on a diagonal
+        // and player cant move in diagonal
+        if (Dir.x <= 0.3f || Dir.x >= -0.3f)
+        {
+            // 0.5f is a buffer i used
+            if (Dir.y > 0.5f)
+            {
+                return DIRECTIONS.UP;
+            }
+            else if (Dir.y < -0.5f)
+            {
+                return DIRECTIONS.DOWN;
+            }
+        }
+        if (Dir.y <= 0.3f || Dir.y >= -0.3f)
+        {
+            if (Dir.x > 0.5f)
+            {
+                return DIRECTIONS.RIGHT;
+            }
+            else if (Dir.x < -0.5f)
+            {
+                return DIRECTIONS.LEFT;
+            }
+        }
+
+
+        return DIRECTIONS.NONE;
+    }
 
 }
