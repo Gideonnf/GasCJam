@@ -16,8 +16,15 @@ public class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
 
     public virtual void Awake()
     {
+        //make sure wont have 2
         if (bDontDestroyOnLoad)
+        {
             DontDestroyOnLoad(gameObject);
+            if (Instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     /// <summary>

@@ -4,10 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    public Animator m_Transition;
-    public float m_TransitionTime;
+    [SerializeField]
+    Animator m_Transition;
+    [SerializeField]
+    float m_TransitionTime;
 
-    void TransitionScene(string sceneName)
+    public void TransitionScene(string sceneName)
     {
         StartCoroutine(LoadLevel(sceneName));
     }
@@ -19,5 +21,7 @@ public class LevelLoader : MonoBehaviour
         yield return new WaitForSeconds(m_TransitionTime);
 
         SceneManager.LoadScene(sceneName);
+
+        m_Transition.SetTrigger("End");
     }
 }

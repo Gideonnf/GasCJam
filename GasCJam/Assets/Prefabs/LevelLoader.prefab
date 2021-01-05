@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6840578390633107735}
   - component: {fileID: 6840578390633107732}
+  - component: {fileID: 1475351813479375862}
   m_Layer: 5
   m_Name: LevelLoader
   m_TagString: Untagged
@@ -46,6 +47,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Transition: {fileID: 6840578391754956495}
   m_TransitionTime: 1
+--- !u!114 &1475351813479375862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840578390633107733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5186ca2613fc59745a73c4547462b737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bDontDestroyOnLoad: 1
+  m_LevelSceneNames:
+  - TestLevel
+  - LevelSelection
 --- !u!1 &6840578391496820635
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +210,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &6840578391754956481
 MonoBehaviour:
