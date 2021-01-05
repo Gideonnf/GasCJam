@@ -15,13 +15,18 @@ public class PreyBehaviour : Detection
     [SerializeField] DIRECTIONS startingDir;
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
+
         preyMovement = GetComponent<PreyMovement>();
+
+        viewDir = startingDir;
 
         // Start the coroutine at the start
         // the prey will always be checking every second instead of every frame
-        StartCoroutine("CheckForObjects");
+        StartCoroutine("CheckForObjectsInRange");
+        StartCoroutine("CheckForObjectsInView");
     }
 
     // Update is called once per frame
@@ -176,9 +181,21 @@ public class PreyBehaviour : Detection
         return DIRECTIONS.NONE;
     }
 
+    public override CHARACTERS CheckForCharacters(Vector2Int tilePosition)
+    {
+        // Get the player position in tiles
+        Vector2Int playerTilePos = MapManager.Instance.GetWorldToTilePos(playerObject.transform.position);
+
+        // if the player is within that tile
+        if (playerTilePos == tilePosition)
+            return CHARACTERS.PLAYER;
+
+        return CHARACTERS.NONE;
+    }
+
     // A couroutine to run for checking of objects
     // Instead of checking every frame it checks every second
-    IEnumerator CheckForObjects()
+    IEnumerator CheckForObjectsInRange()
     {
         for(;;)
         {
@@ -194,6 +211,27 @@ public class PreyBehaviour : Detection
         }
     }
 
+    // i dont know if i should put this in 1 coroutine or separate ones
+    // but im doing them in different ones for now
+    IEnumerator CheckForObjectsInView()
+    {
+        for (; ;)
+        {
+            // if the player is found in its iew
+            if (DetectInView() == CHARACTERS.PLAYER)
+            {
+                // if it isnt running then detect the player in it's view
+                if (isRunning == false)
+                {
+                    // NOTE: I dont know if this gonna work yet lol
+                    targetObject = playerObject;
+                    targetDir = GetTargetDirection();
+                    isRunning = true;
+                }
+            }
 
+            yield return new WaitForSeconds(.2f);
+        }
+    }
     
 }

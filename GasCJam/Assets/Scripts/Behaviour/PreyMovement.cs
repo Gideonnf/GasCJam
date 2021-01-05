@@ -38,10 +38,6 @@ public class PreyMovement : MonoBehaviour
         if (isMoving)
         {
             // Move to the target vector
-            //TODO: Move to the target vector lol
-            // i finna sleep soon
-
-
             Vector3 direction = (targetVector - (Vector2)transform.position).normalized;
             rigidBody.MovePosition(transform.position + direction * moveSpeed * Time.fixedDeltaTime);
 
@@ -131,7 +127,30 @@ public class PreyMovement : MonoBehaviour
             CheckDirection((Detection.DIRECTIONS)index);
         }
 
+        // After finding the moving direction
+        // we need to set the view direction
+        // we want the rat to look in the opposite direction it ran from
 
+        switch (movingDir)
+        {
+            case Detection.DIRECTIONS.UP:
+                preyBehaviour.viewDir = Detection.DIRECTIONS.DOWN;
+                break;
+            case Detection.DIRECTIONS.DOWN:
+                preyBehaviour.viewDir = Detection.DIRECTIONS.UP;
+                break;
+            case Detection.DIRECTIONS.LEFT:
+                preyBehaviour.viewDir = Detection.DIRECTIONS.RIGHT;
+                break;
+            case Detection.DIRECTIONS.RIGHT:
+                preyBehaviour.viewDir = Detection.DIRECTIONS.LEFT;
+                break;
+            case Detection.DIRECTIONS.NONE:
+                Debug.Log("haha pee pee poo poo");
+                break;
+            default:
+                break;
+        }
 
         //// Check the diection it wants to move in
         //// if the opposite direction is not clear

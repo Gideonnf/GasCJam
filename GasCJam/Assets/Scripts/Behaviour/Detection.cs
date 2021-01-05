@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class Detection : MonoBehaviour
 {
-    [Header("Detection settings")]
-    [Tooltip("Detection Radius")]
-    [SerializeField] float CircleRadius = 1;
-
-    [Tooltip("Line of Sight Distance?")]
-    [SerializeField] float SightDistance;
-
-    protected List<GameObject> ObjectsInRange = new List<GameObject>();
-
     public enum DIRECTIONS
     {
         UP,
@@ -20,6 +11,42 @@ public class Detection : MonoBehaviour
         LEFT,
         RIGHT,
         NONE
+    }
+
+    public enum CHARACTERS
+    {
+        PLAYER,
+        KITTEN,
+        MOUSE,
+        NONE
+    }
+
+    [Header("Detection settings")]
+    [Tooltip("Detection Radius")]
+    [SerializeField] float CircleRadius = 1;
+    [Tooltip("Line of Sight Distance?")]
+    [SerializeField] float SightDistance;
+    [Tooltip("Stores the direction that the character is facing")]
+    public DIRECTIONS targetDir = DIRECTIONS.NONE;
+    [Tooltip("The character's view direction")]
+    public DIRECTIONS viewDir = DIRECTIONS.NONE;
+
+    [Header("References to objects")]
+    // idk if we should make a data manager to store the player, mouses and kitten
+    // so for now i'll just use this to store a reference to the objects
+    [Tooltip("Reference to player object")]
+    public GameObject playerObject = null;
+    [Tooltip("Reference to mouse object")]
+    public GameObject ratObject = null;
+
+    
+
+    protected List<GameObject> ObjectsInRange = new List<GameObject>();
+
+
+    public virtual void Start()
+    {
+        
     }
 
     /// <summary>
@@ -54,11 +81,91 @@ public class Detection : MonoBehaviour
 
     //TODO: idk how do this yet
     // i'll cross this bridge when i get there
-    public virtual bool DetectInView()
+
+    /// <summary>
+    /// Checks the area infront of the character
+    /// Returns the characters it finds
+    /// </summary>
+    /// <returns></returns>
+    public virtual CHARACTERS DetectInView()
+    {
+        Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+        //Vector2Int playerTilePos = MapManager.Instance.GetWorldToTilePos(playerObject.transform.position);
+        //Vector2Int mouseTilePos = MapManager.Instance.GetWorldToTilePos(ratObject.transform.position);
+
+        CHARACTERS characterFound = CHARACTERS.NONE;
+
+        // Increment it first because you shouldn't check ur own position
+        // thats not a good idea lmao
+        switch (viewDir)
+        {
+            case DIRECTIONS.UP:
+                currentTilePos.y++;
+                break;
+            case DIRECTIONS.DOWN:
+                currentTilePos.y--;
+                break;
+            case DIRECTIONS.LEFT:
+                currentTilePos.x--;
+                break;
+            case DIRECTIONS.RIGHT:
+                currentTilePos.x++;
+                break;
+            default:
+                Debug.Log("It shouldn't reach here lol if it does then fuk we screwed");
+                break;
+        }
+
+        // Loop through a fixed amount of times
+        for (int index = 0; index < SightDistance; ++index)
+        {
+            // Checks the tile if any of the objects are here
+
+            // use a function to check
+            characterFound = CheckForCharacters(currentTilePos);
+
+            // If no character was found
+            // go next
+            // if not then return that character
+            if (characterFound != CHARACTERS.NONE)
+                return characterFound;
+
+            // move on to the next tile position
+            switch (viewDir)
+            {
+                case DIRECTIONS.UP:
+                    currentTilePos.y++;
+                    break;
+                case DIRECTIONS.DOWN:
+                    currentTilePos.y--;
+                    break;
+                case DIRECTIONS.LEFT:
+                    currentTilePos.x--;
+                    break;
+                case DIRECTIONS.RIGHT:
+                    currentTilePos.x++;
+                    break;
+                default:
+                    Debug.Log("It shouldn't reach here lol if it does then fuk we screwed");
+                    break;
+            }
+        }
+
+        // It didnt find anything here
+        return CHARACTERS.NONE;
+    }
+
+    /// <summary>
+    /// Made this function so that each object can check for hte character it needs
+    /// it can be overrided
+    /// </summary>
+    /// <param name="tilePosition">The tile that it is checking</param>
+    /// <returns> returns the character it found</returns>
+    public virtual CHARACTERS CheckForCharacters(Vector2Int tilePosition)
     {
 
 
-        return false;
+        return CHARACTERS.NONE;
     }
 
 
