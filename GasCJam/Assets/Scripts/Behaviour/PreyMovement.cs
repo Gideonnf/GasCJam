@@ -13,7 +13,7 @@ public class PreyMovement : MonoBehaviour
     [Tooltip("Boolean flag for if it is moving")]
     public bool isMoving = false;
     [Tooltip("Stores the direction it is moving in")]
-    Detection.DIRECTIONS movingDir;
+    public Detection.DIRECTIONS movingDir;
     [Tooltip("Number of empty spaces in moving dir")]
     int currentDirTileCount = 0;
 
@@ -55,9 +55,8 @@ public class PreyMovement : MonoBehaviour
                     if (transform.position.x <= targetXPos)
                     {
                         transform.position = targetVector;
-                        isMoving = false;
                         preyBehaviour.isRunning = false;
-                        movingDir = Detection.DIRECTIONS.NONE;
+                        ResetMovement();
                     }
                 }
                 // if its positive
@@ -66,9 +65,8 @@ public class PreyMovement : MonoBehaviour
                     if (transform.position.x >= targetXPos)
                     {
                         transform.position = targetVector;
-                        isMoving = false;
                         preyBehaviour.isRunning = false;
-                        movingDir = Detection.DIRECTIONS.NONE;
+                        ResetMovement();
                     }
                 }
              
@@ -84,9 +82,8 @@ public class PreyMovement : MonoBehaviour
                     if (transform.position.y <= targetYPos)
                     {
                         transform.position = targetVector;
-                        isMoving = false;
+                        ResetMovement();
                         preyBehaviour.isRunning = false;
-                        movingDir = Detection.DIRECTIONS.NONE;
                     }
                 }
                 // if its positive
@@ -95,9 +92,8 @@ public class PreyMovement : MonoBehaviour
                     if (transform.position.y >= targetYPos)
                     {
                         transform.position = targetVector;
-                        isMoving = false;
                         preyBehaviour.isRunning = false;
-                        movingDir = Detection.DIRECTIONS.NONE;
+                        ResetMovement();
                     }
                 }
             }
@@ -108,7 +104,7 @@ public class PreyMovement : MonoBehaviour
     {
         isMoving = false;
         movingDir = Detection.DIRECTIONS.NONE;
-
+        currentDirTileCount = 0;
     }
 
     /// <summary>
@@ -119,13 +115,12 @@ public class PreyMovement : MonoBehaviour
     /// <param name="dir">target Direction to move towards to</param>
     public void MovePrey(Detection.DIRECTIONS dir, Detection.DIRECTIONS targetDir)
     {
-
-        movingDir = dir;
-        bool directionClear = false;
-
         // if it is already moving then the theres no point checking
         if (isMoving == true)
             return;
+
+        movingDir = dir;
+        bool directionClear = false;
 
         for (int index = 0; index < (int)Detection.DIRECTIONS.NONE; ++index)
         {
