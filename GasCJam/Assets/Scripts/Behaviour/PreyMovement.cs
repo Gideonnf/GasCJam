@@ -241,7 +241,7 @@ public class PreyMovement : MonoBehaviour
                     currentTilePos.x++;
                     break;
                 default:
-                    Debug.LogError("It shouldn't reach here lol");
+                    Debug.Log("It shouldn't reach here lol");
                     break;
             }
         }

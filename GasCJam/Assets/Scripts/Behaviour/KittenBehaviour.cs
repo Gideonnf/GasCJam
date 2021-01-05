@@ -36,14 +36,15 @@ public class KittenBehaviour : Detection
     {
         if (isRunning)
         {
-            if (targetDir == DIRECTIONS.DOWN)
-                kittenMovement.MoveKitten(DIRECTIONS.UP, targetDir);
-            else if (targetDir == DIRECTIONS.UP)
-                kittenMovement.MoveKitten(DIRECTIONS.DOWN, targetDir);
-            else if (targetDir == DIRECTIONS.LEFT)
-                kittenMovement.MoveKitten(DIRECTIONS.RIGHT, targetDir);
-            else if (targetDir == DIRECTIONS.RIGHT)
-                kittenMovement.MoveKitten(DIRECTIONS.LEFT, targetDir);
+            kittenMovement.SetKittenDirection(targetDir);
+            //if (targetDir == DIRECTIONS.DOWN)
+            //    kittenMovement.SetKittenDirection(DIRECTIONS.UP, targetDir);
+            //else if (targetDir == DIRECTIONS.UP)
+            //    kittenMovement.SetKittenDirection(DIRECTIONS.DOWN, targetDir);
+            //else if (targetDir == DIRECTIONS.LEFT)
+            //    kittenMovement.SetKittenDirection(DIRECTIONS.RIGHT, targetDir);
+            //else if (targetDir == DIRECTIONS.RIGHT)
+            //    kittenMovement.SetKittenDirection(DIRECTIONS.LEFT, targetDir);
         }
     }
 
