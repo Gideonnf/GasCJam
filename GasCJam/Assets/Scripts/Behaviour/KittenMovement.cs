@@ -38,6 +38,12 @@ public class KittenMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //TODO: Stop it from moving small diagonals
+        // i could just make it so if it moves along x or y axis
+        // i set the other axis to 0
+        // i.e if its moving left or right, targetvector Y will be 0 to stop it from moving up or down
+        // or if its moving up and down, target vector X will be 0 to stop it from moving side ways while going up or down
+
         if (juststopplease)
             return;
 
