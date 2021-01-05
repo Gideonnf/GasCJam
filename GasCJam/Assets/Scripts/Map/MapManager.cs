@@ -12,8 +12,8 @@ public class MapManager : SingletonBase<MapManager>
     [Header("Tilemaps")]
     public Tilemap m_WallTileMap;
     public Tilemap m_TrapTileMap;
-    
-    void Awake()
+
+    public override void Awake()
     {
         m_GameGrid = GetComponent<Grid>();
 
@@ -48,7 +48,7 @@ public class MapManager : SingletonBase<MapManager>
         if (m_GameGrid == null)
             return Vector2.zero;
 
-        return (Vector2)(m_GameGrid.CellToWorld((Vector3Int)tilePos));
+        return (Vector2)(m_GameGrid.GetCellCenterWorld((Vector3Int)tilePos));
     }
 
     public bool IsThereTileOnMap(Vector2 pos)
