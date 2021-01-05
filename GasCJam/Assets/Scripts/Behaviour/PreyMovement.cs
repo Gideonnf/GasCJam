@@ -31,13 +31,9 @@ public class PreyMovement : MonoBehaviour
 
             transform.position = targetVector;
 
-
-
-
-            //Set isMoving to false when it reaches the end
+            //Set isMoving & isRunning to false when it reaches the end
             isMoving = false;
             preyBehaviour.isRunning = false;
-
         }
     }
 
@@ -89,6 +85,7 @@ public class PreyMovement : MonoBehaviour
             }
         }
         else
+            // if the first direction it checked is already clear
             directionClear = true;
 
         // if the direction isnt clear anywhere
@@ -123,25 +120,6 @@ public class PreyMovement : MonoBehaviour
         // Get the tile position of the current tile
         Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
         Vector2 TargetTilePos = Vector2.zero;
-
-        //switch (directionToCheck)
-        //{
-        //    case Detection.DIRECTIONS.UP:
-        //        currentTilePos.y++;
-        //        break;
-        //    case Detection.DIRECTIONS.DOWN:
-        //        currentTilePos.y--;
-        //        break;
-        //    case Detection.DIRECTIONS.LEFT:
-        //        currentTilePos.x--;
-        //        break;
-        //    case Detection.DIRECTIONS.RIGHT:
-        //        currentTilePos.x++;
-        //        break;
-        //    default:
-        //        Debug.LogError("It shouldn't reach here lol");
-        //        break;
-        //}
 
         while (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
         {

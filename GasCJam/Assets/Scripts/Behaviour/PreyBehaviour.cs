@@ -84,20 +84,11 @@ public class PreyBehaviour : Detection
                     // idk what to do with this part yet lol
                     // fuk i haven't coded in a long time
                     // pee pee poo poo
-
-                    //if (targetObject != null)
-
                         
                 }
                 // if not then it shouldn't care what objects it detected
             }
         }
-
-        //// If it reaches here then no objects of importance was detected
-        //// clear the list of objects
-        //ObjectsInRange.Clear();
-        //// if it no longer detec ts anything then set the target object back to null
-        //targetObject = null;
 
         ResetTarget();
 
