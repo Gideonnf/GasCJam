@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class PreyMovement : MonoBehaviour
 {
+    [Tooltip("Prey Movement Speed")]
+    public float moveSpeed;
     [Tooltip("Reference to the rigid body")]
     Rigidbody2D rigidBody;
     [Tooltip("Stores the target position that the prey has to move to")]
     Vector2 targetVector;
     [Tooltip("Boolean flag for if it is moving")]
-    bool isMoving = false;
+    public bool isMoving = false;
+    [Tooltip("Stores the direction it is moving in")]
+    Detection.DIRECTIONS movingDir;
+    [Tooltip("Number of empty spaces in moving dir")]
+    int currentDirTileCount = 0;
+
     PreyBehaviour preyBehaviour;
 
     // Start is called before the first frame update
@@ -23,18 +30,85 @@ public class PreyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+     
+    }
+
+    private void FixedUpdate()
+    {
         if (isMoving)
         {
             // Move to the target vector
             //TODO: Move to the target vector lol
             // i finna sleep soon
 
-            transform.position = targetVector;
 
-            //Set isMoving & isRunning to false when it reaches the end
-            isMoving = false;
-            preyBehaviour.isRunning = false;
+            Vector3 direction = (targetVector - (Vector2)transform.position).normalized;
+            rigidBody.MovePosition(transform.position + direction * moveSpeed * Time.fixedDeltaTime);
+
+            if (movingDir == Detection.DIRECTIONS.LEFT || movingDir == Detection.DIRECTIONS.RIGHT)
+            {
+                float targetXPos = targetVector.x;
+
+                // if its negative
+                if (targetXPos <= 0.0f)
+                {
+                    if (transform.position.x <= targetXPos)
+                    {
+                        transform.position = targetVector;
+                        isMoving = false;
+                        preyBehaviour.isRunning = false;
+                        movingDir = Detection.DIRECTIONS.NONE;
+                    }
+                }
+                // if its positive
+                else if (targetXPos >= 0.0f)
+                {
+                    if (transform.position.x >= targetXPos)
+                    {
+                        transform.position = targetVector;
+                        isMoving = false;
+                        preyBehaviour.isRunning = false;
+                        movingDir = Detection.DIRECTIONS.NONE;
+                    }
+                }
+             
+
+            }
+            else if (movingDir == Detection.DIRECTIONS.UP || movingDir == Detection.DIRECTIONS.DOWN)
+            {
+                float targetYPos = targetVector.y;
+
+                // if its negative
+                if (targetYPos <= 0.0f)
+                {
+                    if (transform.position.y <= targetYPos)
+                    {
+                        transform.position = targetVector;
+                        isMoving = false;
+                        preyBehaviour.isRunning = false;
+                        movingDir = Detection.DIRECTIONS.NONE;
+                    }
+                }
+                // if its positive
+                else if (targetYPos >= 0.0f)
+                {
+                    if (transform.position.y >= targetYPos)
+                    {
+                        transform.position = targetVector;
+                        isMoving = false;
+                        preyBehaviour.isRunning = false;
+                        movingDir = Detection.DIRECTIONS.NONE;
+                    }
+                }
+            }
         }
+    }
+
+    public void ResetMovement()
+    {
+        isMoving = false;
+        movingDir = Detection.DIRECTIONS.NONE;
+
     }
 
     /// <summary>
@@ -45,55 +119,66 @@ public class PreyMovement : MonoBehaviour
     /// <param name="dir">target Direction to move towards to</param>
     public void MovePrey(Detection.DIRECTIONS dir, Detection.DIRECTIONS targetDir)
     {
-        
-        Detection.DIRECTIONS movingDir = dir;
+
+        movingDir = dir;
         bool directionClear = false;
 
         // if it is already moving then the theres no point checking
         if (isMoving == true)
             return;
 
-        // Check the diection it wants to move in
-        // if the opposite direction is not clear
-        // check all the others
-        if (CheckDirection(dir) == false)
+        for (int index = 0; index < (int)Detection.DIRECTIONS.NONE; ++index)
         {
-            for (int index = 0; index < (int)Detection.DIRECTIONS.NONE; ++index)
-            {
-                // If it reaches the same direction as the direction given earlier
-                // or if its in the same direction as the cat
-                // skip it
-                if (index == (int)dir)
-                    continue;
-                else if (index == (int)targetDir)
-                    continue;
+            if (index == (int)targetDir)
+                continue;
 
-                // If that direction is blocked/not very long
-                // Check it through the function again
-                // Convert int to direction
-                if (CheckDirection((Detection.DIRECTIONS)index))
-                {
-                    //Change the moving direction to the new one
-                    movingDir = (Detection.DIRECTIONS)index;
-                    directionClear = true;
-                    break;
-                }
-
-                // If it doesnt pass any direction
-                // direction clear will be set to false
-                directionClear = false;
-            }
+            // check through the 4 directions
+            CheckDirection((Detection.DIRECTIONS)index);
         }
-        else
-            // if the first direction it checked is already clear
-            directionClear = true;
 
-        // if the direction isnt clear anywhere
-        // return and not move at all
-        // the prey is probably stuck/bugged
-        // should never reach here
-        if (directionClear == false)
-            return;
+
+
+        //// Check the diection it wants to move in
+        //// if the opposite direction is not clear
+        //// check all the others
+        //if (CheckDirection(dir) == false)
+        //{
+        //    for (int index = 0; index < (int)Detection.DIRECTIONS.NONE; ++index)
+        //    {
+        //        // If it reaches the same direction as the direction given earlier
+        //        // or if its in the same direction as the cat
+        //        // skip it
+        //        if (index == (int)dir)
+        //            continue;
+        //        else if (index == (int)targetDir)
+        //            continue;
+
+        //        // If that direction is blocked/not very long
+        //        // Check it through the function again
+        //        // Convert int to direction
+        //        if (CheckDirection((Detection.DIRECTIONS)index))
+        //        {
+        //            //Change the moving direction to the new one
+        //            movingDir = (Detection.DIRECTIONS)index;
+        //            directionClear = true;
+        //            break;
+        //        }
+
+        //        // If it doesnt pass any direction
+        //        // direction clear will be set to false
+        //        directionClear = false;
+        //    }
+        //}
+        //else
+        //    // if the first direction it checked is already clear
+        //    directionClear = true;
+
+        //// if the direction isnt clear anywhere
+        //// return and not move at all
+        //// the prey is probably stuck/bugged
+        //// should never reach here
+        //if (directionClear == false)
+        //    return;
 
         // Move in the direction
         // Find the end tile position to move towards 
@@ -163,26 +248,53 @@ public class PreyMovement : MonoBehaviour
 
         // idk if i should check just the first tile or more than 1
         // for now i'll just check once
+        // EDIT: once does not work. I repeat, once does not work aifioasiofnasionfoashfhio
 
-        switch (directionToCheck)
+        int currentTileCounter = 0;
+
+        while (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
         {
-            case Detection.DIRECTIONS.UP:
-                currentTilePos.y++;
-                break;
-            case Detection.DIRECTIONS.DOWN:
-                currentTilePos.y--;
-                break;
-            case Detection.DIRECTIONS.LEFT:
-                currentTilePos.x--;
-                break;
-            case Detection.DIRECTIONS.RIGHT:
-                currentTilePos.x++;
-                break;
+            currentTileCounter++;
+
+            // Move the currentTilePos
+            switch (directionToCheck)
+            {
+                case Detection.DIRECTIONS.UP:
+                    currentTilePos.y++;
+                    break;
+                case Detection.DIRECTIONS.DOWN:
+                    currentTilePos.y--;
+                    break;
+                case Detection.DIRECTIONS.LEFT:
+                    currentTilePos.x--;
+                    break;
+                case Detection.DIRECTIONS.RIGHT:
+                    currentTilePos.x++;
+                    break;
+                default:
+                    Debug.LogError("It shouldn't reach here lol");
+                    break;
+            }
         }
 
-        if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
-            return true;
+        // if the current tile counter is more than the number of empty tiles in the current direction
+        // it means that it found a better direction
+        if (currentTileCounter > currentDirTileCount)
+        {
+            // Set the new moving direction
+            movingDir = directionToCheck;
 
-        return false;
+            currentDirTileCount = currentTileCounter;
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+        //if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
+        //    return true;
+
     }
 }

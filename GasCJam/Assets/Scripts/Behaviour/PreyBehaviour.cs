@@ -17,11 +17,11 @@ public class PreyBehaviour : Detection
     // Start is called before the first frame update
     void Start()
     {
+        preyMovement = GetComponent<PreyMovement>();
+
         // Start the coroutine at the start
         // the prey will always be checking every second instead of every frame
-       // StartCoroutine("CheckForObjects");
-
-        preyMovement = GetComponent<PreyMovement>();
+        StartCoroutine("CheckForObjects");
     }
 
     // Update is called once per frame
@@ -43,11 +43,11 @@ public class PreyBehaviour : Detection
         }
         else
         {
-            if (DetectRadius())
-            {
-                // Set the target direction here
-                targetDir = GetTargetDirection();
-            }
+            //if (DetectRadius())
+            //{
+            //    // Set the target direction here
+            //    targetDir = GetTargetDirection();
+            //}
         }
     }
 
@@ -61,6 +61,15 @@ public class PreyBehaviour : Detection
         {
             foreach (GameObject detectedObj in ObjectsInRange)
             {
+                if (targetObject != null)
+                {
+                    if (targetObject == detectedObj)
+                    {
+                        isRunning = true;
+                        return true;
+                    }    
+                }
+
                 // if the player is detected in the objects in range
                 if (detectedObj.tag == "Player")
                 {
@@ -70,9 +79,7 @@ public class PreyBehaviour : Detection
 
                     //Debug.Log("Target acquired");
 
-                    if (targetObject == null)
-                        // Store the target object
-                        targetObject = detectedObj;
+                    targetObject = detectedObj;
 
                     isRunning = true;
 
@@ -90,7 +97,15 @@ public class PreyBehaviour : Detection
             }
         }
 
-        ResetTarget();
+        // if it isnt detecting anything
+        // and it isnt moving
+        // then reset it
+        if (preyMovement.isMoving == false)
+        {
+            ResetTarget();
+            preyMovement.ResetMovement();
+        }
+
 
         return false;
     }
@@ -104,6 +119,9 @@ public class PreyBehaviour : Detection
         // set the direction back to none
         targetDir = DIRECTIONS.NONE;
 
+        isRunning = false;
+        
+       
        // Debug.Log("We'll get em next time");
     }
 
@@ -172,7 +190,7 @@ public class PreyBehaviour : Detection
                 targetDir = GetTargetDirection();
 
             }
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.2f);
         }
     }
 

@@ -1666,6 +1666,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7281651184082895325, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7281651185554422600, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1710,9 +1714,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7281651185554422641, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: moveSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7281651185554422645, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_Name
       value: Prey
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281651185554422645, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7281651185554422645, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_TagString
@@ -1774,6 +1786,10 @@ PrefabInstance:
     - target: {fileID: 6597564006238219421, guid: 4ed027a0ed0b34a4aa5dcae573ab4873, type: 3}
       propertyPath: m_Name
       value: MovableBlock
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597564006238219421, guid: 4ed027a0ed0b34a4aa5dcae573ab4873, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ed027a0ed0b34a4aa5dcae573ab4873, type: 3}
