@@ -19,6 +19,8 @@ public class KittenMovement : MonoBehaviour
     // Store reference to the behaviour script
     KittenBehaviour kittenBehaviour;
 
+    bool juststopplease = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +38,122 @@ public class KittenMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+        if (juststopplease)
+            return;
+
+        if (isMoving)
+        {
+            Vector3 direction = (targetVector - (Vector2)transform.position).normalized;
+            rigidBody.MovePosition(transform.position + direction * moveSpeed * Time.fixedDeltaTime);
+
+            float targetXPos = targetVector.x;
+            float targetYPos = targetVector.y;
+
+            // if its moving to the left
+            if (movingDir == Detection.DIRECTIONS.LEFT)
+            {
+                // when it reaches less than or equal to the target  xposition
+                // left is negative for x axis
+                if (transform.position.x <= targetXPos)
+                {
+                    transform.position = targetVector;
+                    kittenBehaviour.isRunning = false;
+                    isMoving = false;
+                    movingDir = Detection.DIRECTIONS.NONE;
+                }
+            }
+            else if (movingDir == Detection.DIRECTIONS.RIGHT)
+            {
+                // when it reaches more than or equal to the target x position
+                // right is positive for x axis
+                if (transform.position.x >= targetXPos)
+                {
+                    transform.position = targetVector;
+                    kittenBehaviour.isRunning = false;
+                    isMoving = false;
+                    movingDir = Detection.DIRECTIONS.NONE;
+                }
+            }
+            else if (movingDir == Detection.DIRECTIONS.UP)
+            {
+                // when it reaches more than or equal to the target y position
+                // moving up is positive for y axis
+                if (transform.position.y >= targetYPos)
+                {
+                    transform.position = targetVector;
+                    kittenBehaviour.isRunning = false;
+                    isMoving = false;
+                    movingDir = Detection.DIRECTIONS.NONE;
+                }
+            }
+            else if (movingDir == Detection.DIRECTIONS.DOWN)
+            {
+                // when it reaches less than or equal to the target y position
+                // moving down is negative for y axis
+                if (transform.position.y <= targetYPos)
+                {
+                    transform.position = targetVector;
+                    kittenBehaviour.isRunning = false;
+                    isMoving = false;
+                    movingDir = Detection.DIRECTIONS.NONE;
+                }
+            }
+
+            //if (movingDir == Detection.DIRECTIONS.LEFT || movingDir == Detection.DIRECTIONS.RIGHT)
+            //{
+
+            //    // if it is negative
+            //    if (targetXPos <= 0.0f)
+            //    {
+            //        if (transform.position.x <= targetXPos)
+            //        {
+            //            transform.position = targetVector;
+            //            kittenBehaviour.isRunning = false;
+            //            isMoving = false;
+            //            movingDir = Detection.DIRECTIONS.NONE;
+            //        }
+            //    }
+            //    // else if it is positive number
+            //    else if (targetXPos >= 0.0f)
+            //    {
+            //        if (transform.position.x >= targetXPos)
+            //        {
+            //            transform.position = targetVector;
+            //            kittenBehaviour.isRunning = false;
+            //            isMoving = false;
+            //            movingDir = Detection.DIRECTIONS.NONE;
+            //        }
+            //    }
+
+            //}
+            //else if (movingDir == Detection.DIRECTIONS.UP || movingDir == Detection.DIRECTIONS.DOWN)
+            //{
+
+            //    // if it is a negative number
+            //    if (targetYPos <= 0.0f)
+            //    {
+            //        if (transform.position.y <= targetYPos)
+            //        {
+            //            transform.position = targetVector;
+            //            kittenBehaviour.isRunning = false;
+            //            isMoving = false;
+            //            movingDir = Detection.DIRECTIONS.NONE;
+            //        }
+            //    }
+            //    // if it is a positive number
+            //    else if (targetYPos >= 0.0f)
+            //    {
+            //        if (transform.position.y >= targetYPos)
+            //        {
+            //            transform.position = targetVector;
+            //            kittenBehaviour.isRunning = false;
+            //            isMoving = false;
+            //            movingDir = Detection.DIRECTIONS.NONE;
+            //        }
+            //    }
+            //}
+
+        }
     }
 
     public void SetKittenDirection(Detection.DIRECTIONS targetDir)
@@ -118,5 +235,20 @@ public class KittenMovement : MonoBehaviour
 
        
         return targetTilePos;
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // if it collides with the rat
+        if (collision.gameObject.tag == "Prey")
+        {
+            juststopplease = true;
+            isMoving = false;
+            // end the round?
+            // victory
+            Debug.Log("Touched the mouse already lmao");
+            return;
+        }
     }
 }

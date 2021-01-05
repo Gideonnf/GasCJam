@@ -10,7 +10,6 @@ public class PreyBehaviour : Detection
     // Checks if the prey is running
     public bool isRunning = false;
 
-    [SerializeField] DIRECTIONS startingDir;
 
     // Start is called before the first frame update
     public override void Start()

@@ -110,6 +110,10 @@ public class KittenBehaviour : Detection
     // Instead of checking every frame it checks every second
     IEnumerator CheckForObjectsInRange()
     {
+        // NOTE: I might change this to check if the rat is nearby
+        // if it is then it'll win
+        // nearby as in really fuking close
+
         for (; ; )
         {
             // If it successfully detected something in it's radius
@@ -118,7 +122,6 @@ public class KittenBehaviour : Detection
             {
                 // Set the target direction here
                 targetDir = GetTargetDirection();
-
             }
             yield return new WaitForSeconds(.2f);
         }
@@ -130,12 +133,12 @@ public class KittenBehaviour : Detection
         {
             if (DetectInView() == CHARACTERS.MOUSE)
             {
-                if (isRunning == false)
-                {
+               // if (isRunning == false)
+               // {
                     targetObject = ratObject;
                     targetDir = GetTargetDirection();
                     isRunning = true;
-                }
+               // }
             }
             else if (DetectInView() == CHARACTERS.PLAYER)
             {

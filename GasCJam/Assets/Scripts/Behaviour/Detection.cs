@@ -30,6 +30,8 @@ public class Detection : MonoBehaviour
     public DIRECTIONS targetDir = DIRECTIONS.NONE;
     [Tooltip("The character's view direction")]
     public DIRECTIONS viewDir = DIRECTIONS.NONE;
+    [Tooltip("Starting direction")]
+    public DIRECTIONS startingDir;
 
     // Stores the target object
     [System.NonSerialized] public GameObject targetObject = null;
@@ -41,6 +43,7 @@ public class Detection : MonoBehaviour
     public GameObject playerObject = null;
     [Tooltip("Reference to mouse object")]
     public GameObject ratObject = null;
+
 
     protected List<GameObject> ObjectsInRange = new List<GameObject>();
 
