@@ -10,7 +10,7 @@ public class PreyBehaviour : Detection
     DIRECTIONS targetDir = DIRECTIONS.NONE;
     PreyMovement preyMovement;
     // Checks if the prey is running
-    bool isRunning = false;
+    public bool isRunning = false;
 
     [SerializeField] DIRECTIONS startingDir;
 
@@ -19,7 +19,7 @@ public class PreyBehaviour : Detection
     {
         // Start the coroutine at the start
         // the prey will always be checking every second instead of every frame
-        StartCoroutine("CheckForObjects");
+       // StartCoroutine("CheckForObjects");
 
         preyMovement = GetComponent<PreyMovement>();
     }
@@ -37,15 +37,26 @@ public class PreyBehaviour : Detection
             else if (targetDir == DIRECTIONS.UP)
                 preyMovement.MovePrey(DIRECTIONS.DOWN, targetDir);
             else if (targetDir == DIRECTIONS.LEFT)
-                preyMovement.MovePrey(DIRECTIONS.LEFT, targetDir);
-            else if (targetDir == DIRECTIONS.RIGHT)
                 preyMovement.MovePrey(DIRECTIONS.RIGHT, targetDir);
+            else if (targetDir == DIRECTIONS.RIGHT)
+                preyMovement.MovePrey(DIRECTIONS.LEFT, targetDir);
+        }
+        else
+        {
+            if (DetectRadius())
+            {
+                // Set the target direction here
+                targetDir = GetTargetDirection();
+            }
         }
     }
 
     public override bool DetectRadius()
     {
         // Runs the base function to check for objects in radius
+        // Clear the list before checking everytime
+        ObjectsInRange.Clear();
+
         if (base.DetectRadius())
         {
             foreach (GameObject detectedObj in ObjectsInRange)
@@ -57,7 +68,7 @@ public class PreyBehaviour : Detection
                     // Don't have to reset the detected object
                     // Focuses on one object at a time
 
-                    Debug.Log("Target acquired");
+                    //Debug.Log("Target acquired");
 
                     if (targetObject == null)
                         // Store the target object
@@ -102,7 +113,7 @@ public class PreyBehaviour : Detection
         // set the direction back to none
         targetDir = DIRECTIONS.NONE;
 
-        Debug.Log("We'll get em next time");
+       // Debug.Log("We'll get em next time");
     }
 
     /// <summary>
@@ -119,8 +130,8 @@ public class PreyBehaviour : Detection
         // Get the direction of the target
         Vector2 Dir = (TargetPos - CurrentPos).normalized;
 
-        Debug.Log(targetDir);
-        Debug.Log(Dir);
+        //Debug.Log(targetDir);
+       // Debug.Log(Dir);
 
         // Checking for Up and Down first
         // if we're checking for up and down 

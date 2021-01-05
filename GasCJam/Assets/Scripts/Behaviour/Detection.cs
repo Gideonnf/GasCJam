@@ -6,13 +6,10 @@ public class Detection : MonoBehaviour
 {
     [Header("Detection settings")]
     [Tooltip("Detection Radius")]
-    [SerializeField] GameObject CircleRangeCollider;
     [SerializeField] float CircleRadius = 1;
 
     [Tooltip("Line of Sight Distance?")]
     [SerializeField] float SightDistance;
-
-    public bool testingBoolean = false;
 
     protected List<GameObject> ObjectsInRange = new List<GameObject>();
 
@@ -31,7 +28,7 @@ public class Detection : MonoBehaviour
     /// <returns>true if there is objects found</returns>
     public virtual bool DetectRadius()
     {
-        Debug.Log("parent function does a thing");
+       // Debug.Log("parent function does a thing");
 
         // Get a list of all the colliders within the area
         Collider2D[] ListOfColliders = Physics2D.OverlapCircleAll(transform.position, CircleRadius);
