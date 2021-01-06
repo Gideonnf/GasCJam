@@ -4,7 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D m_RigidBody;
 
-    Vector3 m_Dir;
+    [HideInInspector]
+    public Vector3 m_Dir;
 
     [Header("Movement data")]
     public float m_MoveSpeed = 1.0f;
