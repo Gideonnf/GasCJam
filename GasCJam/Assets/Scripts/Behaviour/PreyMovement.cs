@@ -28,12 +28,13 @@ public class PreyMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
 
         preyBehaviour = GetComponent<PreyBehaviour>();
+
+        UpdateAnimation();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //UpdateAnimation();
     }
 
     private void FixedUpdate()
