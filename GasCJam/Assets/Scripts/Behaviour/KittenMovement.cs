@@ -409,6 +409,18 @@ public class KittenMovement : MonoBehaviour
     /// <returns> Returns the vector 2 position </returns>
     public Vector2 FindEndTile (Detection.DIRECTIONS directionToCheck)
     {
+        // NOTE:
+        // ONE WAY TO TRY AND FIX JITTERY MOVEMENTS
+        // JITTERY MOVEMENTS AS IN IT'LL KEEP CHANGING BETWEEN DIRECTIONS
+        // BECAUSE ITS A LIL PIECE OF SHIT 
+
+        // i'll make it so it'll check for the target object
+        // and stop at them
+        // i.e if im checking on the up direction then i'll stop at their y position instead of going all the way
+        // actually i dont think this is gonna fix it
+        // but it do b like that sometimes
+
+        
         // Get the current tile position in the map
         Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
         //Create a variable to store the vector
