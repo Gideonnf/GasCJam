@@ -202,13 +202,13 @@ public class MouseMovement : MonoBehaviour
         // Before checking for alternate path
         // check if it still needs to move
         // if there isn't then you don't have to find an alternate path
-        if (mouseDetection.CheckForEnemies() == false)
-        {
-            StopMovement();
-            mouseDetection.StopMovement();
+        //if (mouseDetection.CheckForEnemies() == false)
+        //{
+        //    StopMovement();
+        //    mouseDetection.StopMovement();
 
-            return Detection.DIRECTIONS.NONE;
-        }
+        //    return Detection.DIRECTIONS.NONE;
+        //}
 
         Detection.DIRECTIONS tempDirection = Detection.DIRECTIONS.NONE;
         Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);

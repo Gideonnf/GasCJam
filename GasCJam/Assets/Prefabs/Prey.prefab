@@ -196,12 +196,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3835cac063eac54f89a36e4934bd740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CircleRadius: 2
-  SightDistance: 0
+  CircleRadius: 1.5
+  SightDistance: 3
   targetDir: 4
   viewDir: 4
   startingDir: 0
-  characterState: 3
+  characterState: 4
   playerObject: {fileID: 0}
   ratObject: {fileID: 0}
 --- !u!114 &8648553465782317771
@@ -217,3 +217,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  movingDir: 0

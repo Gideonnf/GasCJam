@@ -21,6 +21,8 @@ public class MouseDetection : Detection
         transform.position = tilePosition2D;
 
         StartCoroutine("CheckForObjectsInRange");
+        StartCoroutine("CheckForObjectsInView");
+
     }
 
     // Update is called once per frame
@@ -88,6 +90,18 @@ public class MouseDetection : Detection
         targetDir = DIRECTIONS.NONE;
     }
 
+    public override CHARACTERS CheckForCharacters(Vector2Int tilePosition)
+    {
+        // Get the player position in tiles
+        Vector2Int playerTilePos = MapManager.Instance.GetWorldToTilePos(playerObject.transform.position);
+
+        // if the player is within that tile
+        if (playerTilePos == tilePosition)
+            return CHARACTERS.PLAYER;
+
+        return CHARACTERS.NONE;
+    }
+
     // A couroutine to run for checking of objects
     // Instead of checking every frame it checks every second
     IEnumerator CheckForObjectsInRange()
@@ -98,6 +112,26 @@ public class MouseDetection : Detection
             // Check for what direction it is in
             DetectRadius();
 
+
+            yield return new WaitForSeconds(.2f);
+        }
+    }
+
+    IEnumerator CheckForObjectsInView()
+    {
+        for (; ;)
+        {
+            if (DetectInView() == CHARACTERS.PLAYER)
+            {
+                // running
+                characterState = STATE.RUNNING;
+
+                // Set the player object as it's current target
+                targetObject = playerObject;
+
+                targetDir = GetTargetDirection();
+
+            }
 
             yield return new WaitForSeconds(.2f);
         }
