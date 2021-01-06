@@ -171,6 +171,22 @@ public class Detection : MonoBehaviour
         return CHARACTERS.NONE;
     }
 
+    /// <summary>
+    /// because i didnt want to keep writing down these three lines everytime
+    /// </summary>
+    /// <returns>returns the direction vector of the target object</returns>
+    public Vector2 GetTargetDirVector()
+    {
+        // Get the two positions we need
+        Vector2 TargetPos = targetObject.transform.position;
+        Vector2 CurrentPos = transform.position;
+
+        // Get the direction of the target
+        Vector2 Dir = (TargetPos - CurrentPos).normalized;
+
+        return Dir;
+    }
+
 
     /// <summary>
     /// Gets the direction of the target object
