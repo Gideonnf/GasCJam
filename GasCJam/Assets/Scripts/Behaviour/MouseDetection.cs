@@ -21,7 +21,7 @@ public class MouseDetection : Detection
         transform.position = tilePosition2D;
 
         StartCoroutine("CheckForObjectsInRange");
-        StartCoroutine("CheckForObjectsInView");
+        //StartCoroutine("CheckForObjectsInView");
 
     }
 
