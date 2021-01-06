@@ -6029,6 +6029,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4334334669019854761, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: CircleRadius
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7281651184082895325, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -6115,7 +6119,7 @@ PrefabInstance:
       objectReference: {fileID: 1144178997}
     - target: {fileID: 8648553465782317771, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: moveSpeed
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}

@@ -15,7 +15,7 @@ public class MouseMovement : MonoBehaviour
     // Keep track of the target tile position
     Vector2 targetTilePosition = Vector2.zero;
     // Keep track of the current moving direction
-    Detection.DIRECTIONS movingDir;
+    public Detection.DIRECTIONS movingDir;
     // 
     Vector3 directionVector;
 
@@ -45,16 +45,14 @@ public class MouseMovement : MonoBehaviour
                     directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
                 }
 
-                Debug.Log("Moving to next tile");
-                Debug.Log(targetTilePosition);
             }
             else
             {
                 // get the direction to the next tile
                 //Vector3 direction = (targetTilePosition - (Vector2)transform.position).normalized;
 
-                Debug.Log(targetTilePosition);
-                Debug.Log(transform.position);
+                //Debug.Log(targetTilePosition);
+                //Debug.Log(transform.position);
 
                 // it already has a target to move to
 
@@ -239,11 +237,13 @@ public class MouseMovement : MonoBehaviour
                     if (CheckDirectionSize(Detection.DIRECTIONS.LEFT) < CheckDirectionSize(Detection.DIRECTIONS.RIGHT))
                     {
                         // the moving direction should be right
+                        Debug.Log("Moving Right");
                         tempDirection = Detection.DIRECTIONS.RIGHT;
                     }
                     else
                     {
                         // else the moving direction should be left
+                        Debug.Log("Moving Left");
                         tempDirection = Detection.DIRECTIONS.LEFT;
                     }
                 }
@@ -251,14 +251,18 @@ public class MouseMovement : MonoBehaviour
                 else
                 {
                     // if the target is on the left side
-                    if (targetTilePos.x <= 0.0f)
+                    if (targetTilePos.x <= transform.position.x)
                     {
+                        Debug.Log("Moving Right 2");
+
                         tempDirection = Detection.DIRECTIONS.RIGHT;
                         //return Detection.DIRECTIONS.RIGHT;
                     }
                     else
                     // the target is on the right
                     {
+                        Debug.Log("Moving Left 2");
+
                         tempDirection = Detection.DIRECTIONS.LEFT;
 
                         //return Detection.DIRECTIONS.LEFT;
@@ -270,24 +274,24 @@ public class MouseMovement : MonoBehaviour
             {
                 // if its more than 2 blocks to the left or more than 2 blocks to the right
                 // then it can go left or right depending on which has more space
-                //if (targetTilePos.y < (currentTilePos.y - 1) || targetTilePos.y > (currentTilePos.y + 1))
-                //{
-                //    // if the number of empty tiles on above is less than below
-                //    if (CheckDirectionSize(Detection.DIRECTIONS.UP) < CheckDirectionSize(Detection.DIRECTIONS.DOWN))
-                //    {
-                //        // the moving direction should be right
-                //        return Detection.DIRECTIONS.DOWN;
-                //    }
-                //    else
-                //    {
-                //        // else the moving direction should be left
-                //        return Detection.DIRECTIONS.UP;
-                //    }
-                //}
-                //else
-                //{
+                if (targetTilePos.y < (currentTilePos.y - 1) || targetTilePos.y > (currentTilePos.y + 1))
+                {
+                    // if the number of empty tiles on above is less than below
+                    if (CheckDirectionSize(Detection.DIRECTIONS.UP) < CheckDirectionSize(Detection.DIRECTIONS.DOWN))
+                    {
+                        // the moving direction should be right
+                        tempDirection = Detection.DIRECTIONS.DOWN;
+                    }
+                    else
+                    {
+                        // else the moving direction should be left
+                        tempDirection = Detection.DIRECTIONS.UP;
+                    }
+                }
+                else
+                {
                     // the target is below
-                    if(targetTilePos.y <= 0.0f)
+                    if (targetTilePos.y <= transform.position.y)
                     {
                         tempDirection = Detection.DIRECTIONS.UP;
                     }
@@ -296,7 +300,7 @@ public class MouseMovement : MonoBehaviour
                     {
                         tempDirection = Detection.DIRECTIONS.DOWN;
                     }
-                //}
+                }
             }
 
             // might not need this
