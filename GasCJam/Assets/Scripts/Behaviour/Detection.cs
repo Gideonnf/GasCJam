@@ -21,6 +21,14 @@ public class Detection : MonoBehaviour
         NONE
     }
 
+    public enum STATE
+    {
+        IDLE,
+        RUNNING,
+        CHASING,
+        NONE
+    }
+
     [Header("Detection settings")]
     [Tooltip("Detection Radius")]
     [SerializeField] float CircleRadius = 1;
@@ -32,6 +40,8 @@ public class Detection : MonoBehaviour
     public DIRECTIONS viewDir = DIRECTIONS.NONE;
     [Tooltip("Starting direction")]
     public DIRECTIONS startingDir;
+    [Tooltip("Current state of the object")]
+    public STATE characterState = STATE.NONE;
 
     // Stores the target object
     [System.NonSerialized] public GameObject targetObject = null;
