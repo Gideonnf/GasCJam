@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovableBlock : MonoBehaviour
@@ -24,7 +23,10 @@ public class MovableBlock : MonoBehaviour
         {
             m_BeingPushed = true;
             StartCoroutine("Pushed");
-            //Debug.Log("being pushed");
+
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            if (player != null)
+                player.Pushing(m_BeingPushed);
         }
     }
 
@@ -35,7 +37,10 @@ public class MovableBlock : MonoBehaviour
         {
             m_BeingPushed = false;
             StopCoroutine("Pushed");
-            //Debug.Log("stop pushed");
+
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            if (player != null)
+                player.Pushing(m_BeingPushed);
         }
     }
 

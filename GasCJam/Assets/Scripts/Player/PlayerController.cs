@@ -41,10 +41,6 @@ public class PlayerController : MonoBehaviour
         {
             m_Animator.SetFloat("Horizontal", m_Dir.x);
             m_Animator.SetFloat("Vertical", m_Dir.y);
-
-            Debug.Log(m_Dir);
-
-            //if direction == vector3.zero, go to idle mode
         }
     }
 
@@ -58,5 +54,12 @@ public class PlayerController : MonoBehaviour
     {
         m_Dir.Normalize();
         m_RigidBody.MovePosition(transform.position + m_Dir * m_MoveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void Pushing(bool pushing)
+    {
+        //start animation
+        if (m_Animator != null)
+            m_Animator.SetBool("Pushing", pushing);
     }
 }
