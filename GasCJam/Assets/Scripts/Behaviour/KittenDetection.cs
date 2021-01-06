@@ -31,9 +31,17 @@ public class KittenDetection : Detection
 
     public override bool DetectRadius()
     {
+
         // Clear the objets in the list incase
         if (ObjectsInRange.Count > 0)
             ObjectsInRange.Clear();
+
+        // Dont chase for targets when it's tired
+        if (characterState == STATE.TIRED)
+        {
+            ReturnToStart();
+            return false;
+        }
 
         // call the base class detect radius to get the list of objects in range
         if (base.DetectRadius())
@@ -43,6 +51,8 @@ public class KittenDetection : Detection
             {
                 if (detectedObj.tag == "Prey")
                 {
+
+
                     // Set the character state
                     characterState = STATE.CHASING;
 
@@ -51,11 +61,27 @@ public class KittenDetection : Detection
 
                     // Get the target's direc tion
                     targetDir = GetTargetDirection();
+
+                    return true;
                 }
             }
         }
 
         return false;
+    }
+
+    public void ReturnToStart()
+    {
+        // Create a blank game object
+        if (targetObject == null)
+            targetObject = new GameObject("StartingPosition");
+        // Set the starting position
+
+        //characterState = STATE.TIRED;
+
+        targetObject.transform.position = kittenMovement.startingPos;
+
+        targetDir = GetTargetDirection();
     }
 
     public void StopMovement()

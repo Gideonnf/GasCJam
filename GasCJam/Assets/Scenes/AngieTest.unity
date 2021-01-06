@@ -234,8 +234,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   startingPos: {x: 0, y: 0}
-  maxTravelDistance: 8
-  minTravelDistance: 0.2
+  maxTravelDistance: 4
+  minTravelDistance: 0.4
 --- !u!114 &631104831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1954,7 +1954,7 @@ MonoBehaviour:
   targetDir: 4
   viewDir: 4
   startingDir: 0
-  characterState: 3
+  characterState: 4
   playerObject: {fileID: 0}
   ratObject: {fileID: 0}
 --- !u!4 &7281651184461524719

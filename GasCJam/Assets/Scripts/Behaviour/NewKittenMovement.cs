@@ -38,17 +38,41 @@ public class NewKittenMovement : MonoBehaviour
     void FixedUpdate()
     {
         // if the cat is currently chasing 
-        if (kittenDetection.characterState == Detection.STATE.CHASING)
+        if (kittenDetection.characterState == Detection.STATE.CHASING || kittenDetection.characterState == Detection.STATE.TIRED)
         {
             Vector2 distanceVector = (Vector2)transform.position - startingPos;
             float distanceFromStarting = distanceVector.magnitude;
-            
-            if (distanceFromStarting >= maxTravelDistance)
-            {
-                kittenDetection.characterState = Detection.STATE.TIRED;
 
-                StopMovement();
+            if (kittenDetection.characterState == Detection.STATE.CHASING)
+            {
+                if (distanceFromStarting >= maxTravelDistance)
+                {
+                    // To clear target object and reset character state
+                    kittenDetection.StopMovement();
+
+                    kittenDetection.characterState = Detection.STATE.TIRED;
+
+                    kittenDetection.ReturnToStart();
+
+                    StopMovement();
+
+                    return;
+                }
             }
+            if (kittenDetection.characterState == Detection.STATE.TIRED)
+            {
+                if (distanceFromStarting <= minTravelDistance)
+                {
+                    transform.position = startingPos;
+
+                    kittenDetection.characterState = Detection.STATE.IDLE;
+
+                    StopMovement();
+
+                    return;
+                }
+            }
+            
 
             // if there is no target tile yet
             // find the target tile
