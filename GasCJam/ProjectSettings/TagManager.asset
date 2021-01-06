@@ -50,6 +50,9 @@ TagManager:
   - name: OuterTreeBehind
     uniqueID: 2238140821
     locked: 0
+  - name: ParticleEffectFloor
+    uniqueID: 2046397727
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
