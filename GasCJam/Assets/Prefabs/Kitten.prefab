@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 6120036834013358926}
   - component: {fileID: 6120036834013358961}
   - component: {fileID: 6120036834013358962}
-  - component: {fileID: 6120036834013358965}
-  - component: {fileID: 6120036834013358964}
   m_Layer: 0
   m_Name: Kitten
   m_TagString: Kitten
@@ -82,47 +80,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5932026, y: 0.67068887}
   m_EdgeRadius: 0
---- !u!114 &6120036834013358965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6120036834013358963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b86ff5bb88c78564f8bb28c7a2490a04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CircleRadius: 3
-  SightDistance: 0
-  targetDir: 4
-  viewDir: 4
-  startingDir: 0
-  characterState: 3
-  playerObject: {fileID: 0}
-  ratObject: {fileID: 0}
-  maxTravelDistance: 4
-  minTravelDistance: 0.2
-  isRunning: 0
-  isTired: 0
---- !u!114 &6120036834013358964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6120036834013358963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7399f3815347c394aacd72d55732e44a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 4
-  isMoving: 0
-  isStuck: 0
-  movingDir: 0
-  tempMovingDir: 0
 --- !u!1 &6120036834412696027
 GameObject:
   m_ObjectHideFlags: 0

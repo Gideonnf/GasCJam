@@ -215,6 +215,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &631104829 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6120036834013358963, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
+  m_PrefabInstance: {fileID: 6290884020794698824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &631104830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631104829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b2f172324eadd45b352edf8d541cac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  startingPos: {x: 0, y: 0}
+  maxTravelDistance: 8
+  minTravelDistance: 0.2
+--- !u!114 &631104831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631104829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a184054798ca849a8be3a03283ab27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CircleRadius: 2
+  SightDistance: 0
+  targetDir: 4
+  viewDir: 4
+  startingDir: 0
+  characterState: 4
+  playerObject: {fileID: 0}
+  ratObject: {fileID: 0}
 --- !u!1 &1107303745
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +785,10 @@ PrefabInstance:
     - target: {fileID: 9143037144266038559, guid: df3b048a1bec256429d6d9a97ff0b3fa, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143037144266038559, guid: df3b048a1bec256429d6d9a97ff0b3fa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9143037144266038562, guid: df3b048a1bec256429d6d9a97ff0b3fa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1763,11 +1808,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6120036834013358926, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.41
+      value: 1.19
       objectReference: {fileID: 0}
     - target: {fileID: 6120036834013358926, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.42
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6120036834013358926, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1809,14 +1854,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kitten
       objectReference: {fileID: 0}
-    - target: {fileID: 6120036834013358963, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6120036834013358965, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
-      propertyPath: ratObject
-      value: 
-      objectReference: {fileID: 7281651184461524690}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
 --- !u!50 &7281651184461524688
@@ -1898,7 +1935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87eed842831e31e47919fbd7b1222d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 2
   movingDir: 0
 --- !u!114 &7281651184461524693
 MonoBehaviour:

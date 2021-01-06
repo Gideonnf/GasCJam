@@ -26,6 +26,7 @@ public class Detection : MonoBehaviour
         IDLE,
         RUNNING,
         CHASING,
+        TIRED,
         NONE
     }
 
