@@ -18,8 +18,8 @@ TagManager:
   - 
   - Obstacles
   - Prey
-  - 
-  - 
+  - Wall
+  - PlayerFeetCollider
   - 
   - 
   - 
