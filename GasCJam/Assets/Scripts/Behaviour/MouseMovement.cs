@@ -16,6 +16,8 @@ public class MouseMovement : MonoBehaviour
     Vector2 targetTilePosition = Vector2.zero;
     // Keep track of the current moving direction
     Detection.DIRECTIONS movingDir;
+    // How many spaces the current moving direction has
+    int currentDirTileCounter = 0;
 
 
     // Start is called before the first frame update
@@ -47,18 +49,117 @@ public class MouseMovement : MonoBehaviour
     }
 
     /// <summary>
+    /// Checks all the direction for the longest path
+    /// </summary>
+    /// <returns></returns>
+    Detection.DIRECTIONS CheckDirection()
+    {
+        int currentTileCounter = 0;
+
+        Detection.DIRECTIONS tempDir = Detection.DIRECTIONS.NONE;
+
+        // Check the direction it needs to move in first
+        for (int index = 0; index < (int)Detection.DIRECTIONS.NONE; ++index)
+        {
+            if (index == (int)mouseDetection.targetDir)
+                continue;
+
+            Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+
+            // while the path is clear
+            // keep checking to find out how many
+            // will take the direction with the longest clear path
+            while(MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
+            {
+                currentTileCounter++;
+
+                switch ((Detection.DIRECTIONS)index)
+                {
+                    case Detection.DIRECTIONS.UP:
+                        currentTilePos.y++;
+                        break;
+                    case Detection.DIRECTIONS.DOWN:
+                        currentTilePos.y--;
+                        break;
+                    case Detection.DIRECTIONS.LEFT:
+                        currentTilePos.x--;
+                        break;
+                    case Detection.DIRECTIONS.RIGHT:
+                        currentTilePos.x++;
+                        break;
+                    default:
+                        Debug.LogError("It shouldn't reach here lol");
+                        break;
+                }
+            }
+
+            // if the current direction has more space than the previous one
+            if (currentTileCounter > currentDirTileCounter)
+            {
+                // set them
+                tempDir = (Detection.DIRECTIONS)index;
+
+                currentDirTileCounter = currentTileCounter;
+
+                // reset
+                currentTileCounter = 0;
+            }
+        }
+
+        return tempDir;
+    }
+
+    /// <summary>
+    /// Checks a direction
+    /// </summary>
+    /// <param name="dirToCheck">The direction to check</param>
+    /// <returns>True if the path is clear</returns>
+    bool CheckDirection(Detection.DIRECTIONS dirToCheck)
+    {
+        // Get the current tile position
+        Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+
+        switch (dirToCheck)
+        {
+            case Detection.DIRECTIONS.UP:
+                currentTilePos.y++;
+                break;
+            case Detection.DIRECTIONS.DOWN:
+                currentTilePos.y--;
+                break;
+            case Detection.DIRECTIONS.LEFT:
+                currentTilePos.x--;
+                break;
+            case Detection.DIRECTIONS.RIGHT:
+                currentTilePos.x++;
+                break;
+            case Detection.DIRECTIONS.NONE:
+                break;
+            default:
+                break;
+        }
+
+        if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
+            return true;
+
+        return false;
+    }
+
+    /// <summary>
     /// Checks which direction to move before it starst to move to the next tile
     /// 
     /// </summary>
     void GetMovingDirection()
     {
+        movingDir = CheckDirection();
+
         // 
         switch (mouseDetection.targetDir)
         {
             case Detection.DIRECTIONS.UP:
                 // If the target is coming from above
                 // he'll want to move down
-                if(CheckDirection(Detection.DIRECTIONS.DOWN) == false)
+                if (CheckDirection(Detection.DIRECTIONS.DOWN))
                 {
 
                 }
@@ -74,21 +175,11 @@ public class MouseMovement : MonoBehaviour
             default:
                 break;
         }
-
-
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="dirToCheck">Direction to Check</param>
-    /// <returns>If the path is clear</returns>
-    bool CheckDirection(Detection.DIRECTIONS dirToCheck)
-    {
-
-
-        return false;
     }
 
     Vector2 GetNextTile()
+    {
+
+        return Vector2.zero;
+    }
 }
