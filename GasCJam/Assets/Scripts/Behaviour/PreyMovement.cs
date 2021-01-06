@@ -17,6 +17,9 @@ public class PreyMovement : MonoBehaviour
     [Tooltip("Number of empty spaces in moving dir")]
     int currentDirTileCount = 0;
 
+    [Header("Visual")]
+    public Animator m_Animator;
+
     PreyBehaviour preyBehaviour;
 
     // Start is called before the first frame update
@@ -30,7 +33,7 @@ public class PreyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
+        //UpdateAnimation();
     }
 
     private void FixedUpdate()
@@ -99,8 +102,10 @@ public class PreyMovement : MonoBehaviour
     public void ResetMovement()
     {
         isMoving = false;
-        movingDir = Detection.DIRECTIONS.NONE;
+        //movingDir = Detection.DIRECTIONS.NONE;
         currentDirTileCount = 0;
+
+        UpdateAnimation();
     }
 
     /// <summary>
@@ -116,6 +121,7 @@ public class PreyMovement : MonoBehaviour
             return;
 
         movingDir = dir;
+        UpdateAnimation();
         bool directionClear = false;
 
         // Check the first direction to run towards
@@ -248,6 +254,7 @@ public class PreyMovement : MonoBehaviour
         //Toggle the isMoving flag to true 
         // this is to start movement in update
         isMoving = true;
+        UpdateAnimation();
     }
 
     /// <summary>
@@ -352,5 +359,30 @@ public class PreyMovement : MonoBehaviour
         //if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
         //    return true;
 
+    }
+
+    public void UpdateAnimation()
+    {
+        Vector2 dir = Vector2.zero;
+
+        switch (movingDir)
+        {
+            case Detection.DIRECTIONS.UP:
+                dir.y = 1.0f;
+                break;
+            case Detection.DIRECTIONS.DOWN:
+                dir.y = -1.0f;
+                break;
+            case Detection.DIRECTIONS.LEFT:
+                dir.x = -1.0f;
+                break;
+            case Detection.DIRECTIONS.RIGHT:
+                dir.x = 1.0f;
+                break;
+        }
+
+        m_Animator.SetBool("Moving", isMoving);
+        m_Animator.SetFloat("Horizontal", dir.x);
+        m_Animator.SetFloat("Vertical", dir.y);
     }
 }

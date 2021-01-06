@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7281651184082895324}
   - component: {fileID: 7281651184082895327}
+  - component: {fileID: 4674554412004450638}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -81,7 +82,26 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
+--- !u!95 &4674554412004450638
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7281651184082895325}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ae96c07d3a95ad348a8644d88e733c21, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7281651185554422645
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92b808816e939b4eb9ed96880da3ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 0
+  isMoving: 0
+  movingDir: 0
 --- !u!114 &7281651185554422646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,5 +213,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CircleRadius: 2
   SightDistance: 0
-  isRunning: 0
+  targetDir: 4
+  viewDir: 4
   startingDir: 3
+  playerObject: {fileID: 0}
+  ratObject: {fileID: 0}
+  isRunning: 0
