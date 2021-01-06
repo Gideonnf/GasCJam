@@ -15,6 +15,10 @@ public class KittenMovement : MonoBehaviour
     public bool isStuck = false;
     [Tooltip("Stores the direction that it is moving in")]
     public Detection.DIRECTIONS movingDir;
+    [Tooltip("Temporary moving direction when stuck")]
+    public Detection.DIRECTIONS tempMovingDir;
+
+    bool targetReached = false;
 
     // Store reference to the behaviour script
     KittenBehaviour kittenBehaviour;
@@ -50,14 +54,16 @@ public class KittenMovement : MonoBehaviour
         if (isMoving)
         {
             Vector3 direction = (targetVector - (Vector2)transform.position).normalized;
-            rigidBody.MovePosition(transform.position + direction * moveSpeed * Time.fixedDeltaTime);
 
             float targetXPos = targetVector.x;
             float targetYPos = targetVector.y;
 
             // if its moving to the left
-            if (movingDir == Detection.DIRECTIONS.LEFT)
+            if (movingDir == Detection.DIRECTIONS.LEFT || tempMovingDir == Detection.DIRECTIONS.LEFT)
             {
+                // Set the y axis to 0
+                // it doesn't need to move up and down
+                direction.y = 0;
                 // when it reaches less than or equal to the target  xposition
                 // left is negative for x axis
                 if (transform.position.x <= targetXPos)
@@ -66,10 +72,21 @@ public class KittenMovement : MonoBehaviour
                     kittenBehaviour.isRunning = false;
                     isMoving = false;
                     movingDir = Detection.DIRECTIONS.NONE;
+                    tempMovingDir = Detection.DIRECTIONS.NONE;
+                    targetReached = true;
+
+                    if (targetReached == false)
+                    {
+                        targetReached = true;
+                        return;
+                    }
                 }
             }
-            else if (movingDir == Detection.DIRECTIONS.RIGHT)
+            else if (movingDir == Detection.DIRECTIONS.RIGHT || tempMovingDir == Detection.DIRECTIONS.RIGHT)
             {
+                // Set the y axis to 0
+                // it doesn't need to move up and down
+                direction.y = 0;
                 // when it reaches more than or equal to the target x position
                 // right is positive for x axis
                 if (transform.position.x >= targetXPos)
@@ -78,10 +95,22 @@ public class KittenMovement : MonoBehaviour
                     kittenBehaviour.isRunning = false;
                     isMoving = false;
                     movingDir = Detection.DIRECTIONS.NONE;
+                    tempMovingDir = Detection.DIRECTIONS.NONE;
+                    targetReached = true;
+
+                    if (targetReached == false)
+                    {
+                        targetReached = true;
+                        return;
+                    }
                 }
             }
-            else if (movingDir == Detection.DIRECTIONS.UP)
+            else if (movingDir == Detection.DIRECTIONS.UP || tempMovingDir == Detection.DIRECTIONS.UP)
             {
+                // Set the x axis to 0
+                // it doesn't need to move left and right
+                direction.x = 0;
+
                 // when it reaches more than or equal to the target y position
                 // moving up is positive for y axis
                 if (transform.position.y >= targetYPos)
@@ -90,10 +119,22 @@ public class KittenMovement : MonoBehaviour
                     kittenBehaviour.isRunning = false;
                     isMoving = false;
                     movingDir = Detection.DIRECTIONS.NONE;
+                    tempMovingDir = Detection.DIRECTIONS.NONE;
+                    targetReached = true;
+
+                    if (targetReached == false)
+                    {
+                        targetReached = true;
+                        return;
+                    }
                 }
             }
-            else if (movingDir == Detection.DIRECTIONS.DOWN)
+            else if (movingDir == Detection.DIRECTIONS.DOWN || tempMovingDir == Detection.DIRECTIONS.DOWN)
             {
+                // Set the x axis to 0
+                // it doesn't need to move left and right
+                direction.x = 0;
+
                 // when it reaches less than or equal to the target y position
                 // moving down is negative for y axis
                 if (transform.position.y <= targetYPos)
@@ -102,62 +143,61 @@ public class KittenMovement : MonoBehaviour
                     kittenBehaviour.isRunning = false;
                     isMoving = false;
                     movingDir = Detection.DIRECTIONS.NONE;
+                    tempMovingDir = Detection.DIRECTIONS.NONE;
+
+                    if (targetReached == false)
+                    {
+                        targetReached = true;
+                        return;
+                    }
                 }
             }
 
-            //if (movingDir == Detection.DIRECTIONS.LEFT || movingDir == Detection.DIRECTIONS.RIGHT)
-            //{
+            // Return when they reach the target to prevent any extra movements
 
-            //    // if it is negative
-            //    if (targetXPos <= 0.0f)
-            //    {
-            //        if (transform.position.x <= targetXPos)
-            //        {
-            //            transform.position = targetVector;
-            //            kittenBehaviour.isRunning = false;
-            //            isMoving = false;
-            //            movingDir = Detection.DIRECTIONS.NONE;
-            //        }
-            //    }
-            //    // else if it is positive number
-            //    else if (targetXPos >= 0.0f)
-            //    {
-            //        if (transform.position.x >= targetXPos)
-            //        {
-            //            transform.position = targetVector;
-            //            kittenBehaviour.isRunning = false;
-            //            isMoving = false;
-            //            movingDir = Detection.DIRECTIONS.NONE;
-            //        }
-            //    }
+            //update it's position
+            rigidBody.MovePosition(transform.position + direction * moveSpeed * Time.fixedDeltaTime);
 
-            //}
-            //else if (movingDir == Detection.DIRECTIONS.UP || movingDir == Detection.DIRECTIONS.DOWN)
-            //{
+            // If the target already reached
+            // and it looped back through then that means that it hasnt move
+            // and that should mean that its stuck
 
-            //    // if it is a negative number
-            //    if (targetYPos <= 0.0f)
-            //    {
-            //        if (transform.position.y <= targetYPos)
-            //        {
-            //            transform.position = targetVector;
-            //            kittenBehaviour.isRunning = false;
-            //            isMoving = false;
-            //            movingDir = Detection.DIRECTIONS.NONE;
-            //        }
-            //    }
-            //    // if it is a positive number
-            //    else if (targetYPos >= 0.0f)
-            //    {
-            //        if (transform.position.y >= targetYPos)
-            //        {
-            //            transform.position = targetVector;
-            //            kittenBehaviour.isRunning = false;
-            //            isMoving = false;
-            //            movingDir = Detection.DIRECTIONS.NONE;
-            //        }
-            //    }
-            //}
+            if (targetReached)
+            {
+                Vector2 currentPos = transform.position;
+
+                isStuck = true;
+
+                //switch (movingDir)
+                //{
+                //    case Detection.DIRECTIONS.UP:
+                //        if (currentPos.y >= targetVector.y)
+                //        {
+                //            isStuck = true;
+                //        }
+                //        break;
+                //    case Detection.DIRECTIONS.DOWN:
+                //        if (currentPos.y <= targetVector.y)
+                //        {
+
+                //        }
+                //        break;
+                //    case Detection.DIRECTIONS.LEFT:
+                //        break;
+                //    case Detection.DIRECTIONS.RIGHT:
+                //        break;
+                //    case Detection.DIRECTIONS.NONE:
+                //        break;
+                //    default:
+                //        break;
+                //}
+
+                //// if they are already overlapping the target vector
+                //if (currentPos == targetVector)
+                //{
+                //    isStuck = true;
+                //}
+            }
 
         }
     }
@@ -169,7 +209,76 @@ public class KittenMovement : MonoBehaviour
         // (i.e another direction)
         if (isStuck == true)
         {
+            Vector2 targetPos = kittenBehaviour.targetObject.transform.position;
+            Vector2 currentPos = transform.position;
 
+            Vector2 Dir = (targetPos - currentPos).normalized;
+
+            // if it is moving up or down and it got stuck
+            // it'll check left and right
+            if (movingDir == Detection.DIRECTIONS.UP || movingDir == Detection.DIRECTIONS.DOWN)
+            {
+                // if its positive then move right
+                if (Dir.x >= 0.0f)
+                {
+                    tempMovingDir = Detection.DIRECTIONS.RIGHT;
+                }
+                // if its negative then move left
+                else if (Dir.x <= 0.0f)
+                {
+                    tempMovingDir = Detection.DIRECTIONS.LEFT;
+                }
+            }
+            // if its moving left and right
+            // then it'll check up and down
+            else if (movingDir == Detection.DIRECTIONS.LEFT || movingDir == Detection.DIRECTIONS.RIGHT)
+            {
+                if (Dir.y >= 0.0f)
+                {
+                    tempMovingDir = Detection.DIRECTIONS.UP;
+                }
+                else if (Dir.y <= 0.0f)
+                {
+                    tempMovingDir = Detection.DIRECTIONS.DOWN;
+                }
+            }
+
+            if (targetVector != FindEndTile(tempMovingDir))
+            {
+                targetVector = FindEndTile(tempMovingDir);
+                targetReached = false;
+            }
+
+            // Check the original moving direction if the path is clear
+            Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+
+            switch (movingDir)
+            {
+                case Detection.DIRECTIONS.UP:
+                    currentTilePos.y++;
+                    break;
+                case Detection.DIRECTIONS.DOWN:
+                    currentTilePos.y--;
+                    break;
+                case Detection.DIRECTIONS.LEFT:
+                    currentTilePos.x--;
+                    break;
+                case Detection.DIRECTIONS.RIGHT:
+                    currentTilePos.x++;
+                    break;
+                case Detection.DIRECTIONS.NONE:
+                    break;
+                default:
+                    Debug.LogError("pee pee poo poo");
+                    break;
+            }
+
+            // if the path infront is clear
+            if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
+            {
+                tempMovingDir = Detection.DIRECTIONS.NONE;
+                isStuck = false;
+            }
         }
         else
         {
@@ -177,9 +286,18 @@ public class KittenMovement : MonoBehaviour
             // it should always be moving in the direction of the cat
             movingDir = targetDir;
 
-            targetVector = FindEndTile(movingDir);
+            // if the target vector changes
+
+            if (targetVector != FindEndTile(movingDir))
+            {
+                targetVector = FindEndTile(movingDir);
+
+                targetReached = false;
+            }
+
 
             isMoving = true;
+
         }
         // if its already moving
         //if (isMoving == true)
@@ -255,6 +373,17 @@ public class KittenMovement : MonoBehaviour
             // victory
             Debug.Log("Touched the mouse already lmao");
             return;
+        }
+        // if it collides into a wall
+        else if (collision.gameObject.tag == "Walls")
+        {
+            // if it is moving and it hit a wall
+            if (isMoving)
+            {
+                // if its suppose to still be moving
+                // but its colliding with a wall then it is stuck
+                isStuck = true;
+            }
         }
     }
 }

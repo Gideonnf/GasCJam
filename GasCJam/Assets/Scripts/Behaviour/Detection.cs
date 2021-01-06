@@ -49,7 +49,7 @@ public class Detection : MonoBehaviour
 
     public virtual void Start()
     {
-        
+        viewDir = startingDir;
     }
 
     /// <summary>

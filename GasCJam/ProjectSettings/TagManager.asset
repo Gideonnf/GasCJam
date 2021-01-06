@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SortingColliders
   - Prey
+  - Walls
   layers:
   - Default
   - TransparentFX
