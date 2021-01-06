@@ -55,10 +55,11 @@ public class Detection : MonoBehaviour
     public GameObject ratObject = null;
 
 
-    protected List<GameObject> ObjectsInRange = new List<GameObject>();
+    protected List<GameObject> ObjectsInRange;
 
     public virtual void Start()
     {
+        ObjectsInRange = new List<GameObject>();
         viewDir = startingDir;
     }
 
@@ -68,7 +69,7 @@ public class Detection : MonoBehaviour
     /// <returns>true if there is objects found</returns>
     public virtual bool DetectRadius()
     {
-       // Debug.Log("parent function does a thing");
+        // Debug.Log("parent function does a thing");
 
         // Get a list of all the colliders within the area
         Collider2D[] ListOfColliders = Physics2D.OverlapCircleAll(transform.position, CircleRadius);
@@ -76,9 +77,12 @@ public class Detection : MonoBehaviour
         // Scan through the list of collided objects to find the game objects
         foreach (Collider2D collider in ListOfColliders)
         {
+            // dont add itself
+            if (collider.gameObject == this.gameObject)
+                continue;
             // Add it into the list if it isnt the environment
             // the only objects that would end up here are player, kitten, rats
-            if (collider.gameObject.tag != "Environment")
+            if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Kitten" || collider.gameObject.tag == "Prey")
             {
                 ObjectsInRange.Add(collider.gameObject);
             }
