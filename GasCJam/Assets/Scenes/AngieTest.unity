@@ -1809,6 +1809,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kitten
       objectReference: {fileID: 0}
+    - target: {fileID: 6120036834013358963, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6120036834013358965, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
       propertyPath: ratObject
       value: 
@@ -1895,6 +1899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  movingDir: 0
 --- !u!114 &7281651184461524693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1907,7 +1912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3835cac063eac54f89a36e4934bd740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CircleRadius: 3
+  CircleRadius: 1.5
   SightDistance: 0
   targetDir: 4
   viewDir: 4
