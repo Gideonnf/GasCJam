@@ -650,7 +650,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.6694772, y: -2.4953675}
+  m_Offset: {x: -2.6694775, y: -2.5812812}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -661,7 +661,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.361912, y: 1.6891365}
+  m_Size: {x: 8.361912, y: 1.5173092}
   m_EdgeRadius: 0
 --- !u!4 &607001748 stripped
 Transform:
@@ -6009,7 +6009,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -6.6455965, y: 2.2591033}
+  m_Offset: {x: -6.682214, y: 2.2591033}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6020,7 +6020,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3746433, y: 9.431983}
+  m_Size: {x: 1.3014092, y: 9.431983}
   m_EdgeRadius: 0
 --- !u!1001 &1119521893618367821
 PrefabInstance:
@@ -6113,6 +6113,10 @@ PrefabInstance:
       propertyPath: playerObject
       value: 
       objectReference: {fileID: 1144178997}
+    - target: {fileID: 8648553465782317771, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
 --- !u!1001 &6597564006705491982

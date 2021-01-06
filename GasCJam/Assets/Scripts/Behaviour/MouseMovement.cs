@@ -16,8 +16,8 @@ public class MouseMovement : MonoBehaviour
     Vector2 targetTilePosition = Vector2.zero;
     // Keep track of the current moving direction
     Detection.DIRECTIONS movingDir;
-    // How many spaces the current moving direction has
-    int currentDirTileCounter = 0;
+    // 
+    Vector3 directionVector;
 
 
     // Start is called before the first frame update
@@ -29,7 +29,7 @@ public class MouseMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // if it is running
         if (mouseDetection.characterState == Detection.STATE.RUNNING)
@@ -40,62 +40,61 @@ public class MouseMovement : MonoBehaviour
             {
                 // Get the moving Direction
                 if (GetMovingDirection())
+                {
                     targetTilePosition = GetNextTile();
+                    directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+                }
 
+                Debug.Log("Moving to next tile");
+                Debug.Log(targetTilePosition);
             }
             else
             {
                 // get the direction to the next tile
-                Vector3 direction = (targetTilePosition - (Vector2)transform.position).normalized;
+                //Vector3 direction = (targetTilePosition - (Vector2)transform.position).normalized;
+
+                Debug.Log(targetTilePosition);
+                Debug.Log(transform.position);
 
                 // it already has a target to move to
 
                 // If it is moving along the X Axis
-                if (movingDir == Detection.DIRECTIONS.LEFT || movingDir == Detection.DIRECTIONS.RIGHT)
+                if (movingDir == Detection.DIRECTIONS.LEFT)
                 {
-                    // get the x Position of the tile
                     float targetXPos = targetTilePosition.x;
-                    // if it is negative
-                    if (targetXPos <= 0.0f)
+
+                    if (transform.position.x <= targetXPos)
                     {
-                        if (transform.position.x <= targetXPos)
-                        {
-                            // it reached the tile
-                            targetReached = true;
-                        }
-                    }
-                    // if its positive
-                    else
-                    {
-                        if (transform.position.x >= targetXPos)
-                        {
-                            // it reached the tile
-                            targetReached = true;
-                        }
+                        // it reached the tile
+                        targetReached = true;
                     }
                 }
-                // if it is moving along the Y Axis
-                else if (movingDir == Detection.DIRECTIONS.UP || movingDir == Detection.DIRECTIONS.DOWN)
+                else if (movingDir == Detection.DIRECTIONS.RIGHT)
+                {
+                    float targetXPos = targetTilePosition.x;
+
+                    if (transform.position.x >= targetXPos)
+                    {
+                        // it reached the tile
+                        targetReached = true;
+                    }
+                }
+                else if (movingDir == Detection.DIRECTIONS.UP)
                 {
                     float targetYPos = targetTilePosition.y;
 
-                    // if its negative
-                    if (targetYPos <= 0.0f)
+                    if (transform.position.y >= targetYPos)
                     {
-                        if (transform.position.y <= targetYPos)
-                        {
-                            // it reached the tile
-                            targetReached = true;
-                        }
+                        targetReached = true;
                     }
-                    // if its positive
-                    else
+                }
+                else if (movingDir == Detection.DIRECTIONS.DOWN)
+                {
+                    float targetYPos = targetTilePosition.y;
+
+                    if (transform.position.y <= targetYPos)
                     {
-                        if (transform.position.y >= targetYPos)
-                        {
-                            // it reached the tile
-                            targetReached = true;
-                        }
+                        targetReached = true;
                     }
                 }
 
@@ -106,9 +105,8 @@ public class MouseMovement : MonoBehaviour
                     StopMovement();
                 }
 
-
                 // move it move it to the limit limit
-                m_rigidBody.MovePosition(transform.position + direction * moveSpeed * Time.fixedDeltaTime);
+                m_rigidBody.MovePosition(transform.position + directionVector * moveSpeed * Time.fixedDeltaTime);
             }
 
         }
@@ -234,23 +232,24 @@ public class MouseMovement : MonoBehaviour
             {
                 // if its more than 2 blocks to the left or more than 2 blocks to the right
                 // then it can go left or right depending on which has more space
-                //if (targetTilePos.x < (currentTilePos.x - 1) || targetTilePos.x > (currentTilePos.x + 1))
-                //{
-                //    // if the number of empty tiles on the left is less than the right
-                //    if (CheckDirectionSize(Detection.DIRECTIONS.LEFT) < CheckDirectionSize(Detection.DIRECTIONS.RIGHT))
-                //    {
-                //        // the moving direction should be right
-                //        return Detection.DIRECTIONS.RIGHT;
-                //    }
-                //    else
-                //    {
-                //        // else the moving direction should be left
-                //        return Detection.DIRECTIONS.LEFT;
-                //    }
-                //}
-                //// else it will need to go in the direction that is further away from the target object
-                //else
-                //{
+                //                if (Mathf.Abs(targetTilePos.x) < Mathf.Abs(currentTilePos.x - 1) || Mathf.Abs(targetTilePos.x) > Mathf.Abs(currentTilePos.x + 1))
+                if (targetTilePos.x > (currentTilePos.x - 1) && targetTilePos.x < (currentTilePos.x + 1))
+                {
+                    // if the number of empty tiles on the left is less than the right
+                    if (CheckDirectionSize(Detection.DIRECTIONS.LEFT) < CheckDirectionSize(Detection.DIRECTIONS.RIGHT))
+                    {
+                        // the moving direction should be right
+                        tempDirection = Detection.DIRECTIONS.RIGHT;
+                    }
+                    else
+                    {
+                        // else the moving direction should be left
+                        tempDirection = Detection.DIRECTIONS.LEFT;
+                    }
+                }
+                // else it will need to go in the direction that is further away from the target object
+                else
+                {
                     // if the target is on the left side
                     if (targetTilePos.x <= 0.0f)
                     {
@@ -264,7 +263,7 @@ public class MouseMovement : MonoBehaviour
 
                         //return Detection.DIRECTIONS.LEFT;
                     }
-                //}
+                }
             }
             // if its only checking along the Y Axis
             else if (currDirection == Detection.DIRECTIONS.UP || currDirection == Detection.DIRECTIONS.DOWN)
