@@ -118,14 +118,56 @@ public class PreyMovement : MonoBehaviour
         movingDir = dir;
         bool directionClear = false;
 
-        for (int index = 0; index < (int)Detection.DIRECTIONS.NONE; ++index)
-        {
-            if (index == (int)targetDir)
-                continue;
+        // Check the first direction to run towards
+        CheckDirection(dir);
 
-            // check through the 4 directions
-            CheckDirection((Detection.DIRECTIONS)index);
+        Vector2 targetDirVector = preyBehaviour.GetTargetDirVector();
+
+        // Check alternative paths
+        // if the target is coming from the left or right
+        if (targetDir == Detection.DIRECTIONS.LEFT || targetDir == Detection.DIRECTIONS.RIGHT)
+        {
+            // check whether the object is coming at a diagonal
+            // example, to prevent it from running downwards if the target is below as well
+
+            // if it is negative y vector
+            // if the target is below the prey
+            if (targetDirVector.y <= 0.0f)
+            {
+                CheckDirection(Detection.DIRECTIONS.UP);
+            }
+            // if the target is above the prey
+            else if (targetDirVector.y >= 0.0f)
+            {
+                CheckDirection(Detection.DIRECTIONS.DOWN);
+            }
         }
+        else if (targetDir == Detection.DIRECTIONS.UP || targetDir == Detection.DIRECTIONS.DOWN)
+        {
+            // check if the object is coming at a diagonal
+            // example, if its coming from the top left, the rat shouldn't run left
+
+            // if it is coming from the left
+            if (targetDirVector.x <= 0.0f)
+            {
+                CheckDirection(Detection.DIRECTIONS.RIGHT);
+            }
+            // if it is coming from the right
+            else if (targetDirVector.x >= 0.0f)
+            {
+                CheckDirection(Detection.DIRECTIONS.LEFT);
+            }
+        }
+
+
+        //for (int index = 0; index < (int)Detection.DIRECTIONS.NONE; ++index)
+        //{
+        //    if (index == (int)targetDir)
+        //        continue;
+
+        //    // check through the 4 directions
+        //    CheckDirection((Detection.DIRECTIONS)index);
+        //}
 
         // After finding the moving direction
         // we need to set the view direction

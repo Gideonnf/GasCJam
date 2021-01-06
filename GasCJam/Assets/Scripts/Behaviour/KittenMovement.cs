@@ -274,10 +274,12 @@ public class KittenMovement : MonoBehaviour
         // (i.e another direction)
         if (isStuck == true)
         {
-            Vector2 targetPos = kittenBehaviour.targetObject.transform.position;
-            Vector2 currentPos = transform.position;
+            //Vector2 targetPos = kittenBehaviour.targetObject.transform.position;
+            //Vector2 currentPos = transform.position;
 
-            Vector2 Dir = (targetPos - currentPos).normalized;
+            //Vector2 Dir = (targetPos - currentPos).normalized;
+
+            Vector2 Dir = kittenBehaviour.GetTargetDirVector();
 
             // get the original moving direction
             movingDir = kittenBehaviour.GetTargetDirection();
