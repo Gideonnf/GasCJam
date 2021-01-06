@@ -162,42 +162,12 @@ public class KittenMovement : MonoBehaviour
             // and it looped back through then that means that it hasnt move
             // and that should mean that its stuck
 
-            if (targetReached)
-            {
-                Vector2 currentPos = transform.position;
+            //if (targetReached)
+            //{
+            //    Vector2 currentPos = transform.position;
 
-                isStuck = true;
-
-                //switch (movingDir)
-                //{
-                //    case Detection.DIRECTIONS.UP:
-                //        if (currentPos.y >= targetVector.y)
-                //        {
-                //            isStuck = true;
-                //        }
-                //        break;
-                //    case Detection.DIRECTIONS.DOWN:
-                //        if (currentPos.y <= targetVector.y)
-                //        {
-
-                //        }
-                //        break;
-                //    case Detection.DIRECTIONS.LEFT:
-                //        break;
-                //    case Detection.DIRECTIONS.RIGHT:
-                //        break;
-                //    case Detection.DIRECTIONS.NONE:
-                //        break;
-                //    default:
-                //        break;
-                //}
-
-                //// if they are already overlapping the target vector
-                //if (currentPos == targetVector)
-                //{
-                //    isStuck = true;
-                //}
-            }
+            //    isStuck = true;
+            //}
 
         }
     }
@@ -373,17 +343,6 @@ public class KittenMovement : MonoBehaviour
             // victory
             Debug.Log("Touched the mouse already lmao");
             return;
-        }
-        // if it collides into a wall
-        else if (collision.gameObject.tag == "Walls")
-        {
-            // if it is moving and it hit a wall
-            if (isMoving)
-            {
-                // if its suppose to still be moving
-                // but its colliding with a wall then it is stuck
-                isStuck = true;
-            }
         }
     }
 }
