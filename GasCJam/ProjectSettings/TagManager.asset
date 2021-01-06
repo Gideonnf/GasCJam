@@ -41,6 +41,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Floor
+    uniqueID: 591083899
+    locked: 0
+  - name: OuterFloor
+    uniqueID: 16497499
+    locked: 0
+  - name: OuterTreeBehind
+    uniqueID: 2238140821
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: OuterTreeFront
+    uniqueID: 688829047
     locked: 0
