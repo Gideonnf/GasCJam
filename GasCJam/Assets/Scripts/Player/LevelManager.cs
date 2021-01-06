@@ -3,7 +3,7 @@
 public class LevelManager : SingletonBase<LevelManager>
 {
     int m_CurrLevel; //if in menu or anything its 0
-    int m_LevelUnlocked;
+    public int m_LevelUnlocked;
     LevelLoader m_LevelChanger;
 
     public List<string> m_LevelSceneNames = new List<string>();
