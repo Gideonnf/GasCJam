@@ -228,11 +228,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7281651185554422600, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 7281651185554422600, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.58
+      value: -0.44
       objectReference: {fileID: 0}
     - target: {fileID: 7281651185554422600, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_LocalPosition.z
@@ -265,6 +265,26 @@ PrefabInstance:
     - target: {fileID: 7281651185554422600, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281651185554422641, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: moveSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281651185554422644, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.006111741
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281651185554422644, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: m_Size.x
+      value: 0.8166487
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281651185554422644, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.061116934
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281651185554422644, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: m_Size.y
+      value: 0.7799783
       objectReference: {fileID: 0}
     - target: {fileID: 7281651185554422645, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_Name
@@ -322,6 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 1
+  m_Animator: {fileID: 0}
 --- !u!212 &1107303747
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1068,24 +1089,6 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
-  - first: {x: -1, y: -1, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
-  - first: {x: 0, y: -1, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
   - first: {x: 7, y: -1, z: 0}
     second:
       serializedVersion: 2
@@ -1100,15 +1103,6 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 0
       m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
-  - first: {x: -2, y: 0, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1132,42 +1126,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
   - first: {x: -6, y: 1, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
-  - first: {x: -5, y: 1, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
-  - first: {x: -2, y: 1, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
-  - first: {x: 2, y: 1, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
-  - first: {x: 3, y: 1, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 1
@@ -1513,15 +1471,15 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 51
     m_Data: {fileID: 11400000, guid: 17dea38f03545864480588d448c341cb, type: 2}
-  - m_RefCount: 23
+  - m_RefCount: 16
     m_Data: {fileID: 11400000, guid: accb9324a66b4104586a55dc76aafed6, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 51
     m_Data: {fileID: 487510069385677053, guid: 793c6b70b89963a4b946d62eff7ea838, type: 3}
-  - m_RefCount: 23
+  - m_RefCount: 16
     m_Data: {fileID: -4686060970847296921, guid: 793c6b70b89963a4b946d62eff7ea838, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 74
+  - m_RefCount: 67
     m_Data:
       e00: 1
       e01: 0
@@ -1540,7 +1498,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 74
+  - m_RefCount: 67
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -1826,7 +1784,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262062809163630395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.55, y: 3.55, z: 0}
+  m_LocalPosition: {x: 4.54, y: 1.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 262062810654031250}
@@ -1895,7 +1853,7 @@ GameObject:
   - component: {fileID: 262062809163630396}
   m_Layer: 0
   m_Name: Kitten
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1936,8 +1894,10 @@ MonoBehaviour:
   startingDir: 0
   playerObject: {fileID: 0}
   ratObject: {fileID: 1097094568}
-  maxTravelDistance: 3
+  maxTravelDistance: 4
+  minTravelDistance: 0.2
   isRunning: 0
+  isTired: 0
 --- !u!212 &262062810654031249
 SpriteRenderer:
   m_ObjectHideFlags: 0

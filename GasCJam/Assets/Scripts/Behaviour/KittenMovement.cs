@@ -167,8 +167,7 @@ public class KittenMovement : MonoBehaviour
                     {
                         transform.position = targetVector;
                         kittenBehaviour.isRunning = false;
-                        isMoving = false;
-                        movingDir = Detection.DIRECTIONS.NONE;
+                        ResetMovement();
                         targetReached = true;
 
                         if (targetReached == false)
@@ -189,8 +188,7 @@ public class KittenMovement : MonoBehaviour
                     {
                         transform.position = targetVector;
                         kittenBehaviour.isRunning = false;
-                        isMoving = false;
-                        movingDir = Detection.DIRECTIONS.NONE;
+                        ResetMovement();
                         targetReached = true;
 
                         if (targetReached == false)
@@ -212,8 +210,7 @@ public class KittenMovement : MonoBehaviour
                     {
                         transform.position = targetVector;
                         kittenBehaviour.isRunning = false;
-                        isMoving = false;
-                        movingDir = Detection.DIRECTIONS.NONE;
+                        ResetMovement();
                         targetReached = true;
 
                         if (targetReached == false)
@@ -235,9 +232,7 @@ public class KittenMovement : MonoBehaviour
                     {
                         transform.position = targetVector;
                         kittenBehaviour.isRunning = false;
-                        isMoving = false;
-                        movingDir = Detection.DIRECTIONS.NONE;
-
+                        ResetMovement();
                         if (targetReached == false)
                         {
                             targetReached = true;
@@ -274,10 +269,12 @@ public class KittenMovement : MonoBehaviour
         // (i.e another direction)
         if (isStuck == true)
         {
-            //Vector2 targetPos = kittenBehaviour.targetObject.transform.position;
-            //Vector2 currentPos = transform.position;
 
-            //Vector2 Dir = (targetPos - currentPos).normalized;
+            if (kittenBehaviour.isTired)
+            {
+                ResetMovement();
+                return;
+            }
 
             Vector2 Dir = kittenBehaviour.GetTargetDirVector();
 
@@ -393,6 +390,15 @@ public class KittenMovement : MonoBehaviour
         // it will try to find how to get to the rat
         // it will have to move another axis
 
+    }
+
+    /// <summary>
+    /// Resets the movement variables of ktiten movement
+    /// </summary>
+    public void ResetMovement()
+    {
+        isMoving = false;
+        movingDir = Detection.DIRECTIONS.NONE;
     }
 
     /// <summary>

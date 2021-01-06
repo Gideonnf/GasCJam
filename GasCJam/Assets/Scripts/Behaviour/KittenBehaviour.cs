@@ -5,12 +5,18 @@ using UnityEngine;
 public class KittenBehaviour : Detection
 {
     // to check how far it travelled from its original position
-    Vector2 StartingPos;
+    Vector2 startingPos;
     [Header("Cat Behaviour settings")]
     [Tooltip("How far the cat can go before it gets tired")]
     public float maxTravelDistance = 0.0f;
+    [Tooltip("How far it can be from the starting position after going back")]
+    public float minTravelDistance = 0.0f;
+    bool itDoBLikeThat;
 
     public bool isRunning = false;
+
+    // If it is tired, it'll go back to it's starting position
+    public bool isTired = false;
 
     KittenMovement kittenMovement;
 
@@ -23,7 +29,7 @@ public class KittenBehaviour : Detection
         kittenMovement = GetComponent<KittenMovement>();
 
         // Store the starting position
-        StartingPos = transform.position;
+        startingPos = transform.position;
 
         // Start the coroutine
         // running it outside of update so it doesnt lag anything
@@ -36,7 +42,41 @@ public class KittenBehaviour : Detection
     {
         if (isRunning)
         {
+            Vector2 distanceVector = (Vector2)transform.position - startingPos;
+            float distanceFromStarting = distanceVector.magnitude;
+
+            // the cat becomes too tired
+            if (distanceFromStarting >= maxTravelDistance)
+            {
+                // set is tired to true
+                isTired = true;
+                // reset the movement
+                kittenMovement.ResetMovement();
+                
+                // reset the movement
+            }
+
+            // if it is tired
+            if (isTired)
+            {
+                if (distanceFromStarting <= minTravelDistance)
+                {
+                    // it returned back to the starting position
+                    isTired = false;
+                    kittenMovement.ResetMovement();
+                    isRunning = false;
+
+                    return;
+                }
+
+                targetDir = GetTargetDirection();
+
+                Debug.Log("Returning Direction" + targetDir);
+            }
+
             kittenMovement.SetKittenDirection(targetDir);
+
+
             //if (targetDir == DIRECTIONS.DOWN)
             //    kittenMovement.SetKittenDirection(DIRECTIONS.UP, targetDir);
             //else if (targetDir == DIRECTIONS.UP)
@@ -46,6 +86,63 @@ public class KittenBehaviour : Detection
             //else if (targetDir == DIRECTIONS.RIGHT)
             //    kittenMovement.SetKittenDirection(DIRECTIONS.LEFT, targetDir);
         }
+    }
+
+    public override Vector2 GetTargetDirVector()
+    {
+        if (isTired)
+        {
+            Vector2 currentPos = transform.position;
+            Vector2 Dir = (startingPos - currentPos).normalized;
+
+            return Dir;
+        }
+        else
+        {
+            return base.GetTargetDirVector();
+        }
+    }
+
+    public override DIRECTIONS GetTargetDirection()
+    {
+       // return base.GetTargetDirection();
+       if (isTired)
+        {
+            Vector2 currentPos = transform.position;
+
+            Vector2 Dir = (startingPos - currentPos).normalized;
+
+            if (Dir.x <= 0.3f || Dir.x >= -0.3f)
+            {
+                // 0.5f is a buffer i used
+                if (Dir.y > 0.5f)
+                {
+                    return DIRECTIONS.UP;
+                }
+                else if (Dir.y < -0.5f)
+                {
+                    return DIRECTIONS.DOWN;
+                }
+            }
+            if (Dir.y <= 0.3f || Dir.y >= -0.3f)
+            {
+                if (Dir.x > 0.5f)
+                {
+                    return DIRECTIONS.RIGHT;
+                }
+                else if (Dir.x < -0.5f)
+                {
+                    return DIRECTIONS.LEFT;
+                }
+            }
+
+        }
+        else
+        {
+            return base.GetTargetDirection();
+        }
+
+        return DIRECTIONS.NONE;
     }
 
     public override bool DetectRadius()

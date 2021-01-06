@@ -175,7 +175,7 @@ public class Detection : MonoBehaviour
     /// because i didnt want to keep writing down these three lines everytime
     /// </summary>
     /// <returns>returns the direction vector of the target object</returns>
-    public Vector2 GetTargetDirVector()
+    public virtual Vector2 GetTargetDirVector()
     {
         // Get the two positions we need
         Vector2 TargetPos = targetObject.transform.position;
