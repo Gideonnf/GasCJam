@@ -69,6 +69,7 @@ public class MouseMovement : MonoBehaviour
                     ListOfMovableTiles.Clear();
                     currentIndex = 0;
                     StopMovement();
+                    mouseDetection.StopMovement();
                     movingDir = Detection.DIRECTIONS.NONE;
                     return;
                 }

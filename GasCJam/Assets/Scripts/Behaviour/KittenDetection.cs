@@ -70,6 +70,8 @@ public class KittenDetection : Detection
     public void SetViewDirection(DIRECTIONS movingDirection)
     {
         viewDir = movingDirection;
+
+        
     }
 
 
@@ -143,7 +145,7 @@ public class KittenDetection : Detection
         }
         else
         {
-            Debug.Log("Not in range");
+           // Debug.Log("Not in range");
             // if theres nothing in it's range anymore
             isShocked = false;
         }
@@ -239,10 +241,6 @@ public class KittenDetection : Detection
                 targetObject = ratObject;
 
                 targetDir = GetTargetDirection();
-            }
-            else
-            {
-                isShocked = false;
             }
 
             yield return new WaitForSeconds(.2f);

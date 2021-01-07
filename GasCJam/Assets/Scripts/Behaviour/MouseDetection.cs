@@ -57,7 +57,7 @@ public class MouseDetection : Detection
 
                 isShocked = false;
 
-                elapsedTime = 0;
+                //elapsedTime = 0;
             }
         }
     }
@@ -187,6 +187,10 @@ public class MouseDetection : Detection
                             // check the next if there is
                             continue;
                         }
+
+                        // reset it if it tracks the player
+                        if (detectedObj.tag == "Player")
+                            elapsedTime = 0.0f;
 
                         isShocked = true;
                     }
