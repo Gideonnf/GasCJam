@@ -9,6 +9,13 @@ public class MouseDetection : Detection
     [Tooltip("Keep track if hte player is in sight of the mouse")]
     public bool playerInSight = false;
 
+    [Tooltip("How long the spent shocked")]
+    public float shockTime;
+    [Tooltip("If it is shocked or not")]
+    public bool isShocked = false;
+
+    float elapsedTime;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -32,7 +39,28 @@ public class MouseDetection : Detection
     void Update()
     {
         //DetectRadius();
+        if (isShocked)
+        {
+            elapsedTime += Time.deltaTime;
+            Debug.Log(elapsedTime);
+
+            if (elapsedTime >= shockTime)
+            {
+                characterState = STATE.RUNNING;
+
+                isShocked = false;
+
+                elapsedTime = 0;
+            }
+        }
     }
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, CircleRadius);
+    }
+
 
     /// <summary>
     ///  For checking nearby enemies
@@ -84,15 +112,30 @@ public class MouseDetection : Detection
                 // it will try to run away
                 if (detectedObj.tag == "Player" || detectedObj.tag == "Kitten")
                 {
-                    // running
-                    characterState = STATE.RUNNING;
+                    //// running
+                    if (characterState != STATE.RUNNING)
+                        isShocked = true;
 
                     // Set the player object as it's current target
                     targetObject = detectedObj;
 
                     targetDir = GetTargetDirection();
                 }
+                //else if (detectedObj.tag == "Kitten")
+                //{
+
+                //    if (characterState != STATE.RUNNING)
+                //        isShocked = true;
+
+                //    targetObject = detectedObj;
+
+                //    targetDir = GetTargetDirection();
+                //}
             }
+        }
+        else
+        {
+            isShocked = false;
         }
         //else
         //{

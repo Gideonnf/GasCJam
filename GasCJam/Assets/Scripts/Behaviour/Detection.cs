@@ -32,7 +32,7 @@ public class Detection : MonoBehaviour
 
     [Header("Detection settings")]
     [Tooltip("Detection Radius")]
-    [SerializeField] float CircleRadius = 1;
+    public float CircleRadius = 1;
     [Tooltip("Line of Sight Distance?")]
     [SerializeField] float SightDistance;
     [Tooltip("Stores the direction that the character is facing")]

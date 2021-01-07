@@ -33,8 +33,8 @@ public class MouseMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log("current position" + transform.position);
-        Debug.Log("target tile position " + targetTilePosition);
+        //Debug.Log("current position" + transform.position);
+        //Debug.Log("target tile position " + targetTilePosition);
 
         // if it is running
         if (mouseDetection.characterState == Detection.STATE.RUNNING)

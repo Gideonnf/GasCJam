@@ -6,6 +6,14 @@ public class KittenDetection : Detection
 {
     NewKittenMovement kittenMovement;
 
+    [Tooltip("How long the spent shocked")]
+    public float shockTime;
+    [Tooltip("If it is shocked or not")]
+    public bool isShocked = false;
+
+    float elapsedTime;
+    
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -21,12 +29,37 @@ public class KittenDetection : Detection
         transform.position = tilePosition2D;
 
         StartCoroutine("CheckForObjectsInRange");
+        StartCoroutine("CheckForObjectsInView");
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (isShocked)
+        {
+            elapsedTime += Time.deltaTime;
+
+            //Debug.Log(elapsedTime);
+
+            // if its done getting shocked
+            if (elapsedTime >= shockTime)
+            {
+                // change the state
+                characterState = STATE.CHASING;
+
+                isShocked = false;
+
+                elapsedTime = 0;
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, CircleRadius);
     }
 
     public override bool DetectRadius()
@@ -51,10 +84,10 @@ public class KittenDetection : Detection
             {
                 if (detectedObj.tag == "Prey")
                 {
-                    // TODO: Add a timer before changing state
-
-                    // Set the character state
-                    characterState = STATE.CHASING;
+                    // if they are already chasing
+                    // they cant really get shocked
+                    if (characterState != STATE.CHASING)
+                        isShocked = true;
 
                     // Set the mouse object as it's current target
                     targetObject = detectedObj;
@@ -62,9 +95,19 @@ public class KittenDetection : Detection
                     // Get the target's direc tion
                     targetDir = GetTargetDirection();
 
+
+                    // Set the character state
+                    //characterState = STATE.CHASING;
+
+
                     return true;
                 }
             }
+        }
+        else
+        {
+            // if theres nothing in it's range anymore
+            isShocked = false;
         }
 
         return false;
@@ -91,6 +134,19 @@ public class KittenDetection : Detection
         targetDir = DIRECTIONS.NONE;
     }
 
+    public override CHARACTERS CheckForCharacters(Vector2Int tilePosition)
+    {
+        Vector2Int mouseTilePos = MapManager.Instance.GetWorldToTilePos(ratObject.transform.position);
+        Vector2Int playerTilePos = MapManager.Instance.GetWorldToTilePos(playerObject.transform.position);
+
+        if (mouseTilePos == tilePosition)
+            return CHARACTERS.MOUSE;
+        if (playerTilePos == tilePosition)
+            return CHARACTERS.PLAYER;
+
+        return CHARACTERS.NONE;
+    }
+
     // A couroutine to run for checking of objects
     // Instead of checking every frame it checks every second
     IEnumerator CheckForObjectsInRange()
@@ -101,6 +157,32 @@ public class KittenDetection : Detection
             // Check for what direction it is in
             DetectRadius();
 
+
+            yield return new WaitForSeconds(.2f);
+        }
+    }
+
+    IEnumerator CheckForObjectsInView()
+    {
+        for (; ;)
+        {
+            if (DetectInView() == CHARACTERS.PLAYER)
+            {
+                // lose the game
+            }
+
+            if (DetectInView() == CHARACTERS.MOUSE)
+            {
+                isShocked = true;
+
+                targetObject = ratObject;
+
+                targetDir = GetTargetDirection();
+            }
+            else
+            {
+                isShocked = false;
+            }
 
             yield return new WaitForSeconds(.2f);
         }
