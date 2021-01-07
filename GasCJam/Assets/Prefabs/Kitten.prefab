@@ -70,8 +70,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   startingPos: {x: 0, y: 0}
-  maxTravelDistance: 4
-  minTravelDistance: 0.4
+  maxTravelDistance: 8
+  minTravelDistance: 0
   m_Animator: {fileID: 6793352393782947398}
 --- !u!114 &631104831
 MonoBehaviour:
@@ -86,13 +86,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CircleRadius: 2
-  SightDistance: 0
+  SightDistance: 2
   targetDir: 4
   viewDir: 4
-  startingDir: 0
-  characterState: 4
-  playerObject: {fileID: 0}
-  ratObject: {fileID: 0}
+  startingDir: 2
+  characterState: 0
+  shockTime: 1.9
+  isShocked: 0
+  RatDetectionRadius: 0
 --- !u!58 &5675176376966360138
 CircleCollider2D:
   m_ObjectHideFlags: 0

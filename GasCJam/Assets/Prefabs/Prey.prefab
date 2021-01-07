@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3835cac063eac54f89a36e4934bd740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CircleRadius: 1.8
+  CircleRadius: 2
   SightDistance: 3
   targetDir: 4
   viewDir: 4
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87eed842831e31e47919fbd7b1222d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 2.5
   movingDir: 0
   m_Animator: {fileID: 4674554412004450638}
   m_Stop: 0

@@ -242,6 +242,10 @@ public class KittenDetection : Detection
 
                 targetDir = GetTargetDirection();
             }
+            else
+            {
+                isShocked = false;
+            }
 
             yield return new WaitForSeconds(.2f);
         }
