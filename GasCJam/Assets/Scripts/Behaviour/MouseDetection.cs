@@ -9,6 +9,8 @@ public class MouseDetection : Detection
     [Tooltip("Keep track if hte player is in sight of the mouse")]
     public bool playerInSight = false;
 
+    
+
     [Tooltip("How long the spent shocked")]
     public float shockTime;
     [Tooltip("If it is shocked or not")]
@@ -47,7 +49,7 @@ public class MouseDetection : Detection
 
             elapsedTime += Time.deltaTime;
 
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
 
             if (elapsedTime >= shockTime || targetObject.tag == "Player")
             {
@@ -101,6 +103,54 @@ public class MouseDetection : Detection
         return CHARACTERS.NONE;
     }
 
+    /// <summary>
+    /// Checks the direc tion before moving in it if the kitten is there
+    /// </summary>
+    /// <param name="dirToCheck"></param>
+    /// <returns></returns>
+    public bool CheckForKitten(DIRECTIONS dirToCheck)
+    {
+        Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+        Vector2Int kittenTilePos = MapManager.Instance.GetWorldToTilePos(kittenObject.transform.position);
+
+        // Dont check for the kitten if its being chased by the kitten
+        if (targetObject == kittenObject)
+            return false;
+
+        while (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
+        {
+            switch (dirToCheck)
+            {
+                case Detection.DIRECTIONS.UP:
+                    currentTilePos.y++;
+                    break;
+                case Detection.DIRECTIONS.DOWN:
+                    currentTilePos.y--;
+                    break;
+                case Detection.DIRECTIONS.LEFT:
+                    currentTilePos.x--;
+                    break;
+                case Detection.DIRECTIONS.RIGHT:
+                    currentTilePos.x++;
+                    break;
+                case Detection.DIRECTIONS.NONE:
+                    break;
+                default:
+                    break;
+            }
+
+            // the kitten is along that direction
+            if (currentTilePos == kittenTilePos)
+            {
+                return true;
+            }
+
+        }
+
+
+        return false;
+    }
+
     public override bool DetectRadius()
     {
         // Clear the objects in range
@@ -115,8 +165,23 @@ public class MouseDetection : Detection
             {
                 // If it spots the player or kitten
                 // it will try to run away
-                if (detectedObj.tag == "Player")
+                if (detectedObj.tag == "Player" || detectedObj.tag == "Kitten" )
                 {
+                    // if it already has a target
+                    if (targetObject != null)
+                    {
+                        // If it detects the kitten while being chased by the player
+                        if (targetObject != detectedObj && targetObject.tag == "Player")
+                        {
+                            // Make it shocked
+                            isShocked = true;
+
+                            // stop both the movement
+                            StopMovement();
+                            mouseMovement.StopMovement();
+                        }
+                    }
+
                     // Set the player object as it's current target
                     targetObject = detectedObj;
 
@@ -127,33 +192,14 @@ public class MouseDetection : Detection
                     if (CheckIfClear(targetDir) == false)
                     {
                         StopMovement();
-                        return false;
+
+                        continue;
                     }
 
                     // shocked
                     if (characterState != STATE.RUNNING)
                         isShocked = true;
 
-                    break;
-                }
-                else if (detectedObj.tag == "Kitten")
-                {
-                    // Set the player object as it's current target
-                    targetObject = detectedObj;
-
-                    targetDir = GetTargetDirection();
-
-                    // Check the direction if its clear
-                    // if it isn't then they detected an enemy through the wall
-                    if (CheckIfClear(targetDir) == false)
-                    {
-                        StopMovement();
-                        return false;
-                    }
-
-                    // shocked
-                    if (characterState != STATE.RUNNING)
-                        isShocked = true;
                 }
             }
         }

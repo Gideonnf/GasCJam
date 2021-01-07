@@ -54,6 +54,8 @@ public class Detection : MonoBehaviour
     protected GameObject playerObject = null;
     [Tooltip("Reference to mouse object")]
     protected GameObject ratObject = null;
+    [Tooltip("Reference to the kitten object")]
+    protected GameObject kittenObject = null;
 
 
     protected List<GameObject> ObjectsInRange;
@@ -64,6 +66,7 @@ public class Detection : MonoBehaviour
         // get the player object at start
         playerObject = GameObject.FindGameObjectWithTag("Player");
         ratObject = GameObject.FindGameObjectWithTag("Prey");
+        kittenObject = GameObject.FindGameObjectWithTag("Kitten");
 
         viewDir = startingDir;
     }

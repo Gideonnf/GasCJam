@@ -49,6 +49,9 @@ public class MouseMovement : MonoBehaviour
                 if (GetMovingDirection())
                 {
                     targetTilePosition = GetNextTile();
+
+                   // Debug.Log("mouse tile position" + targetTilePosition);
+
                     directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
                     mouseDetection.SetViewDirection(movingDir);
                     UpdateAnimation(true);
@@ -276,7 +279,7 @@ public class MouseMovement : MonoBehaviour
                     // if the target is on the left side
                     if (targetTilePos.x <= transform.position.x)
                     {
-                        Debug.Log("Moving Right 2");
+                       // Debug.Log("Moving Right 2");
 
                         tempDirection = Detection.DIRECTIONS.RIGHT;
                         //return Detection.DIRECTIONS.RIGHT;
@@ -284,7 +287,7 @@ public class MouseMovement : MonoBehaviour
                     else
                     // the target is on the right
                     {
-                        Debug.Log("Moving Left 2");
+                       // Debug.Log("Moving Left 2");
 
                         tempDirection = Detection.DIRECTIONS.LEFT;
 
@@ -355,7 +358,9 @@ public class MouseMovement : MonoBehaviour
 
         if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
         {
-            return tempDirection;
+            // Check if the kitten is along that direction
+            if (mouseDetection.CheckForKitten(tempDirection) == false)
+                return tempDirection;
         }
 
 

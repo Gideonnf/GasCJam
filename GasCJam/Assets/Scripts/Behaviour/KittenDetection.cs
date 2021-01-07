@@ -89,7 +89,7 @@ public class KittenDetection : Detection
 
                     // Get the target's direc tion
                     targetDir = GetTargetDirection();
-        
+
                     // Check the direction if its clear
                     // if it isn't then they detected an enemy through the wall
                     if (CheckIfClear(targetDir) == false)
@@ -101,10 +101,6 @@ public class KittenDetection : Detection
                     // they cant really get shocked
                     if (characterState != STATE.CHASING)
                         isShocked = true;
-
-
-                    
-
 
                     // Set the character state
                     //characterState = STATE.CHASING;
