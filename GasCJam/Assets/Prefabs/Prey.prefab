@@ -176,8 +176,6 @@ MonoBehaviour:
   viewDir: 4
   startingDir: 0
   characterState: 4
-  playerObject: {fileID: 0}
-  ratObject: {fileID: 0}
   playerInSight: 0
 --- !u!114 &8648553465782317771
 MonoBehaviour:

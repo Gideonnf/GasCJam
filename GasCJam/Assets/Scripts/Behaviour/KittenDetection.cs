@@ -51,6 +51,8 @@ public class KittenDetection : Detection
             {
                 if (detectedObj.tag == "Prey")
                 {
+                    // TODO: Add a timer before changing state
+
                     // Set the character state
                     characterState = STATE.CHASING;
 

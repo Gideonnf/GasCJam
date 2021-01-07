@@ -10,9 +10,9 @@ public class NewKittenMovement : MonoBehaviour
     [Tooltip("Starting position of the Cat")]
     public Vector2 startingPos;
     [Tooltip("The max distance it can travel")]
-    public float maxTravelDistance;
+    public int maxTravelDistance;
     [Tooltip("Minimum travel distance")]
-    public float minTravelDistance;
+    public int minTravelDistance;
     // Keep track if it reached the tile
     bool targetReached = false;
     // Keep track of the rigid body
@@ -38,6 +38,9 @@ public class NewKittenMovement : MonoBehaviour
         kittenDetection = GetComponent<KittenDetection>();
         m_rigidBody = GetComponent<Rigidbody2D>();
         startingPos = transform.position;
+
+        ListOfTilesTravelled.Add(startingPos);
+
     }
 
     // Update is called once per frame
@@ -46,34 +49,25 @@ public class NewKittenMovement : MonoBehaviour
         // if the cat is currently chasing 
         if (kittenDetection.characterState == Detection.STATE.CHASING || kittenDetection.characterState == Detection.STATE.TIRED)
         {
-            Vector2 distanceVector = (Vector2)transform.position - startingPos;
-            float distanceFromStarting = distanceVector.magnitude;
+            //Vector2 distanceVector = (Vector2)transform.position - startingPos;
+            //float distanceFromStarting = distanceVector.magnitude;
 
+            // Only check if it can get tired while chasing
+            // this is so that it wont repeatedly check to see if its tired
             if (kittenDetection.characterState == Detection.STATE.CHASING)
             {
-                if (distanceFromStarting >= maxTravelDistance)
+                if (currentIndex  > maxTravelDistance)
                 {
                     // To clear target object and reset character state
                     kittenDetection.StopMovement();
 
                     kittenDetection.characterState = Detection.STATE.TIRED;
+                    
+                    // Take away the last tile 
+                    // the last tile is its last position
+                    currentIndex -= 2;
 
-                    currentIndex = ListOfTilesTravelled.Count - 1;
-
-                    StopMovement();
-
-                    UpdateAnimation(false);
-
-                    return;
-                }
-            }
-            if (kittenDetection.characterState == Detection.STATE.TIRED)
-            {
-                if (distanceFromStarting <= minTravelDistance)
-                {
-                    transform.position = startingPos;
-
-                    kittenDetection.characterState = Detection.STATE.IDLE;
+                    //currentIndex = ListOfTilesTravelled.Count - 1;
 
                     StopMovement();
 
@@ -82,20 +76,63 @@ public class NewKittenMovement : MonoBehaviour
                     return;
                 }
             }
+
+            //// when its tired, use this to check if it has returned back to the starting position
+            //if (kittenDetection.characterState == Detection.STATE.TIRED)
+            //{
+            //    // im gonna need to change this later probably
+            //    if (currentIndex <= 0)
+            //    {
+            //        transform.position = startingPos;
+
+            //        kittenDetection.characterState = Detection.STATE.IDLE;
+
+            //        StopMovement();
+
+            //        UpdateAnimation(false);
+
+            //        return;
+            //    }
+            //}
             
 
             // if there is no target tile yet
             // find the target tile
             if (targetTilePosition == Vector2.zero)
             {
+                // If the kitten is tired
+                // move based on the list of tiles instead of a target object
                 if (kittenDetection.characterState == Detection.STATE.TIRED)
                 {
+                    // im gonna need to change this later probably
+                    if (currentIndex < 0)
+                    {
+                        transform.position = startingPos;
+
+                        kittenDetection.characterState = Detection.STATE.IDLE;
+
+                        //Clear the list
+                        ListOfTilesTravelled.Clear();
+                        // add the starting position
+                        ListOfTilesTravelled.Add(startingPos);
+                        // reset the index
+                        //currentIndex = 1;
+
+                        StopMovement();
+
+                        UpdateAnimation(false);
+
+                        return;
+                    }
                     // set the target to the last position on the list
                     targetTilePosition = ListOfTilesTravelled[currentIndex];
                     directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
                     UpdateAnimation(true);
-                    // Get the direction to the next tile
 
+                    currentIndex--;
+
+                    // Get the direction to the next tile
+                    movingDir = kittenDetection.GetTargetDirection(targetTilePosition);
                 }
                 else
                 {
@@ -103,9 +140,15 @@ public class NewKittenMovement : MonoBehaviour
                     if (GetMovingDirection())
                     {
                         targetTilePosition = GetNextTile();
-                        ListOfTilesTravelled.Add(targetTilePosition);
                         directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
                         UpdateAnimation(true);
+
+                        // For checking if the kitten is tired
+                        // Store the tiles it traversed in a list
+                        ListOfTilesTravelled.Add(targetTilePosition);
+                        // Increment the index everytime it changes
+                        currentIndex++;
+                        
                     }
                 }
             }

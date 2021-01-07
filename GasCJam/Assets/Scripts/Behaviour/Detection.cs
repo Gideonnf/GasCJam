@@ -85,6 +85,7 @@ public class Detection : MonoBehaviour
             // dont add itself
             if (collider.gameObject == this.gameObject)
                 continue;
+
             // Add it into the list if it isnt the environment
             // the only objects that would end up here are player, kitten, rats
             if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Kitten" || collider.gameObject.tag == "Prey")
@@ -204,6 +205,51 @@ public class Detection : MonoBehaviour
         Vector2 Dir = (TargetPos - CurrentPos).normalized;
 
         return Dir;
+    }
+
+    public virtual DIRECTIONS GetTargetDirection(Vector2 targetPos)
+    {
+        Vector2 currentPos = transform.position;
+
+        // Get the direction of the target
+        Vector2 Dir = (targetPos - currentPos).normalized;
+
+        //Debug.Log(targetDir);
+        // Debug.Log(Dir);
+
+        // Checking for Up and Down first
+        // if we're checking for up and down 
+        // the X dir will be within a small buffer
+        // 0.3f is just a number i used as a buffer
+        // anything more than that means its on a diagonal
+        // and player cant move in diagonal
+        if (Dir.x <= 0.3f || Dir.x >= -0.3f)
+        {
+            // 0.5f is a buffer i used
+            if (Dir.y > 0.5f)
+            {
+                return DIRECTIONS.UP;
+            }
+            else if (Dir.y < -0.5f)
+            {
+                return DIRECTIONS.DOWN;
+            }
+        }
+        if (Dir.y <= 0.3f || Dir.y >= -0.3f)
+        {
+            if (Dir.x > 0.5f)
+            {
+                return DIRECTIONS.RIGHT;
+            }
+            else if (Dir.x < -0.5f)
+            {
+                return DIRECTIONS.LEFT;
+            }
+        }
+
+
+
+        return DIRECTIONS.NONE;
     }
 
 
