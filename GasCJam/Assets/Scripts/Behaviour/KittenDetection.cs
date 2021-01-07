@@ -39,7 +39,7 @@ public class KittenDetection : Detection
         // Dont chase for targets when it's tired
         if (characterState == STATE.TIRED)
         {
-            ReturnToStart();
+            //ReturnToStart();
             return false;
         }
 
@@ -51,8 +51,6 @@ public class KittenDetection : Detection
             {
                 if (detectedObj.tag == "Prey")
                 {
-
-
                     // Set the character state
                     characterState = STATE.CHASING;
 

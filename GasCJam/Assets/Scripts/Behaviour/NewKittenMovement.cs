@@ -24,6 +24,9 @@ public class NewKittenMovement : MonoBehaviour
     // Keep track of hte current moving direction
     Detection.DIRECTIONS movingDir;
 
+    List<Vector2> ListOfTilesTravelled = new List<Vector2>();
+    int currentIndex = 0;
+
     Vector3 directionVector;
 
     // Start is called before the first frame update
@@ -52,7 +55,7 @@ public class NewKittenMovement : MonoBehaviour
 
                     kittenDetection.characterState = Detection.STATE.TIRED;
 
-                    kittenDetection.ReturnToStart();
+                    currentIndex = ListOfTilesTravelled.Count - 1;
 
                     StopMovement();
 
@@ -78,11 +81,24 @@ public class NewKittenMovement : MonoBehaviour
             // find the target tile
             if (targetTilePosition == Vector2.zero)
             {
-                 //Get the moving Direction
-                 if (GetMovingDirection())
+                if (kittenDetection.characterState == Detection.STATE.TIRED)
                 {
-                    targetTilePosition = GetNextTile();
+                    // set the target to the last position on the list
+                    targetTilePosition = ListOfTilesTravelled[currentIndex];
                     directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+
+                    // Get the direction to the next tile
+
+                }
+                else
+                {
+                    //Get the moving Direction
+                    if (GetMovingDirection())
+                    {
+                        targetTilePosition = GetNextTile();
+                        ListOfTilesTravelled.Add(targetTilePosition);
+                        directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+                    }
                 }
             }
             else
