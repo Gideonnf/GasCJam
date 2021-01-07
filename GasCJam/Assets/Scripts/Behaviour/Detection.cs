@@ -247,11 +247,46 @@ public class Detection : MonoBehaviour
             }
         }
 
-
-
         return DIRECTIONS.NONE;
     }
 
+    /// <summary>
+    /// Call this to check if they detected a target through the wall
+    /// If the direction to the target is not empty
+    /// It means it was through the wall
+    /// </summary>
+    /// <param name="dirToCheck">The direction to check</param>
+    /// <returns> returns true if its clear </returns>
+    public bool CheckIfClear(DIRECTIONS dirToCheck)
+    {
+        Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+
+        switch (dirToCheck)
+        {
+            case Detection.DIRECTIONS.UP:
+                currentTilePos.y++;
+                break;
+            case Detection.DIRECTIONS.DOWN:
+                currentTilePos.y--;
+                break;
+            case Detection.DIRECTIONS.LEFT:
+                currentTilePos.x--;
+                break;
+            case Detection.DIRECTIONS.RIGHT:
+                currentTilePos.x++;
+                break;
+            case Detection.DIRECTIONS.NONE:
+                break;
+            default:
+                break;
+        }
+
+        if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
+            return true;
+
+
+        return false;
+    }
 
     /// <summary>
     /// Gets the direction of the target object

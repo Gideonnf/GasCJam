@@ -84,16 +84,26 @@ public class KittenDetection : Detection
             {
                 if (detectedObj.tag == "Prey")
                 {
-                    // if they are already chasing
-                    // they cant really get shocked
-                    if (characterState != STATE.CHASING)
-                        isShocked = true;
-
                     // Set the mouse object as it's current target
                     targetObject = detectedObj;
 
                     // Get the target's direc tion
                     targetDir = GetTargetDirection();
+        
+                    // Check the direction if its clear
+                    // if it isn't then they detected an enemy through the wall
+                    if (CheckIfClear(targetDir) == false)
+                    {
+                        StopMovement();
+                        return false;
+                    }
+                    // if they are already chasing
+                    // they cant really get shocked
+                    if (characterState != STATE.CHASING)
+                        isShocked = true;
+
+
+                    
 
 
                     // Set the character state

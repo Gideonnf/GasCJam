@@ -41,6 +41,10 @@ public class MouseDetection : Detection
         //DetectRadius();
         if (isShocked)
         {
+            // never update fast enough yet
+            if (targetObject == null)
+                return;
+
             elapsedTime += Time.deltaTime;
 
             Debug.Log(elapsedTime);
@@ -111,27 +115,46 @@ public class MouseDetection : Detection
             {
                 // If it spots the player or kitten
                 // it will try to run away
-                if (detectedObj.tag == "Player" || detectedObj.tag == "Kitten")
+                if (detectedObj.tag == "Player")
                 {
-                    //// running
-                    if (characterState != STATE.RUNNING)
-                        isShocked = true;
-
                     // Set the player object as it's current target
                     targetObject = detectedObj;
 
                     targetDir = GetTargetDirection();
+
+                    // Check the direction if its clear
+                    // if it isn't then they detected an enemy through the wall
+                    if (CheckIfClear(targetDir) == false)
+                    {
+                        StopMovement();
+                        return false;
+                    }
+
+                    // shocked
+                    if (characterState != STATE.RUNNING)
+                        isShocked = true;
+
+                    break;
                 }
-                //else if (detectedObj.tag == "Kitten")
-                //{
+                else if (detectedObj.tag == "Kitten")
+                {
+                    // Set the player object as it's current target
+                    targetObject = detectedObj;
 
-                //    if (characterState != STATE.RUNNING)
-                //        isShocked = true;
+                    targetDir = GetTargetDirection();
 
-                //    targetObject = detectedObj;
+                    // Check the direction if its clear
+                    // if it isn't then they detected an enemy through the wall
+                    if (CheckIfClear(targetDir) == false)
+                    {
+                        StopMovement();
+                        return false;
+                    }
 
-                //    targetDir = GetTargetDirection();
-                //}
+                    // shocked
+                    if (characterState != STATE.RUNNING)
+                        isShocked = true;
+                }
             }
         }
         else
