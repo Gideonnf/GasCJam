@@ -19,6 +19,8 @@ public class MouseMovement : MonoBehaviour
     // 
     Vector3 directionVector;
 
+    [Header("Visual")]
+    public Animator m_Animator;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +39,8 @@ public class MouseMovement : MonoBehaviour
         // if it is running
         if (mouseDetection.characterState == Detection.STATE.RUNNING)
         {
+            //TODO:: fix jerky movement of mouse instead of stopping every tile
+
             // if no target tile position was assigned yet
             // set the target tile
             if (targetTilePosition == Vector2.zero)
@@ -47,6 +51,7 @@ public class MouseMovement : MonoBehaviour
                     targetTilePosition = GetNextTile();
                     directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
                     mouseDetection.SetViewDirection(movingDir);
+                    UpdateAnimation(true);
                 }
                 else
                 {
@@ -57,6 +62,7 @@ public class MouseMovement : MonoBehaviour
                     {
                         StopMovement();
                         mouseDetection.StopMovement();
+                        UpdateAnimation(false);
                     }
                     return;
                 }
@@ -217,6 +223,7 @@ public class MouseMovement : MonoBehaviour
         {
             StopMovement();
             mouseDetection.StopMovement();
+            UpdateAnimation(false);
 
             return Detection.DIRECTIONS.NONE;
         }
@@ -449,5 +456,12 @@ public class MouseMovement : MonoBehaviour
 
         // returns the next tile in that direction
         return MapManager.Instance.GetTileToWorldPos(currentTilePos);
+    }
+
+    public void UpdateAnimation(bool isMoving)
+    {
+        m_Animator.SetBool("Moving", isMoving);
+        m_Animator.SetFloat("Horizontal", directionVector.x);
+        m_Animator.SetFloat("Vertical", directionVector.y);
     }
 }
