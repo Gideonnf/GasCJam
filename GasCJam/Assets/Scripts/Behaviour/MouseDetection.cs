@@ -178,12 +178,14 @@ public class MouseDetection : Detection
                         // Check for the target direction
                         targetDir = GetTargetDirection();
 
+          
 
                         // Check if the path to the detected object is clear
-                        if (CheckIfClear(targetDir) == false)
+                        if (CheckIfClear(targetDir, targetObject.transform.position) == false)
                         {
                             // that target isnt available a danger to the mouse
                             StopMovement();
+
                             // check the next if there is
                             continue;
                         }
@@ -204,7 +206,7 @@ public class MouseDetection : Detection
 
                             // if the object detected is behind a wall
                             // skip this object because it's not a threat
-                            if (CheckIfClear(detectedObjDir) == false)
+                            if (CheckIfClear(detectedObjDir, detectedObj.transform.position) == false)
                             {
                                 continue;
                             }

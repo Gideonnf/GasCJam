@@ -105,7 +105,7 @@ public class KittenDetection : Detection
                         targetDir = GetTargetDirection();
 
                         // Check if the path to the detected object is clear
-                        if (CheckIfClear(targetDir) == false)
+                        if (CheckIfClear(targetDir, targetObject.transform.position) == false)
                         {
                             // that target isnt available a danger to the mouse
                             StopMovement();

@@ -260,9 +260,17 @@ public class Detection : MonoBehaviour
     /// </summary>
     /// <param name="dirToCheck">The direction to check</param>
     /// <returns> returns true if its clear </returns>
-    public bool CheckIfClear(DIRECTIONS dirToCheck)
+    public bool CheckIfClear(DIRECTIONS dirToCheck, Vector2 targetPosition)
     {
         Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+        Vector2Int targetTilePos = MapManager.Instance.GetWorldToTilePos(targetPosition);
+
+       // Debug.Log("Distance between : " + Vector2Int.Distance(targetTilePos, currentTilePos));
+
+         if (Vector2Int.Distance(targetTilePos, currentTilePos) <= 1)
+            return true;
+
+
         //Debug.Log("Direction" + dirToCheck);
         //Debug.Log("Original Position : " + currentTilePos);
 
