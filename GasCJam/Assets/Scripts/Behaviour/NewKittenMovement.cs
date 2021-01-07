@@ -511,7 +511,7 @@ public class NewKittenMovement : MonoBehaviour
 
     public void UpdateAnimation(bool isMoving)
     {
-        m_Animator.SetBool("Moving", isMoving);
+        m_Animator.SetBool("IsMoving", isMoving);
         m_Animator.SetFloat("Horizontal", directionVector.x);
         m_Animator.SetFloat("Vertical", directionVector.y);
     }
