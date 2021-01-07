@@ -56,6 +56,10 @@ public class KittenDetection : Detection
                 elapsedTime = 0;
             }
         }
+        else
+        {
+            elapsedTime = 0;
+        }
     }
 
     void OnDrawGizmosSelected()
@@ -236,16 +240,19 @@ public class KittenDetection : Detection
 
             if (DetectInView() == CHARACTERS.MOUSE)
             {
-                isShocked = true;
+                if (characterState != STATE.TIRED)
+                {
+                    isShocked = true;
 
-                targetObject = ratObject;
+                    targetObject = ratObject;
 
-                targetDir = GetTargetDirection();
+                    targetDir = GetTargetDirection();
+                }
             }
-            else
-            {
-                isShocked = false;
-            }
+            //else
+            //{
+            //    isShocked = false;
+            //}
 
             yield return new WaitForSeconds(.2f);
         }

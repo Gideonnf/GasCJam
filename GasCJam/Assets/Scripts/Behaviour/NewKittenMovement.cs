@@ -19,13 +19,22 @@ public class NewKittenMovement : MonoBehaviour
     Rigidbody2D m_rigidBody;
     // Keep track of the kitten detection script
     KittenDetection kittenDetection;
+    // Keep Track of mouse movement
+    MouseMovement mouseMovement;
     // Keep track of the target tile position
     Vector2 targetTilePosition = Vector2.zero;
     // Keep track of hte current moving direction
     Detection.DIRECTIONS movingDir;
 
+
     List<Vector2> ListOfTilesTravelled = new List<Vector2>();
+
+    // Keep track of the tiles that the rat travelled
+    List<Vector2> ListOfRatTiles = new List<Vector2>();
+
     int currentIndex = 0;
+
+    int currentRatIndex = 0;
 
     Vector3 directionVector;
 
@@ -37,6 +46,7 @@ public class NewKittenMovement : MonoBehaviour
     {
         kittenDetection = GetComponent<KittenDetection>();
         m_rigidBody = GetComponent<Rigidbody2D>();
+        mouseMovement = kittenDetection.ratObject.GetComponent<MouseMovement>();
         startingPos = transform.position;
 
         ListOfTilesTravelled.Add(startingPos);
@@ -56,8 +66,26 @@ public class NewKittenMovement : MonoBehaviour
             // this is so that it wont repeatedly check to see if its tired
             if (kittenDetection.characterState == Detection.STATE.CHASING)
             {
+                // Check rat movement
+                // If the target's tile position isn't a zero vector
+                // it means it has a path
+                if (mouseMovement.targetTilePosition != Vector2.zero)
+                {
+                    // if it doesnt contain the target tile position
+                    if (ListOfRatTiles.Contains(mouseMovement.targetTilePosition) == false)
+                    {
+                        // add it to the list
+                        ListOfRatTiles.Add(mouseMovement.targetTilePosition);
+                    }
+                }
+
                 if (currentIndex  > maxTravelDistance)
                 {
+                    // if the mouse is tired
+                    // clear the list of tiles because it doesnt need to chase anymore
+                    ListOfRatTiles.Clear();
+                    currentRatIndex = 0;
+
                     // To clear target object and reset character state
                     kittenDetection.StopMovement();
 
@@ -65,7 +93,7 @@ public class NewKittenMovement : MonoBehaviour
                     
                     // Take away the last tile 
                     // the last tile is its last position
-                    currentIndex -= 2;
+                    //currentIndex -= 2;
 
                     //currentIndex = ListOfTilesTravelled.Count - 1;
 
@@ -86,7 +114,7 @@ public class NewKittenMovement : MonoBehaviour
                 if (kittenDetection.characterState == Detection.STATE.TIRED)
                 {
                     // im gonna need to change this later probably
-                    if (currentIndex < 0)
+                    if (currentIndex <= 0)
                     {
                         transform.position = startingPos;
 
@@ -106,7 +134,7 @@ public class NewKittenMovement : MonoBehaviour
                         return;
                     }
                     // set the target to the last position on the list
-                    targetTilePosition = ListOfTilesTravelled[currentIndex];
+                    targetTilePosition = ListOfTilesTravelled[currentIndex - 1];
                     directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
                     UpdateAnimation(true);
 
@@ -119,20 +147,44 @@ public class NewKittenMovement : MonoBehaviour
                 }
                 else
                 {
-                    //Get the moving Direction
-                    if (GetMovingDirection())
+                    // if there are tiles to follow
+                    if(ListOfRatTiles.Count > 0)
                     {
-                        targetTilePosition = GetNextTile();
-                        directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
-                        UpdateAnimation(true);
+                        if (currentRatIndex < ListOfRatTiles.Count)
+                        {
+                            // set the target tiles
+                            targetTilePosition = ListOfRatTiles[currentRatIndex];
+                            directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
 
-                        // For checking if the kitten is tired
-                        // Store the tiles it traversed in a list
-                        ListOfTilesTravelled.Add(targetTilePosition);
-                        // Increment the index everytime it changes
-                        currentIndex++;
-                        
+                            // increment the rat index to keep track 
+                            currentRatIndex++;
+                            
+                            // Add it to the list of travelled tiles
+                            ListOfTilesTravelled.Add(targetTilePosition);
+                            // increment the curent index also
+                            currentIndex++;
+
+                            // Get the moving direction
+                            movingDir = kittenDetection.GetTargetDirection(targetTilePosition);
+
+                            kittenDetection.SetViewDirection(movingDir);
+                        }
                     }
+
+                    ////Get the moving Direction
+                    //if (GetMovingDirection())
+                    //{
+                    //    targetTilePosition = GetNextTile();
+                    //    directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+                    //    UpdateAnimation(true);
+
+                    //    // For checking if the kitten is tired
+                    //    // Store the tiles it traversed in a list
+                    //    ListOfTilesTravelled.Add(targetTilePosition);
+                    //    // Increment the index everytime it changes
+                    //    currentIndex++;
+                        
+                    //}
                 }
             }
             else

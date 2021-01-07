@@ -13,7 +13,7 @@ public class MouseMovement : MonoBehaviour
     // Keep track of the detection script
     MouseDetection mouseDetection;
     // Keep track of the target tile position
-    Vector2 targetTilePosition = Vector2.zero;
+    [System.NonSerialized] public Vector2 targetTilePosition = Vector2.zero;
     // Keep track of the current moving direction
     public Detection.DIRECTIONS movingDir;
 
