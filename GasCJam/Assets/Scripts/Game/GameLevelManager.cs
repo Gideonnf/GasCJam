@@ -16,6 +16,11 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
     [Header("Hole Scenerio")]
     public float m_ScaleMultiplier = 1.0f;
 
+    public void Awake()
+    {
+        SoundManager.Instance.Play("BackgroundMusic");
+    }
+
     //lose
     public void RatEnterHole()
     {

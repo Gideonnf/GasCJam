@@ -5228,6 +5228,13 @@ MonoBehaviour:
     m_HearingBaseOnDist: 0
     m_Loop: 0
     m_Source: {fileID: 0}
+  - m_Name: BackgroundMusic
+    m_Clip: {fileID: 8300000, guid: 5dad8a8ccdaf7c84aad7df4ad9e8eaa8, type: 3}
+    m_Volume: 0.5
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 1
+    m_Source: {fileID: 0}
 --- !u!1 &1688233005
 GameObject:
   m_ObjectHideFlags: 0
