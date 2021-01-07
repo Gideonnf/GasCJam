@@ -9,10 +9,6 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
     public NewKittenMovement m_Kitten;
     public MouseMovement m_Mouse;
 
-    [Header("UI")]
-    public GameObject m_LoseScreen;
-    public GameObject m_WinScreen;
-
     [Header("Hole Scenerio")]
     public float m_ScaleMultiplier = 1.0f;
 
@@ -21,17 +17,14 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
         SoundManager.Instance.Play("BackgroundMusic");
     }
 
-    //lose
+    //FOR RAT ENTERING HOLE
     public void RatEnterHole()
     {
-        //FOR RAT ENTERING HOLE
         //pause the player
-        //kitten starts crying
-        //rat shrinks into hole
-        //player watch quick cutscene
-
         m_Player.m_Stop = true;
+
         //TODO::might need pause the kitten? stop movement
+        //kitten starts crying
         m_Kitten.m_Animator.SetBool("Crying", true);
 
         //make the rat stop too
@@ -42,6 +35,7 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
 
     IEnumerator RatIntoHoleEffects()
     {
+        //rat shrinks into hole
         Vector3 scale = m_Mouse.gameObject.transform.localScale;
         while (scale.x > 0.0f)
         {
@@ -60,21 +54,25 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
         yield return new WaitForSeconds(0.1f);
 
         //show the lose UI and restart button
+        InGameMenuManager.Instance.OpenMenu(MenuType.LOSE_SCREEN);
     }
 
     //lose
     public void KittenSeesCat()
     {
+        //TODO::
         //FOR KITTEN SEEING PLAYER
         //pause the player
         //immediately show kitten shock
+        InGameMenuManager.Instance.OpenMenu(MenuType.LOSE_SCREEN);
     }
 
     //kitten manage to eat the rat
     //go to next level
     public void Win()
     {
-        //wait for a second or so before showing the win screen?
+        //TODO:wait for a second or so before showing the win screen?
         //SHOW THE WIN UI
+        InGameMenuManager.Instance.OpenMenu(MenuType.WIN_SCREEN);
     }
 }
