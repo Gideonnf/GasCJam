@@ -44,7 +44,16 @@ public class PlayerController : MonoBehaviour
             m_Dir = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
         }
 
+        UpdateSound();
         UpdateAnimation();
+    }
+
+    public void UpdateSound()
+    {
+        if (m_Dir == Vector3.zero)
+            SoundManager.Instance.Stop("CatWalking");
+        else
+            SoundManager.Instance.Play("CatWalking");
     }
 
     public void UpdateAnimation()

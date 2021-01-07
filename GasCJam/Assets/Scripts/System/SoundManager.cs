@@ -26,7 +26,18 @@ public class SoundManager : SingletonBase<SoundManager>
         if (playingSound == null)
             return;
 
-        playingSound.m_Source.Play();
+        if (!playingSound.m_Source.isPlaying)
+            playingSound.m_Source.Play();
+    }
+
+    public void Stop(string name)
+    {
+        Sound playingSound = Array.Find(m_SoundClipList, sound => sound.m_Name == name);
+
+        if (playingSound == null)
+            return;
+
+        playingSound.m_Source.Stop();
     }
 
     public void Play(string name, AudioSource source)

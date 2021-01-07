@@ -5166,8 +5166,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1502053254}
   - component: {fileID: 1502053253}
+  - component: {fileID: 1502053255}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5206,6 +5207,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1502053255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502053252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1d084bf528a2448990313b00b55a1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bDontDestroyOnLoad: 0
+  m_SoundClipList:
+  - m_Name: CatWalking
+    m_Clip: {fileID: 8300000, guid: e06ac262edcaccf43a7a8537294e887d, type: 3}
+    m_Volume: 1
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 0
+    m_Source: {fileID: 0}
 --- !u!1 &1688233005
 GameObject:
   m_ObjectHideFlags: 0
