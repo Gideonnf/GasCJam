@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D m_RigidBody;
 
     [HideInInspector]
-    public bool m_Pause;
+    public bool m_Stop;
 
     [HideInInspector]
     public Vector3 m_Dir;
@@ -21,11 +21,18 @@ public class PlayerController : MonoBehaviour
     {
         m_Dir = Vector3.zero;
         m_RigidBody = GetComponent<Rigidbody2D>();
-        m_Pause = false;
+        m_Stop = false;
     }
 
     public void Update()
     {
+        if (m_Stop)
+        {
+            m_Dir = Vector3.zero;
+            UpdateAnimation();
+            return;
+        }
+            
         //cant move diagonally
         m_Dir = Vector3.zero;
         if (Input.GetButton("Vertical"))
@@ -52,8 +59,7 @@ public class PlayerController : MonoBehaviour
     //for affecting rigidbody
     private void FixedUpdate()
     {
-        if (!m_Pause)
-            Move();
+        Move();
     }
 
     void Move()

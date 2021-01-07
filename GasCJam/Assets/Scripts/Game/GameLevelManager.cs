@@ -25,10 +25,13 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
         //rat shrinks into hole
         //player watch quick cutscene
 
-        m_Player.m_Pause = true;
+        m_Player.m_Stop = true;
         //TODO::might need pause the kitten? stop movement
         m_Kitten.m_Animator.SetBool("Crying", true);
-        //TODO::make the rat stop too
+
+        //make the rat stop too
+        m_Mouse.m_Stop = true;
+
         StartCoroutine(RatIntoHoleEffects());
     }
 
@@ -48,6 +51,8 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
             m_Mouse.gameObject.transform.localScale = scale;
             yield return null;
         }
+
+        yield return new WaitForSeconds(0.1f);
 
         //show the lose UI and restart button
     }

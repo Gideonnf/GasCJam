@@ -22,17 +22,22 @@ public class MouseMovement : MonoBehaviour
     [Header("Visual")]
     public Animator m_Animator;
 
+    public bool m_Stop = false;
+
     // Start is called before the first frame update
     void Start()
     {
         mouseDetection = GetComponent<MouseDetection>();
         m_rigidBody = GetComponent<Rigidbody2D>();
-
+        m_Stop = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (m_Stop)
+            return;
+
         //Debug.Log("current position" + transform.position);
         //Debug.Log("target tile position " + targetTilePosition);
 
