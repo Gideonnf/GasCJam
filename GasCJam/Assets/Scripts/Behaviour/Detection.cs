@@ -51,9 +51,9 @@ public class Detection : MonoBehaviour
     // idk if we should make a data manager to store the player, mouses and kitten
     // so for now i'll just use this to store a reference to the objects
     [Tooltip("Reference to player object")]
-    GameObject playerObject = null;
+    protected GameObject playerObject = null;
     [Tooltip("Reference to mouse object")]
-    GameObject ratObject = null;
+    protected GameObject ratObject = null;
 
 
     protected List<GameObject> ObjectsInRange;
