@@ -178,6 +178,7 @@ public class MouseDetection : Detection
                         // Check for the target direction
                         targetDir = GetTargetDirection();
 
+
                         // Check if the path to the detected object is clear
                         if (CheckIfClear(targetDir) == false)
                         {
@@ -215,70 +216,51 @@ public class MouseDetection : Detection
 
                 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 // If it spots the player or kitten
                 // it will try to run away
-                if (detectedObj.tag == "Player" || detectedObj.tag == "Kitten" )
-                {
-                    // if it already has a target
-                    if (targetObject != null)
-                    {
-                        // If it detects the kitten while being chased by the player
-                        if (targetObject != detectedObj && targetObject.tag == "Player")
-                        {
-                            // Make it shocked
-                            isShocked = true;
+                //if (detectedObj.tag == "Player" || detectedObj.tag == "Kitten" )
+                //{
+                //    // if it already has a target
+                //    if (targetObject != null)
+                //    {
+                //        // If it detects the kitten while being chased by the player
+                //        if (targetObject != detectedObj && targetObject.tag == "Player")
+                //        {
+                //            // Make it shocked
+                //            isShocked = true;
 
-                            // stop both the movement
-                            StopMovement();
-                            mouseMovement.StopMovement();
-                            mouseMovement.ResetMovementList();
-                        }
-                    }
+                //            // stop both the movement
+                //            StopMovement();
+                //            mouseMovement.StopMovement();
+                //            mouseMovement.ResetMovementList();
+                //        }
+                //    }
 
-                    // Set the player object as it's current target
-                    targetObject = detectedObj;
+                //    // Set the player object as it's current target
+                //    targetObject = detectedObj;
 
-                    targetDir = GetTargetDirection();
+                //    targetDir = GetTargetDirection();
 
-                    // Check the direction if its clear
-                    // if it isn't then they detected an enemy through the wall
-                    //if (CheckIfClear(targetDir) == false && targetObject.tag != "Player")
-                    //{
-                    //    if (characterState == STATE.RUNNING)
-                    //    {
-                    //        mouseMovement.ResetMovementList();
-                    //        mouseMovement.StopMovement();
-                    //    }
+                //    // Check the direction if its clear
+                //    // if it isn't then they detected an enemy through the wall
+                //    //if (CheckIfClear(targetDir) == false && targetObject.tag != "Player")
+                //    //{
+                //    //    if (characterState == STATE.RUNNING)
+                //    //    {
+                //    //        mouseMovement.ResetMovementList();
+                //    //        mouseMovement.StopMovement();
+                //    //    }
 
-                    //    StopMovement();
+                //    //    StopMovement();
 
-                    //    continue;
-                    //}
+                //    //    continue;
+                //    //}
 
-                    // shocked
-                    if (characterState != STATE.RUNNING)
-                        isShocked = true;
+                //    // shocked
+                //    if (characterState != STATE.RUNNING)
+                //        isShocked = true;
 
-                }
+                //}
             }
         }
         else

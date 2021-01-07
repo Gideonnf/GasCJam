@@ -104,8 +104,8 @@ public class MouseMovement : MonoBehaviour
                 {
                     float targetXPos = targetTilePosition.x;
 
-                    Debug.Log("target's x position" + targetTilePosition.x);
-                    Debug.Log("fuc poop pee" + transform.position.x);
+                    //Debug.Log("target's x position" + targetTilePosition.x);
+                   // Debug.Log("fuc poop pee" + transform.position.x);
 
                     if (transform.position.x >= targetXPos)
                     {
@@ -131,7 +131,10 @@ public class MouseMovement : MonoBehaviour
                         targetReached = true;
                     }
                 }
-
+                else if (movingDir == Detection.DIRECTIONS.NONE)
+                {
+                    targetTilePosition = Vector2.zero;
+                }
                 // it reached the tile
                 if (targetReached == true)
                 {
@@ -149,7 +152,6 @@ public class MouseMovement : MonoBehaviour
         // and redo themovement
         //if (mouseDetection.characterState == Detection.STATE.RUNNING)
         //{
-        //    //TODO:: fix jerky movement of mouse instead of stopping every tile
         //    // if no target tile position was assigned yet
         //    // set the target tile
         //    if (targetTilePosition == Vector2.zero)
@@ -446,13 +448,13 @@ public class MouseMovement : MonoBehaviour
                     if (CheckDirectionSize(Detection.DIRECTIONS.LEFT) < CheckDirectionSize(Detection.DIRECTIONS.RIGHT))
                     {
                         // the moving direction should be right
-                        Debug.Log("Moving Right");
+//
                         tempDirection = Detection.DIRECTIONS.RIGHT;
                     }
                     else
                     {
                         // else the moving direction should be left
-                        Debug.Log("Moving Left");
+                        //Debug.Log("Moving Left");
                         tempDirection = Detection.DIRECTIONS.LEFT;
                     }
                 }

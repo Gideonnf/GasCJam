@@ -105,9 +105,6 @@ public class Detection : MonoBehaviour
         return false;
     }
 
-    //TODO: idk how do this yet
-    // i'll cross this bridge when i get there
-
     /// <summary>
     /// Checks the area infront of the character
     /// Returns the characters it finds
@@ -263,6 +260,8 @@ public class Detection : MonoBehaviour
     public bool CheckIfClear(DIRECTIONS dirToCheck)
     {
         Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+        Debug.Log("Direction" + dirToCheck);
+        Debug.Log("Original Position : " + currentTilePos);
 
         switch (dirToCheck)
         {
@@ -283,6 +282,9 @@ public class Detection : MonoBehaviour
             default:
                 break;
         }
+
+        Debug.Log("Check Position" + currentTilePos);
+
 
         if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
             return true;

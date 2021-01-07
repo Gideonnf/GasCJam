@@ -77,25 +77,6 @@ public class NewKittenMovement : MonoBehaviour
                 }
             }
 
-            //// when its tired, use this to check if it has returned back to the starting position
-            //if (kittenDetection.characterState == Detection.STATE.TIRED)
-            //{
-            //    // im gonna need to change this later probably
-            //    if (currentIndex <= 0)
-            //    {
-            //        transform.position = startingPos;
-
-            //        kittenDetection.characterState = Detection.STATE.IDLE;
-
-            //        StopMovement();
-
-            //        UpdateAnimation(false);
-
-            //        return;
-            //    }
-            //}
-            
-
             // if there is no target tile yet
             // find the target tile
             if (targetTilePosition == Vector2.zero)
@@ -159,6 +140,9 @@ public class NewKittenMovement : MonoBehaviour
                 {
                     float targetXPos = targetTilePosition.x;
 
+                    //Debug.Log("kitten target tile position" + targetTilePosition);
+                    //Debug.Log("kitten position" + transform.position);
+
                     if (transform.position.x <= targetXPos)
                     {
                         // it reached the tile
@@ -192,6 +176,11 @@ public class NewKittenMovement : MonoBehaviour
                     {
                         targetReached = true;
                     }
+                }
+                else if (movingDir == Detection.DIRECTIONS.NONE)
+                {
+                    // it shouldn't reach here lol
+                    targetTilePosition = Vector2.zero;
                 }
 
                 if (targetReached == true)

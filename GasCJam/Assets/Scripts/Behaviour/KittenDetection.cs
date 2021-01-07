@@ -84,26 +84,46 @@ public class KittenDetection : Detection
             {
                 if (detectedObj.tag == "Prey")
                 {
-                    // Set the mouse object as it's current target
-                    targetObject = detectedObj;
-
-                    // Get the target's direc tion
-                    targetDir = GetTargetDirection();
-
-                    // Check the direction if its clear
-                    // if it isn't then they detected an enemy through the wall
-                    if (CheckIfClear(targetDir) == false)
+                    // Only detect when idle
+                    if (characterState == STATE.IDLE)
                     {
-                        StopMovement();
-                        return false;
-                    }
-                    // if they are already chasing
-                    // they cant really get shocked
-                    if (characterState != STATE.CHASING)
-                        isShocked = true;
+                        targetObject = detectedObj;
 
-                    // Set the character state
-                    //characterState = STATE.CHASING;
+                        targetDir = GetTargetDirection();
+
+                        // Check if the path to the detected object is clear
+                        if (CheckIfClear(targetDir) == false)
+                        {
+                            // that target isnt available a danger to the mouse
+                            StopMovement();
+                            // check the next if there is
+                            continue;
+                        }
+
+                        isShocked = true;
+                    }
+
+
+                    //// Set the mouse object as it's current target
+                    //targetObject = detectedObj;
+
+                    //// Get the target's direc tion
+                    //targetDir = GetTargetDirection();
+
+                    //// Check the direction if its clear
+                    //// if it isn't then they detected an enemy through the wall
+                    ////if (CheckIfClear(targetDir) == false)
+                    ////{
+                    ////    StopMovement();
+                    ////    return false;
+                    ////}
+                    //// if they are already chasing
+                    //// they cant really get shocked
+                    //if (characterState != STATE.CHASING)
+                    //    isShocked = true;
+
+                    //// Set the character state
+                    ////characterState = STATE.CHASING;
 
 
                     return true;
