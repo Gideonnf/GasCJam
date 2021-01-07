@@ -42,9 +42,10 @@ public class MouseDetection : Detection
         if (isShocked)
         {
             elapsedTime += Time.deltaTime;
+
             Debug.Log(elapsedTime);
 
-            if (elapsedTime >= shockTime)
+            if (elapsedTime >= shockTime || targetObject.tag == "Player")
             {
                 characterState = STATE.RUNNING;
 
