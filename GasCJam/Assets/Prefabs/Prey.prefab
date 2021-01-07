@@ -170,13 +170,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3835cac063eac54f89a36e4934bd740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CircleRadius: 1.5
+  CircleRadius: 1.8
   SightDistance: 3
   targetDir: 4
   viewDir: 4
   startingDir: 0
-  characterState: 4
+  characterState: 0
   playerInSight: 0
+  shockTime: 2
+  isShocked: 0
 --- !u!114 &8648553465782317771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +194,7 @@ MonoBehaviour:
   moveSpeed: 2
   movingDir: 0
   m_Animator: {fileID: 4674554412004450638}
+  m_Stop: 0
 --- !u!58 &651054275831584794
 CircleCollider2D:
   m_ObjectHideFlags: 0
