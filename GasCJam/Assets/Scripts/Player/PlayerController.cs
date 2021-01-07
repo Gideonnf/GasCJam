@@ -5,6 +5,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D m_RigidBody;
 
     [HideInInspector]
+    public bool m_Pause;
+
+    [HideInInspector]
     public Vector3 m_Dir;
 
     [Header("Movement data")]
@@ -18,6 +21,7 @@ public class PlayerController : MonoBehaviour
     {
         m_Dir = Vector3.zero;
         m_RigidBody = GetComponent<Rigidbody2D>();
+        m_Pause = false;
     }
 
     public void Update()
@@ -48,7 +52,8 @@ public class PlayerController : MonoBehaviour
     //for affecting rigidbody
     private void FixedUpdate()
     {
-        Move();
+        if (!m_Pause)
+            Move();
     }
 
     void Move()

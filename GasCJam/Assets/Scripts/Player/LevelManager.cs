@@ -27,9 +27,16 @@ public class LevelManager : SingletonBase<LevelManager>
         }
     }
 
+    public void ReplayCurrentLevel()
+    {
+        m_LevelChanger.TransitionScene(m_LevelSceneNames[m_CurrLevel]);
+    }
+
     //go next level directly
     public void GoToNextLevel()
     {
+        LevelCleared();
+
         m_CurrLevel = m_CurrLevel + 1;
         m_LevelChanger.TransitionScene(m_LevelSceneNames[m_CurrLevel]);
     }
