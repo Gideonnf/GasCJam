@@ -160,9 +160,80 @@ public class MouseDetection : Detection
         // If it detects any objects in it's radius
         if (base.DetectRadius())
         {
+            //// If it already has a target that it is running from
+            //if (targetObject != null)
+            //    return false;
+
             // Loop through the detected objects
             foreach (GameObject detectedObj in ObjectsInRange)
             {
+                // It will only look for these two objects
+                if (detectedObj.tag == "Player" || detectedObj.tag == "Kitten")
+                {
+                    // Only detect when its idle
+                    if (characterState == STATE.IDLE)
+                    {
+                        // Get the target object
+                        targetObject = detectedObj;
+                        // Check for the target direction
+                        targetDir = GetTargetDirection();
+
+                        // Check if the path to the detected object is clear
+                        if (CheckIfClear(targetDir) == false)
+                        {
+                            // that target isnt available a danger to the mouse
+                            StopMovement();
+                            // check the next if there is
+                            continue;
+                        }
+
+                        isShocked = true;
+                    }
+                    // if it is a running state when it detects a enemy
+                    else if (characterState == STATE.RUNNING)
+                    {
+                        // if it detects a new enemy while running from the player
+                        if (detectedObj != targetObject && targetObject.tag == "Player")
+                        {
+                            DIRECTIONS detectedObjDir = GetTargetDirection(detectedObj.transform.position);
+
+                            // if the object detected is behind a wall
+                            // skip this object because it's not a threat
+                            if (CheckIfClear(detectedObjDir) == false)
+                            {
+                                continue;
+                            }
+
+                            // it has to be shocked
+                            isShocked = true;
+
+                            StopMovement();
+                            mouseMovement.StopMovement();
+                            mouseMovement.ResetMovementList();
+                        }
+                    }
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 // If it spots the player or kitten
                 // it will try to run away
                 if (detectedObj.tag == "Player" || detectedObj.tag == "Kitten" )
@@ -179,6 +250,7 @@ public class MouseDetection : Detection
                             // stop both the movement
                             StopMovement();
                             mouseMovement.StopMovement();
+                            mouseMovement.ResetMovementList();
                         }
                     }
 
@@ -189,12 +261,18 @@ public class MouseDetection : Detection
 
                     // Check the direction if its clear
                     // if it isn't then they detected an enemy through the wall
-                    if (CheckIfClear(targetDir) == false)
-                    {
-                        StopMovement();
+                    //if (CheckIfClear(targetDir) == false && targetObject.tag != "Player")
+                    //{
+                    //    if (characterState == STATE.RUNNING)
+                    //    {
+                    //        mouseMovement.ResetMovementList();
+                    //        mouseMovement.StopMovement();
+                    //    }
 
-                        continue;
-                    }
+                    //    StopMovement();
+
+                    //    continue;
+                    //}
 
                     // shocked
                     if (characterState != STATE.RUNNING)
@@ -263,7 +341,7 @@ public class MouseDetection : Detection
             DetectRadius();
 
 
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.1f);
         }
     }
 
@@ -292,7 +370,7 @@ public class MouseDetection : Detection
                 playerInSight = false;
             }
 
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.1f);
         }
     }
 

@@ -16,7 +16,11 @@ public class MouseMovement : MonoBehaviour
     Vector2 targetTilePosition = Vector2.zero;
     // Keep track of the current moving direction
     public Detection.DIRECTIONS movingDir;
-    // 
+
+    // Store a list of tiles movable in the moving direction
+    List<Vector2> ListOfMovableTiles = new List<Vector2>();
+    int currentIndex;
+
     Vector3 directionVector;
 
     [Header("Visual")]
@@ -41,51 +45,50 @@ public class MouseMovement : MonoBehaviour
         //Debug.Log("current position" + transform.position);
         //Debug.Log("target tile position " + targetTilePosition);
 
-        // if it is running
         if (mouseDetection.characterState == Detection.STATE.RUNNING)
         {
-            //TODO:: fix jerky movement of mouse instead of stopping every tile
-
-            // if no target tile position was assigned yet
-            // set the target tile
-            if (targetTilePosition == Vector2.zero)
+            // if the list is currently empty
+            if (ListOfMovableTiles.Count <= 0)
             {
-                // Get the moving Direction
+                // Get the direction to move towards
                 if (GetMovingDirection())
                 {
-                    targetTilePosition = GetNextTile();
-
-                   // Debug.Log("mouse tile position" + targetTilePosition);
-
-                    directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
-                    mouseDetection.SetViewDirection(movingDir);
-                    UpdateAnimation(true);
+                    // If it managed to find a direction
+                    // Fill up the list of tiles in that direction
+                    GetDirectionalTiles(movingDir);
                 }
-                else
+            }
+
+            // if it has no target vector position to go to now
+            if(targetTilePosition == Vector2.zero)
+            {
+                // if it reached the end of the movable tiles
+                // theres no more to move
+                if(currentIndex >= ListOfMovableTiles.Count)
                 {
-                    // Before checking for alternate path
-                    // check if it still needs to move
-                    // if there isn't then you don't have to find an alternate path
-                    if (mouseDetection.CheckForEnemies() == false)
-                    {
-                        StopMovement();
-                        mouseDetection.StopMovement();
-                        UpdateAnimation(false);
-                    }
+                    ListOfMovableTiles.Clear();
+                    currentIndex = 0;
+                    StopMovement();
+                    movingDir = Detection.DIRECTIONS.NONE;
                     return;
                 }
+
+
+                // Set the target tile position to the first index of the list
+                targetTilePosition = ListOfMovableTiles[currentIndex];
+
+                // check this shit
+
+
+                directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+
+                // increment the index
+                currentIndex++;
+
 
             }
             else
             {
-                // get the direction to the next tile
-                //Vector3 direction = (targetTilePosition - (Vector2)transform.position).normalized;
-
-                //Debug.Log(targetTilePosition);
-                //Debug.Log(transform.position);
-
-                // it already has a target to move to
-
                 // If it is moving along the X Axis
                 if (movingDir == Detection.DIRECTIONS.LEFT)
                 {
@@ -100,6 +103,9 @@ public class MouseMovement : MonoBehaviour
                 else if (movingDir == Detection.DIRECTIONS.RIGHT)
                 {
                     float targetXPos = targetTilePosition.x;
+
+                    Debug.Log("target's x position" + targetTilePosition.x);
+                    Debug.Log("fuc poop pee" + transform.position.x);
 
                     if (transform.position.x >= targetXPos)
                     {
@@ -138,13 +144,185 @@ public class MouseMovement : MonoBehaviour
             }
 
         }
+
+        // im gonna need to delete this again
+        // and redo themovement
+        //if (mouseDetection.characterState == Detection.STATE.RUNNING)
+        //{
+        //    //TODO:: fix jerky movement of mouse instead of stopping every tile
+        //    // if no target tile position was assigned yet
+        //    // set the target tile
+        //    if (targetTilePosition == Vector2.zero)
+        //    {
+        //        // Get the moving Direction
+        //        if (GetMovingDirection())
+        //        {
+        //            targetTilePosition = GetNextTile();
+
+        //           // Debug.Log("mouse tile position" + targetTilePosition);
+
+        //            directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+        //            mouseDetection.SetViewDirection(movingDir);
+        //            UpdateAnimation(true);
+        //        }
+        //        else
+        //        {
+        //            // Before checking for alternate path
+        //            // check if it still needs to move
+        //            // if there isn't then you don't have to find an alternate path
+        //            if (mouseDetection.CheckForEnemies() == false)
+        //            {
+        //                StopMovement();
+        //                mouseDetection.StopMovement();
+        //                UpdateAnimation(false);
+        //            }
+        //            return;
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        // get the direction to the next tile
+        //        //Vector3 direction = (targetTilePosition - (Vector2)transform.position).normalized;
+
+        //        //Debug.Log(targetTilePosition);
+        //        //Debug.Log(transform.position);
+
+        //        // it already has a target to move to
+
+        //        // If it is moving along the X Axis
+        //        if (movingDir == Detection.DIRECTIONS.LEFT)
+        //        {
+        //            float targetXPos = targetTilePosition.x;
+
+        //            if (transform.position.x <= targetXPos)
+        //            {
+        //                // it reached the tile
+        //                targetReached = true;
+        //            }
+        //        }
+        //        else if (movingDir == Detection.DIRECTIONS.RIGHT)
+        //        {
+        //            float targetXPos = targetTilePosition.x;
+
+        //            if (transform.position.x >= targetXPos)
+        //            {
+        //                // it reached the tile
+        //                targetReached = true;
+        //            }
+        //        }
+        //        else if (movingDir == Detection.DIRECTIONS.UP)
+        //        {
+        //            float targetYPos = targetTilePosition.y;
+
+        //            if (transform.position.y >= targetYPos)
+        //            {
+        //                targetReached = true;
+        //            }
+        //        }
+        //        else if (movingDir == Detection.DIRECTIONS.DOWN)
+        //        {
+        //            float targetYPos = targetTilePosition.y;
+
+        //            if (transform.position.y <= targetYPos)
+        //            {
+        //                targetReached = true;
+        //            }
+        //        }
+
+        //        // it reached the tile
+        //        if (targetReached == true)
+        //        {
+        //            transform.position = targetTilePosition;
+        //            StopMovement();
+        //        }
+
+        //        // move it move it to the limit limit
+        //        m_rigidBody.MovePosition(transform.position + directionVector * moveSpeed * Time.fixedDeltaTime);
+        //    }
+
+        //}
     }
 
-    public void StopMovement()
+    public void ResetMovementList()
     {
+        ListOfMovableTiles.Clear();
+        currentIndex = 0;
+    }
+
+    /// <summary>
+    ///  Gets all the tiles in that direction
+    /// </summary>
+    /// <param name="dir">The direction to check with</param>
+    /// <returns>True if they</returns>
+    public bool GetDirectionalTiles(Detection.DIRECTIONS dir)
+    {
+        // Get the curernt tile position
+        Vector2Int currentTile = MapManager.Instance.GetWorldToTilePos(transform.position);
+
+        // Moove once in the direction
+        switch (dir)
+        {
+            case Detection.DIRECTIONS.UP:
+                currentTile.y++;
+                break;
+            case Detection.DIRECTIONS.DOWN:
+                currentTile.y--;
+                break;
+            case Detection.DIRECTIONS.LEFT:
+                currentTile.x--;
+                break;
+            case Detection.DIRECTIONS.RIGHT:
+                currentTile.x++;
+                break;
+            case Detection.DIRECTIONS.NONE:
+                break;
+            default:
+                break;
+        }
+
+        // Keep on checking until it finds the wall
+        while(MapManager.Instance.IsThereTileOnMap(currentTile) == false)
+        {
+            Vector2 tileWorldPosition = MapManager.Instance.GetTileToWorldPos(currentTile);
+            // Add the tile to the list
+            ListOfMovableTiles.Add(tileWorldPosition);
+
+            // Increment again by one
+            // to check the next tile
+            switch (dir)
+            {
+                case Detection.DIRECTIONS.UP:
+                    currentTile.y++;
+                    break;
+                case Detection.DIRECTIONS.DOWN:
+                    currentTile.y--;
+                    break;
+                case Detection.DIRECTIONS.LEFT:
+                    currentTile.x--;
+                    break;
+                case Detection.DIRECTIONS.RIGHT:
+                    currentTile.x++;
+                    break;
+                case Detection.DIRECTIONS.NONE:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return true;
+    }
+
+    public void StopMovement(bool SetToTargetPosition = false)
+    {
+        if (SetToTargetPosition)
+            transform.position = targetTilePosition;
+        else
+            targetTilePosition = Vector2.zero;
+
         targetReached = false;
-        movingDir = Detection.DIRECTIONS.NONE;
-        targetTilePosition = Vector2.zero;
+        //movingDir = Detection.DIRECTIONS.NONE;
     }
 
     /// <summary>
