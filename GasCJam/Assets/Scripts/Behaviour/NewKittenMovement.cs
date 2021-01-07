@@ -29,6 +29,9 @@ public class NewKittenMovement : MonoBehaviour
 
     Vector3 directionVector;
 
+    [Header("Visual")]
+    public Animator m_Animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +62,8 @@ public class NewKittenMovement : MonoBehaviour
 
                     StopMovement();
 
+                    UpdateAnimation(false);
+
                     return;
                 }
             }
@@ -71,6 +76,8 @@ public class NewKittenMovement : MonoBehaviour
                     kittenDetection.characterState = Detection.STATE.IDLE;
 
                     StopMovement();
+
+                    UpdateAnimation(false);
 
                     return;
                 }
@@ -86,7 +93,7 @@ public class NewKittenMovement : MonoBehaviour
                     // set the target to the last position on the list
                     targetTilePosition = ListOfTilesTravelled[currentIndex];
                     directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
-
+                    UpdateAnimation(true);
                     // Get the direction to the next tile
 
                 }
@@ -98,6 +105,7 @@ public class NewKittenMovement : MonoBehaviour
                         targetTilePosition = GetNextTile();
                         ListOfTilesTravelled.Add(targetTilePosition);
                         directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+                        UpdateAnimation(true);
                     }
                 }
             }
@@ -456,5 +464,12 @@ public class NewKittenMovement : MonoBehaviour
             return tempDirection;
 
         return Detection.DIRECTIONS.NONE;
+    }
+
+    public void UpdateAnimation(bool isMoving)
+    {
+        m_Animator.SetBool("Moving", isMoving);
+        m_Animator.SetFloat("Horizontal", directionVector.x);
+        m_Animator.SetFloat("Vertical", directionVector.y);
     }
 }
