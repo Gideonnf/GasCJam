@@ -54,7 +54,7 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
         yield return new WaitForSeconds(0.1f);
 
         //show the lose UI and restart button
-        InGameMenuManager.Instance.OpenMenu(MenuType.LOSE_SCREEN);
+        InGameMenuManager.Instance.OpenMenu((int)MenuType.LOSE_SCREEN);
     }
 
     //lose
@@ -64,7 +64,7 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
         //FOR KITTEN SEEING PLAYER
         //pause the player
         //immediately show kitten shock
-        InGameMenuManager.Instance.OpenMenu(MenuType.LOSE_SCREEN);
+        InGameMenuManager.Instance.OpenMenu((int)MenuType.LOSE_SCREEN);
     }
 
     //kitten manage to eat the rat
@@ -73,6 +73,6 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
     {
         //TODO:wait for a second or so before showing the win screen?
         //SHOW THE WIN UI
-        InGameMenuManager.Instance.OpenMenu(MenuType.WIN_SCREEN);
+        InGameMenuManager.Instance.OpenMenu((int)MenuType.WIN_SCREEN);
     }
 }

@@ -60,9 +60,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bDontDestroyOnLoad: 1
+  m_LevelUnlocked: 0
   m_LevelSceneNames:
   - TestLevel
   - LevelSelection
+  m_MainMenuName: MainMenu
 --- !u!1 &6840578391496820635
 GameObject:
   m_ObjectHideFlags: 0
