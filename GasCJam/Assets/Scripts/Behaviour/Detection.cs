@@ -263,8 +263,8 @@ public class Detection : MonoBehaviour
     public bool CheckIfClear(DIRECTIONS dirToCheck)
     {
         Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
-        Debug.Log("Direction" + dirToCheck);
-        Debug.Log("Original Position : " + currentTilePos);
+        //Debug.Log("Direction" + dirToCheck);
+        //Debug.Log("Original Position : " + currentTilePos);
 
         switch (dirToCheck)
         {
@@ -286,7 +286,7 @@ public class Detection : MonoBehaviour
                 break;
         }
 
-        Debug.Log("Check Position" + currentTilePos);
+        //Debug.Log("Check Position" + currentTilePos);
 
 
         if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)

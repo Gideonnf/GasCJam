@@ -10,6 +10,8 @@ public class KittenDetection : Detection
     public float shockTime;
     [Tooltip("If it is shocked or not")]
     public bool isShocked = false;
+    [Tooltip("Detection circle for rat")]
+    public float RatDetectionRadius;
 
     float elapsedTime;
     
@@ -38,6 +40,7 @@ public class KittenDetection : Detection
     {
         if (isShocked)
         {
+            Debug.Log(elapsedTime);
             elapsedTime += Time.deltaTime;
 
             //Debug.Log(elapsedTime);
@@ -60,6 +63,8 @@ public class KittenDetection : Detection
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, CircleRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, RatDetectionRadius);
     }
 
     public void SetViewDirection(DIRECTIONS movingDirection)
@@ -138,6 +143,7 @@ public class KittenDetection : Detection
         }
         else
         {
+            Debug.Log("Not in range");
             // if theres nothing in it's range anymore
             isShocked = false;
         }
@@ -179,12 +185,35 @@ public class KittenDetection : Detection
         return CHARACTERS.NONE;
     }
 
+    public bool DetectRat()
+    {
+        Collider2D[] ListOfColliders = Physics2D.OverlapCircleAll(transform.position, RatDetectionRadius);
+
+        foreach (Collider2D collider in ListOfColliders)
+        {
+            // don't check for itself
+            if (collider.gameObject == this.gameObject)
+                continue;
+
+            // if it collides with the prey
+            if (collider.gameObject.tag == "Prey")
+            {
+                // Win the game
+                //Debug.LogError("Game ended");
+            }
+        }
+
+        return false;
+    }
+
     // A couroutine to run for checking of objects
     // Instead of checking every frame it checks every second
     IEnumerator CheckForObjectsInRange()
     {
         for (; ; )
         {
+            // Check if the rat is touching the cat
+            DetectRat();
             // If it successfully detected something in it's radius
             // Check for what direction it is in
             DetectRadius();
