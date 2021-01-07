@@ -46,9 +46,20 @@ public class MouseMovement : MonoBehaviour
                 {
                     targetTilePosition = GetNextTile();
                     directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+                    mouseDetection.SetViewDirection(movingDir);
                 }
                 else
+                {
+                    // Before checking for alternate path
+                    // check if it still needs to move
+                    // if there isn't then you don't have to find an alternate path
+                    if (mouseDetection.CheckForEnemies() == false)
+                    {
+                        StopMovement();
+                        mouseDetection.StopMovement();
+                    }
                     return;
+                }
 
             }
             else
@@ -202,13 +213,13 @@ public class MouseMovement : MonoBehaviour
         // Before checking for alternate path
         // check if it still needs to move
         // if there isn't then you don't have to find an alternate path
-        //if (mouseDetection.CheckForEnemies() == false)
-        //{
-        //    StopMovement();
-        //    mouseDetection.StopMovement();
+        if (mouseDetection.CheckForEnemies() == false && mouseDetection.playerInSight == false)
+        {
+            StopMovement();
+            mouseDetection.StopMovement();
 
-        //    return Detection.DIRECTIONS.NONE;
-        //}
+            return Detection.DIRECTIONS.NONE;
+        }
 
         Detection.DIRECTIONS tempDirection = Detection.DIRECTIONS.NONE;
         Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
@@ -279,7 +290,8 @@ public class MouseMovement : MonoBehaviour
             {
                 // if its more than 2 blocks to the left or more than 2 blocks to the right
                 // then it can go left or right depending on which has more space
-                if (targetTilePos.y < (currentTilePos.y - 1) || targetTilePos.y > (currentTilePos.y + 1))
+               // if (targetTilePos.y < (currentTilePos.y - 1) || targetTilePos.y > (currentTilePos.y + 1))
+                if (targetTilePos.y > (currentTilePos.y - 1) && targetTilePos.y < (currentTilePos.y + 1))
                 {
                     // if the number of empty tiles on above is less than below
                     if (CheckDirectionSize(Detection.DIRECTIONS.UP) < CheckDirectionSize(Detection.DIRECTIONS.DOWN))

@@ -6,6 +6,9 @@ public class MouseDetection : Detection
 {
     MouseMovement mouseMovement;
 
+    [Tooltip("Keep track if hte player is in sight of the mouse")]
+    public bool playerInSight = false;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -21,7 +24,7 @@ public class MouseDetection : Detection
         transform.position = tilePosition2D;
 
         StartCoroutine("CheckForObjectsInRange");
-        //StartCoroutine("CheckForObjectsInView");
+        StartCoroutine("CheckForObjectsInView");
 
     }
 
@@ -29,43 +32,6 @@ public class MouseDetection : Detection
     void Update()
     {
         //DetectRadius();
-    }
-
-    public override bool DetectRadius()
-    {
-        // Clear the objects in range
-        if (ObjectsInRange.Count > 0)
-            ObjectsInRange.Clear();
-
-        // If it detects any objects in it's radius
-        if (base.DetectRadius())
-        {
-            // Loop through the detected objects
-            foreach(GameObject detectedObj in ObjectsInRange)
-            {
-                // If it spots the player or kitten
-                // it will try to run away
-                if (detectedObj.tag == "Player" || detectedObj.tag == "Kitten")
-                {
-                    // running
-                    characterState = STATE.RUNNING;
-
-                    // Set the player object as it's current target
-                    targetObject = detectedObj;
-
-                    targetDir = GetTargetDirection();
-                }
-            }
-        }
-        //else
-        //{
-        //    characterState = STATE.IDLE;
-        //    targetObject = null;
-        //    targetDir = DIRECTIONS.NONE;
-        //}
-
-
-        return false;
     }
 
     /// <summary>
@@ -102,6 +68,77 @@ public class MouseDetection : Detection
         return CHARACTERS.NONE;
     }
 
+    public override bool DetectRadius()
+    {
+        // Clear the objects in range
+        if (ObjectsInRange.Count > 0)
+            ObjectsInRange.Clear();
+
+        // If it detects any objects in it's radius
+        if (base.DetectRadius())
+        {
+            // Loop through the detected objects
+            foreach (GameObject detectedObj in ObjectsInRange)
+            {
+                // If it spots the player or kitten
+                // it will try to run away
+                if (detectedObj.tag == "Player" || detectedObj.tag == "Kitten")
+                {
+                    // running
+                    characterState = STATE.RUNNING;
+
+                    // Set the player object as it's current target
+                    targetObject = detectedObj;
+
+                    targetDir = GetTargetDirection();
+                }
+            }
+        }
+        //else
+        //{
+        //    characterState = STATE.IDLE;
+        //    targetObject = null;
+        //    targetDir = DIRECTIONS.NONE;
+        //}
+
+
+        return false;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void SetViewDirection(DIRECTIONS movingDirection)
+    {
+        switch (movingDirection)
+        {
+            // If it's moving up
+            // look down
+            case DIRECTIONS.UP:
+                viewDir = DIRECTIONS.DOWN;
+                break;
+            // if its moving down
+            // look up
+            case DIRECTIONS.DOWN:
+                viewDir = DIRECTIONS.UP;
+                break;
+            // if its moving eft
+            // look right
+            case DIRECTIONS.LEFT:
+                viewDir = DIRECTIONS.RIGHT;
+                break;
+            // if its moving right
+            // look left
+            case DIRECTIONS.RIGHT:
+                viewDir = DIRECTIONS.LEFT;
+                break;
+            case DIRECTIONS.NONE:
+                break;
+            default:
+                break;
+        }
+    }
+
     // A couroutine to run for checking of objects
     // Instead of checking every frame it checks every second
     IEnumerator CheckForObjectsInRange()
@@ -123,6 +160,10 @@ public class MouseDetection : Detection
         {
             if (DetectInView() == CHARACTERS.PLAYER)
             {
+                // NOTE
+                // later it'll change to having a shock animation
+                // instead of running straight away
+
                 // running
                 characterState = STATE.RUNNING;
 
@@ -131,6 +172,11 @@ public class MouseDetection : Detection
 
                 targetDir = GetTargetDirection();
 
+                playerInSight = true;
+            }
+            else
+            {
+                playerInSight = false;
             }
 
             yield return new WaitForSeconds(.2f);
