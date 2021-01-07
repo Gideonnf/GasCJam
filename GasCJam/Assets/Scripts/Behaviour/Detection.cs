@@ -143,6 +143,8 @@ public class Detection : MonoBehaviour
         for (int index = 0; index < SightDistance; ++index)
         {
             // Checks the tile if any of the objects are here
+            if (MapManager.Instance.IsThereTileOnMap(currentTilePos))
+                return CHARACTERS.NONE;
 
             // use a function to check
             characterFound = CheckForCharacters(currentTilePos);

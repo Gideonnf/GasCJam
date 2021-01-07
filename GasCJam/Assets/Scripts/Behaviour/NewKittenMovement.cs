@@ -114,6 +114,7 @@ public class NewKittenMovement : MonoBehaviour
 
                     // Get the direction to the next tile
                     movingDir = kittenDetection.GetTargetDirection(targetTilePosition);
+                    // Set the viewing direction to be the same as the kitten's moving dir
                     kittenDetection.SetViewDirection(movingDir);
                 }
                 else
@@ -504,5 +505,15 @@ public class NewKittenMovement : MonoBehaviour
         m_Animator.SetBool("IsMoving", isMoving);
         m_Animator.SetFloat("Horizontal", directionVector.x);
         m_Animator.SetFloat("Vertical", directionVector.y);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Prey")
+        {
+            Debug.Log("TOUCHING THE MOUSE AHFAUHAHFH");
+
+            return;
+        }
     }
 }
