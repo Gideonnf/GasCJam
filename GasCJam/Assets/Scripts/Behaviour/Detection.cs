@@ -51,9 +51,9 @@ public class Detection : MonoBehaviour
     // idk if we should make a data manager to store the player, mouses and kitten
     // so for now i'll just use this to store a reference to the objects
     [Tooltip("Reference to player object")]
-    public GameObject playerObject = null;
+    GameObject playerObject = null;
     [Tooltip("Reference to mouse object")]
-    public GameObject ratObject = null;
+    GameObject ratObject = null;
 
 
     protected List<GameObject> ObjectsInRange;
@@ -61,6 +61,10 @@ public class Detection : MonoBehaviour
     public virtual void Start()
     {
         ObjectsInRange = new List<GameObject>();
+        // get the player object at start
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+        ratObject = GameObject.FindGameObjectWithTag("Prey");
+
         viewDir = startingDir;
     }
 
