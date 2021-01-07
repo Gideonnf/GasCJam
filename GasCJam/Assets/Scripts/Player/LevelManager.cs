@@ -7,13 +7,14 @@ public class LevelManager : SingletonBase<LevelManager>
     LevelLoader m_LevelChanger;
 
     public List<string> m_LevelSceneNames = new List<string>();
+    public string m_MainMenuName;
 
     // Start is called before the first frame update
     public override void Awake()
     {
         base.Awake();
 
-        m_CurrLevel = 1;
+        m_CurrLevel = 0;
         m_LevelUnlocked = 0;
 
         m_LevelChanger = GetComponent<LevelLoader>();
@@ -46,6 +47,11 @@ public class LevelManager : SingletonBase<LevelManager>
     {
         m_CurrLevel = levelNumber;
         m_LevelChanger.TransitionScene(m_LevelSceneNames[levelNumber]);
+    }
+
+    public void GoBackToMenu()
+    {
+        m_LevelChanger.TransitionScene(m_MainMenuName);
     }
 
     public void Transition()

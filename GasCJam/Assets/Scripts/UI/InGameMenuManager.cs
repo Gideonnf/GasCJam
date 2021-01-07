@@ -8,23 +8,38 @@ public class InGameMenuManager : SingletonBase<InGameMenuManager>
     //keeps the different type of menus
     public GameObject[] m_MenuType;
 
-    public void OpenMenu(MenuType type)
+    public void OpenMenu(int type)
     {
         if (m_BlurEffect != null)
             m_BlurEffect.SetActive(true);
 
-        if (m_MenuType.Length >= (int)type)
-            m_MenuType[(int)type].SetActive(true);
+        if (m_MenuType.Length >= type)
+            m_MenuType[type].SetActive(true);
     }
 
-    public void CloseMenu(MenuType type)
+    public void CloseMenu(int type)
     {
         //close the blur first
         if (m_BlurEffect != null)
             m_BlurEffect.SetActive(false);
 
-        if (m_MenuType.Length >= (int)type)
-            m_MenuType[(int)type].SetActive(false);
+        if (m_MenuType.Length >= type)
+            m_MenuType[type].SetActive(false);
+    }
+
+    public void NextLevel()
+    {
+        LevelManager.Instance.GoToNextLevel();
+    }
+
+    public void RestartLevel()
+    {
+        LevelManager.Instance.ReplayCurrentLevel();
+    }
+
+    public void GoBackToMainMenu()
+    {
+        LevelManager.Instance.GoBackToMenu();
     }
 }
 
