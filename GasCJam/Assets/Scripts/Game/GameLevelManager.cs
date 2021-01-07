@@ -16,7 +16,7 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
     [Header("Hole Scenerio")]
     public float m_ScaleMultiplier = 1.0f;
 
-    public override void Awake()
+    public void Start()
     {
         SoundManager.Instance.Play("BackgroundMusic");
     }
