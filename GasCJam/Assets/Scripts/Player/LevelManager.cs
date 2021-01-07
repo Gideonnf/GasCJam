@@ -47,4 +47,9 @@ public class LevelManager : SingletonBase<LevelManager>
         m_CurrLevel = levelNumber;
         m_LevelChanger.TransitionScene(m_LevelSceneNames[levelNumber]);
     }
+
+    public void Transition()
+    {
+        m_LevelChanger.Transition();
+    }
 }

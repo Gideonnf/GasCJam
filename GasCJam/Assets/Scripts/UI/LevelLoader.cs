@@ -14,6 +14,20 @@ public class LevelLoader : MonoBehaviour
         StartCoroutine(LoadLevel(sceneName));
     }
 
+    public void Transition()
+    {
+        StartCoroutine(TransitionAnimation());
+    }
+
+    IEnumerator TransitionAnimation()
+    {
+        m_Transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(m_TransitionTime);
+
+        m_Transition.SetTrigger("End");
+    }
+
     IEnumerator LoadLevel(string sceneName)
     {
         m_Transition.SetTrigger("Start");
