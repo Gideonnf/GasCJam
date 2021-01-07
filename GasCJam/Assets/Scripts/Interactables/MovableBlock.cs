@@ -150,6 +150,8 @@ public class MovableBlock : MonoBehaviour
                 }
             }
 
+            SoundManager.Instance.Play("RockDragging");
+
             yield return null;
         }
     }
