@@ -62,6 +62,12 @@ public class KittenDetection : Detection
         Gizmos.DrawWireSphere(transform.position, CircleRadius);
     }
 
+    public void SetViewDirection(DIRECTIONS movingDirection)
+    {
+        viewDir = movingDirection;
+    }
+
+
     public override bool DetectRadius()
     {
 

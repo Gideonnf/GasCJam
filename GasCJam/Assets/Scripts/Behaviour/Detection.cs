@@ -207,6 +207,7 @@ public class Detection : MonoBehaviour
         return Dir;
     }
 
+
     public virtual DIRECTIONS GetTargetDirection(Vector2 targetPos)
     {
         Vector2 currentPos = transform.position;

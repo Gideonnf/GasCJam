@@ -114,6 +114,7 @@ public class NewKittenMovement : MonoBehaviour
 
                     // Get the direction to the next tile
                     movingDir = kittenDetection.GetTargetDirection(targetTilePosition);
+                    kittenDetection.SetViewDirection(movingDir);
                 }
                 else
                 {
