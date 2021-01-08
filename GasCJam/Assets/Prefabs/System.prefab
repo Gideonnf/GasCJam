@@ -105,3 +105,24 @@ MonoBehaviour:
     m_HearingBaseOnDist: 0
     m_Loop: 0
     m_Source: {fileID: 0}
+  - m_Name: KittenWalk
+    m_Clip: {fileID: 8300000, guid: 658b0ac7f2948634394a61d502f7b5ff, type: 3}
+    m_Volume: 1
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 0
+    m_Source: {fileID: 0}
+  - m_Name: KittenSadMeow
+    m_Clip: {fileID: 8300000, guid: b393d53e3e2f84243807d829509121e4, type: 3}
+    m_Volume: 1
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 0
+    m_Source: {fileID: 0}
+  - m_Name: RatWalk
+    m_Clip: {fileID: 8300000, guid: 92e417e81f6d37c48b1460e30605f14b, type: 3}
+    m_Volume: 0.6
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 0
+    m_Source: {fileID: 0}

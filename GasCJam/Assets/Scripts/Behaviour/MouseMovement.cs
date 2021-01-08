@@ -151,8 +151,13 @@ public class MouseMovement : MonoBehaviour
                 currentIndex++;
             }
 
-             // move it move it to the limit limit
-             m_rigidBody.MovePosition(transform.position + directionVector * moveSpeed * Time.fixedDeltaTime);
+            if (targetTilePosition != Vector2.zero)
+            {
+                PlayWalkingSound();
+            }
+
+            // move it move it to the limit limit
+            m_rigidBody.MovePosition(transform.position + directionVector * moveSpeed * Time.fixedDeltaTime);
         }
     }
 
@@ -563,5 +568,10 @@ public class MouseMovement : MonoBehaviour
         m_Animator.SetBool("Moving", isMoving);
         m_Animator.SetFloat("Horizontal", directionVector.x);
         m_Animator.SetFloat("Vertical", directionVector.y);
+    }
+
+    public void PlayWalkingSound()
+    {
+        SoundManager.Instance.Play("RatWalk");
     }
 }

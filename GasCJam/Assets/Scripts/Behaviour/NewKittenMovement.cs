@@ -137,6 +137,68 @@ public class NewKittenMovement : MonoBehaviour
                 }
             }
 
+
+            Vector3 nextPos = transform.position + directionVector * moveSpeed * Time.fixedDeltaTime;
+            if (targetTilePosition != Vector2.zero)
+            {
+                // If it is moving along the X Axis
+                if (movingDir == Detection.DIRECTIONS.LEFT)
+                {
+                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
+
+                    //Debug.Log("kitten target tile position" + targetTilePosition);
+                    //Debug.Log("kitten position" + transform.position);
+
+                    if (nextPos.x <= targetXPos)
+                    {
+                        // it reached the tile
+                        targetReached = true;
+                    }
+                }
+                else if (movingDir == Detection.DIRECTIONS.RIGHT)
+                {
+                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
+
+                    if (nextPos.x >= targetXPos)
+                    {
+                        // it reached the tile
+                        targetReached = true;
+                    }
+                }
+                else if (movingDir == Detection.DIRECTIONS.UP)
+                {
+                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
+
+                    if (transform.position.y >= targetYPos)
+                    {
+                        targetReached = true;
+                    }
+                }
+                else if (movingDir == Detection.DIRECTIONS.DOWN)
+                {
+                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
+
+                    if (transform.position.y <= targetYPos)
+                    {
+                        targetReached = true;
+                    }
+                }
+                else if (movingDir == Detection.DIRECTIONS.NONE)
+                {
+                    // it shouldn't reach here lol
+                    targetTilePosition = Vector2Int.zero;
+                }
+
+                if (targetReached == true)
+                {
+                    // it reached the tile
+                    //transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
+                    m_rigidBody.MovePosition(MapManager.Instance.GetTileToWorldPos(targetTilePosition));                   
+                    StopMovement();
+                    return;
+                }
+            }
+
             // if there is no target tile yet
             // find the target tile
             if (targetTilePosition == Vector2.zero)
@@ -232,68 +294,13 @@ public class NewKittenMovement : MonoBehaviour
                     //}
                 }
             }
-            else
+
+            if (targetTilePosition != Vector2.zero)
             {
-                // If it is moving along the X Axis
-                if (movingDir == Detection.DIRECTIONS.LEFT)
-                {
-                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
-
-                    //Debug.Log("kitten target tile position" + targetTilePosition);
-                    //Debug.Log("kitten position" + transform.position);
-
-                    if (transform.position.x <= targetXPos)
-                    {
-                        // it reached the tile
-                        targetReached = true;
-                    }
-                }
-                else if (movingDir == Detection.DIRECTIONS.RIGHT)
-                {
-                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
-
-                    if (transform.position.x >= targetXPos)
-                    {
-                        // it reached the tile
-                        targetReached = true;
-                    }
-                }
-                else if (movingDir == Detection.DIRECTIONS.UP)
-                {
-                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
-
-                    if (transform.position.y >= targetYPos)
-                    {
-                        targetReached = true;
-                    }
-                }
-                else if (movingDir == Detection.DIRECTIONS.DOWN)
-                {
-                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
-
-                    if (transform.position.y <= targetYPos)
-                    {
-                        targetReached = true;
-                    }
-                }
-                else if (movingDir == Detection.DIRECTIONS.NONE)
-                {
-                    // it shouldn't reach here lol
-                    targetTilePosition = Vector2Int.zero;
-                }
-
-                if (targetReached == true)
-                {
-                    // it reached the tile
-                    transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
-                    StopMovement();
-                }
-
-
-                
-
-                m_rigidBody.MovePosition(transform.position + directionVector * moveSpeed * Time.fixedDeltaTime);
+                PlayWalkingSound();
             }
+
+            m_rigidBody.MovePosition(transform.position + directionVector * moveSpeed * Time.fixedDeltaTime);
         }
     }
 
@@ -604,6 +611,8 @@ public class NewKittenMovement : MonoBehaviour
         m_Animator.SetFloat("Vertical", directionVector.y);
 
         m_Animator.SetBool("Crying", kittenDetection.characterState == Detection.STATE.TIRED);
+
+        PlaySadMeow(isMoving);
     }
 
     public void UpdateAnimation(bool isMoving, Vector2 dirFacing)
@@ -613,6 +622,8 @@ public class NewKittenMovement : MonoBehaviour
         m_Animator.SetFloat("Vertical", dirFacing.y);
 
         m_Animator.SetBool("Crying", kittenDetection.characterState == Detection.STATE.TIRED);
+
+        PlaySadMeow(isMoving);
     }
 
     public void UpdateAnimation(bool isMoving, Detection.DIRECTIONS dir)
@@ -649,6 +660,19 @@ public class NewKittenMovement : MonoBehaviour
             Debug.Log("TOUCHING THE MOUSE AHFAUHAHFH");
 
             return;
+        }
+    }
+
+    public void PlayWalkingSound()
+    {
+        SoundManager.Instance.Play("KittenWalk");
+    }
+
+    public void PlaySadMeow(bool isMoving)
+    {
+        if (!isMoving && kittenDetection.characterState == Detection.STATE.TIRED)
+        {
+            SoundManager.Instance.Play("KittenSadMeow");
         }
     }
 }
