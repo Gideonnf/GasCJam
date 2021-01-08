@@ -195,7 +195,7 @@ public class MouseDetection : Detection
                             elapsedTime = 0.0f;
 
                         isShocked = true;
-                        Debug.Log("Mouse IsShocked Changed in line 197" + isShocked);
+                       // Debug.Log("Mouse IsShocked Changed in line 197" + isShocked);
 
                     }
                     // if it is a running state when it detects a enemy
@@ -215,7 +215,7 @@ public class MouseDetection : Detection
 
                             // it has to be shocked
                             isShocked = true;
-                            Debug.Log("Mouse IsShocked Changed in line 219" + isShocked);
+                           // Debug.Log("Mouse IsShocked Changed in line 219" + isShocked);
 
 
                             StopMovement();
@@ -276,7 +276,7 @@ public class MouseDetection : Detection
         else
         {
             isShocked = false;
-            Debug.Log("Mouse IsShocked Changed in line 277" + isShocked);
+           // Debug.Log("Mouse IsShocked Changed in line 277" + isShocked);
         }
         //else
         //{

@@ -71,6 +71,7 @@ public class KittenDetection : Detection
                     for (int i = 1; i <= diffX; ++i)
                     {
                         kittenMovement.ListOfRatTiles.Add(new Vector2Int(kittenGridPos.x + i * xOffset, kittenGridPos.y));
+  //                      kittenMovement.ListOfTilesTravelled.Add(new Vector2Int(kittenGridPos.x + i * xOffset, kittenGridPos.y));
                     }
                 }
                 else
@@ -83,6 +84,7 @@ public class KittenDetection : Detection
                     for (int i = 1; i <= diffY; ++i)
                     {
                         kittenMovement.ListOfRatTiles.Add(new Vector2Int(kittenGridPos.x, kittenGridPos.y + i * yOffset));
+ //                       kittenMovement.ListOfTilesTravelled.Add(new Vector2Int(kittenGridPos.x, kittenGridPos.y + i * yOffset));
                     }
                 }
 
@@ -153,7 +155,7 @@ public class KittenDetection : Detection
 
                         kittenMovement.UpdateAnimation(false, targetDir);
 
-                        Debug.Log("Cat IsShocked Changed in line 123" + isShocked);
+                       // Debug.Log("Cat IsShocked Changed in line 123" + isShocked);
 
                     }
 
@@ -165,7 +167,7 @@ public class KittenDetection : Detection
         {
             isShocked = false;
 
-            Debug.Log("Cat IsShocked Changed in line 134" + isShocked);
+          //  Debug.Log("Cat IsShocked Changed in line 134" + isShocked);
         }
 
         return false;
@@ -291,7 +293,7 @@ public class KittenDetection : Detection
                 {
                     isShocked = true;
 
-                    Debug.Log("Cat IsShocked Changed in line 227" + isShocked);
+                    //Debug.Log("Cat IsShocked Changed in line 227" + isShocked);
 
                     targetObject = ratObject;
 

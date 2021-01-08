@@ -286,11 +286,13 @@ public class Detection : MonoBehaviour
 
     public virtual DIRECTIONS GetTargetDirection(Vector2 targetPos)
     {
-        Vector2 currentPos = transform.position;
-
+        Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+        Vector2Int targetTilePos = MapManager.Instance.GetWorldToTilePos(targetPos);
         // Get the direction of the target
-        Vector2 Dir = (targetPos - currentPos).normalized;
 
+        Vector2Int DirInt = (targetTilePos - currentTilePos);
+
+        Vector2 Dir = new Vector2(DirInt.x, DirInt.y).normalized;
         //Debug.Log(targetDir);
         // Debug.Log(Dir);
 
