@@ -21,4 +21,9 @@ public class MainMenuUI : MonoBehaviour
     {
         LevelManager.Instance.GoToLevel(levelNumber);
     }
+
+    public void ButtonClick()
+    {
+        SoundManager.Instance.Play("ButtonClick");
+    }
 }
