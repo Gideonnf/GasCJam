@@ -34,6 +34,26 @@ public class MouseMovement : MonoBehaviour
         mouseDetection = GetComponent<MouseDetection>();
         m_rigidBody = GetComponent<Rigidbody2D>();
         m_Stop = false;
+
+
+        Vector2 startingDir = Vector2.zero;
+        switch (mouseDetection.startingDir)
+        {
+            case Detection.DIRECTIONS.UP:
+                startingDir = new Vector2(0, 1);
+                break;
+            case Detection.DIRECTIONS.DOWN:
+                startingDir = new Vector2(0, -1);
+                break;
+            case Detection.DIRECTIONS.LEFT:
+                startingDir = new Vector2(-1, 0);
+                break;
+            case Detection.DIRECTIONS.RIGHT:
+                startingDir = new Vector2(1, 0);
+                break;
+        }
+
+        UpdateAnimation(false, startingDir);
     }
 
     // Update is called once per frame
@@ -582,6 +602,13 @@ public class MouseMovement : MonoBehaviour
         m_Animator.SetBool("Moving", isMoving);
         m_Animator.SetFloat("Horizontal", directionVector.x);
         m_Animator.SetFloat("Vertical", directionVector.y);
+    }
+
+    public void UpdateAnimation(bool isMoving, Vector2 dirFacing)
+    {
+        m_Animator.SetBool("Moving", isMoving);
+        m_Animator.SetFloat("Horizontal", dirFacing.x);
+        m_Animator.SetFloat("Vertical", dirFacing.y);
     }
 
     public void PlayWalkingSound()
