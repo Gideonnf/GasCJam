@@ -12,6 +12,8 @@ public class KittenDetection : Detection
     public bool isShocked = false;
     [Tooltip("Detection circle for rat")]
     public float RatDetectionRadius;
+    [Tooltip("Detection circle for Player")]
+    public float PlayerDetectionRadius;
 
     float elapsedTime;
 
@@ -254,6 +256,30 @@ public class KittenDetection : Detection
         return false;
     }
 
+    public bool DetectPlayer()
+    {
+        Collider2D[] ListOfColliders = Physics2D.OverlapCircleAll(transform.position, PlayerDetectionRadius);
+
+        foreach (Collider2D collider in ListOfColliders)
+        {
+            // don't check for itself
+            if (collider.gameObject == this.gameObject)
+                continue;
+
+            //TODO:: make sure it check through walls
+
+            // if it collides with the prey
+            if (collider.gameObject.tag == "Player")
+            {
+                DetectPlayer();
+            }
+        }
+
+        return false;
+    }
+
+
+
     // A couroutine to run for checking of objects
     // Instead of checking every frame it checks every second
     IEnumerator CheckForObjectsInRange()
@@ -262,6 +288,8 @@ public class KittenDetection : Detection
         {
             // Check if the rat is touching the cat
             DetectRat();
+
+            DetectPlayer();
             // If it successfully detected something in it's radius
             // Check for what direction it is in
             DetectRadius();
@@ -277,17 +305,7 @@ public class KittenDetection : Detection
         {
             if (DetectInView(CHARACTERS.PLAYER) == true)
             {
-                // lose the game
-                targetObject = playerObject;
-                targetDir = GetTargetDirection();
-
-                kittenMovement.m_Stop = true;
-
-                //show animation
-                kittenMovement.UpdateAnimation(false, targetDir);
-                kittenMovement.m_Animator.SetTrigger("Shock");
-
-                GameLevelManager.Instance.KittenSeesCat();
+                DetectPlayerBehvaiour();
             }
 
             if (DetectInView(CHARACTERS.MOUSE) == true)
@@ -310,5 +328,23 @@ public class KittenDetection : Detection
 
             yield return new WaitForSeconds(.2f);
         }
+    }
+
+    public void DetectPlayerBehvaiour()
+    {
+        if (kittenMovement.m_Stop)
+            return;
+
+        // lose the game
+        targetObject = playerObject;
+        targetDir = GetTargetDirection();
+
+        kittenMovement.m_Stop = true;
+
+        //show animation
+        kittenMovement.UpdateAnimation(false, targetDir);
+        kittenMovement.m_Animator.SetTrigger("Shock");
+
+        GameLevelManager.Instance.KittenSeesCat();
     }
 }
