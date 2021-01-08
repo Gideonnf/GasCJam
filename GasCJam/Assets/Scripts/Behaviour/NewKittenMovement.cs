@@ -51,6 +51,24 @@ public class NewKittenMovement : MonoBehaviour
 
         ListOfTilesTravelled.Add(startingPos);
 
+        Vector2 startingDir = Vector2.zero;
+        switch (kittenDetection.startingDir)
+        {
+            case Detection.DIRECTIONS.UP:
+                startingDir = new Vector2(0,1);
+                break;
+            case Detection.DIRECTIONS.DOWN:
+                startingDir = new Vector2(0, -1);
+                break;
+            case Detection.DIRECTIONS.LEFT:
+                startingDir = new Vector2(-1, 0);
+                break;
+            case Detection.DIRECTIONS.RIGHT:
+                startingDir = new Vector2(1, 0);
+                break;
+        }
+
+        UpdateAnimation(false, startingDir);
     }
 
     // Update is called once per frame
@@ -155,6 +173,7 @@ public class NewKittenMovement : MonoBehaviour
                             // set the target tiles
                             targetTilePosition = ListOfRatTiles[currentRatIndex];
                             directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+                            UpdateAnimation(true);
 
                             // increment the rat index to keep track 
                             currentRatIndex++;
@@ -565,6 +584,44 @@ public class NewKittenMovement : MonoBehaviour
         m_Animator.SetBool("IsMoving", isMoving);
         m_Animator.SetFloat("Horizontal", directionVector.x);
         m_Animator.SetFloat("Vertical", directionVector.y);
+
+        m_Animator.SetBool("Crying", kittenDetection.characterState == Detection.STATE.TIRED);
+    }
+
+    public void UpdateAnimation(bool isMoving, Vector2 dirFacing)
+    {
+        m_Animator.SetBool("IsMoving", isMoving);
+        m_Animator.SetFloat("Horizontal", dirFacing.x);
+        m_Animator.SetFloat("Vertical", dirFacing.y);
+
+        m_Animator.SetBool("Crying", kittenDetection.characterState == Detection.STATE.TIRED);
+    }
+
+    public void UpdateAnimation(bool isMoving, Detection.DIRECTIONS dir)
+    {
+        Vector2 startingDir = Vector2.zero;
+        switch (kittenDetection.startingDir)
+        {
+            case Detection.DIRECTIONS.UP:
+                startingDir = new Vector2(0, 1);
+                break;
+            case Detection.DIRECTIONS.DOWN:
+                startingDir = new Vector2(0, -1);
+                break;
+            case Detection.DIRECTIONS.LEFT:
+                startingDir = new Vector2(-1, 0);
+                break;
+            case Detection.DIRECTIONS.RIGHT:
+                startingDir = new Vector2(1, 0);
+                break;
+        }
+
+        UpdateAnimation(isMoving, startingDir);
+    }
+
+    public void Shock()
+    {
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

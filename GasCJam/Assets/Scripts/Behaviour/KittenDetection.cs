@@ -14,7 +14,6 @@ public class KittenDetection : Detection
     public float RatDetectionRadius;
 
     float elapsedTime;
-    
 
     // Start is called before the first frame update
     public override void Start()
@@ -119,6 +118,8 @@ public class KittenDetection : Detection
 
                         isShocked = true;
 
+                        kittenMovement.UpdateAnimation(false, targetDir);
+
                         Debug.Log("Cat IsShocked Changed in line 123" + isShocked);
 
                     }
@@ -216,6 +217,7 @@ public class KittenDetection : Detection
             if (DetectInView() == CHARACTERS.PLAYER)
             {
                 // lose the game
+
             }
 
             if (DetectInView() == CHARACTERS.MOUSE)
@@ -229,6 +231,10 @@ public class KittenDetection : Detection
                     targetObject = ratObject;
 
                     targetDir = GetTargetDirection();
+
+                    if (characterState == STATE.IDLE)
+                        kittenMovement.UpdateAnimation(false, targetDir);
+                    //TODO:: put the exlaimation mark here
                 }
             }
 
