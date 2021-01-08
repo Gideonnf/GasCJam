@@ -237,13 +237,12 @@ public class NewKittenMovement : MonoBehaviour
                 // If it is moving along the X Axis
                 if (movingDir == Detection.DIRECTIONS.LEFT)
                 {
-                    float targetXPos = targetTilePosition.x;
-                    float currentXPos = MapManager.Instance.GetWorldToTilePos(transform.position).x;
+                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
 
                     //Debug.Log("kitten target tile position" + targetTilePosition);
                     //Debug.Log("kitten position" + transform.position);
 
-                    if (currentXPos <= targetXPos)
+                    if (transform.position.x <= targetXPos)
                     {
                         // it reached the tile
                         targetReached = true;
@@ -251,10 +250,9 @@ public class NewKittenMovement : MonoBehaviour
                 }
                 else if (movingDir == Detection.DIRECTIONS.RIGHT)
                 {
-                    float targetXPos = targetTilePosition.x;
-                    float currentXPos = MapManager.Instance.GetWorldToTilePos(transform.position).x;
+                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
 
-                    if (currentXPos >= targetXPos)
+                    if (transform.position.x >= targetXPos)
                     {
                         // it reached the tile
                         targetReached = true;
@@ -262,20 +260,18 @@ public class NewKittenMovement : MonoBehaviour
                 }
                 else if (movingDir == Detection.DIRECTIONS.UP)
                 {
-                    float targetYPos = targetTilePosition.y;
-                    float currentYPos = MapManager.Instance.GetWorldToTilePos(transform.position).y;
+                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
 
-                    if (currentYPos >= targetYPos)
+                    if (transform.position.y >= targetYPos)
                     {
                         targetReached = true;
                     }
                 }
                 else if (movingDir == Detection.DIRECTIONS.DOWN)
                 {
-                    float targetYPos = targetTilePosition.y;
-                    float currentYPos = MapManager.Instance.GetWorldToTilePos(transform.position).y;
+                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
 
-                    if (currentYPos <= targetYPos)
+                    if (transform.position.y <= targetYPos)
                     {
                         targetReached = true;
                     }
@@ -289,7 +285,7 @@ public class NewKittenMovement : MonoBehaviour
                 if (targetReached == true)
                 {
                     // it reached the tile
-                   // transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
+                    transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
                     StopMovement();
                 }
 
