@@ -30,7 +30,7 @@ public class NewKittenMovement : MonoBehaviour
     List<Vector2Int> ListOfTilesTravelled = new List<Vector2Int>();
 
     // Keep track of the tiles that the rat travelled
-    List<Vector2Int> ListOfRatTiles = new List<Vector2Int>();
+    public List<Vector2Int> ListOfRatTiles = new List<Vector2Int>();
 
     int currentIndex = 0;
 
@@ -190,6 +190,7 @@ public class NewKittenMovement : MonoBehaviour
                             targetTilePosition = ListOfRatTiles[currentRatIndex];
                             Vector2Int Vec2Direction = (targetTilePosition - MapManager.Instance.GetWorldToTilePos(transform.position));
                             directionVector = new Vector3(Vec2Direction.x, Vec2Direction.y, 0);
+                            directionVector.Normalize();
                             UpdateAnimation(true);
 
                             // increment the rat index to keep track 

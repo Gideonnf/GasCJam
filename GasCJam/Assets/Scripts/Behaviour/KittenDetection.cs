@@ -53,6 +53,39 @@ public class KittenDetection : Detection
                 isShocked = false;
 
                 elapsedTime = 0;
+
+                //get mouse pos
+                Vector2Int ratGridPos = MapManager.Instance.GetWorldToTilePos(ratObject.transform.position);
+                Vector2Int kittenGridPos = MapManager.Instance.GetWorldToTilePos(gameObject.transform.position);
+
+                //check which direction its facing
+                Vector2Int diff = ratGridPos - kittenGridPos;
+                
+                if (targetDir == DIRECTIONS.LEFT || targetDir == DIRECTIONS.RIGHT)
+                {
+                    int xOffset = 1;
+                    if (targetDir == DIRECTIONS.LEFT)
+                        xOffset = -1;
+
+                    int diffX = Mathf.Abs(diff.x);
+                    for (int i = 1; i <= diffX; ++i)
+                    {
+                        kittenMovement.ListOfRatTiles.Add(new Vector2Int(kittenGridPos.x + i * xOffset, kittenGridPos.y));
+                    }
+                }
+                else
+                {
+                    int yOffset = 1;
+                    if (targetDir == DIRECTIONS.DOWN)
+                        yOffset = -1;
+
+                    int diffY = Mathf.Abs(diff.y);
+                    for (int i = 1; i <= diffY; ++i)
+                    {
+                        kittenMovement.ListOfRatTiles.Add(new Vector2Int(kittenGridPos.x, kittenGridPos.y + i * yOffset));
+                    }
+                }
+
             }
         }
         else
