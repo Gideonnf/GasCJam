@@ -22,9 +22,9 @@ public class LevelManager : SingletonBase<LevelManager>
 
     public void LevelCleared()
     {
-        if (m_CurrLevel > m_LevelUnlocked)
+        if (m_CurrLevel == m_LevelUnlocked)
         {
-            m_LevelUnlocked = m_CurrLevel;
+            m_LevelUnlocked = m_CurrLevel + 1;
         }
     }
 

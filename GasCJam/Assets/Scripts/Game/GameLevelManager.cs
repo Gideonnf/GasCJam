@@ -81,8 +81,13 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
     //go to next level
     public void Win()
     {
-        //TODO:wait for a second or so before showing the win screen?
+        //wait for a second or so before showing the win screen?
         //SHOW THE WIN UI
+
+        //pause the rat and mouse and player
+        m_Player.m_Stop = true;
+        m_Kitten.m_Stop = true;
+        m_Mouse.m_Stop = true;
 
         StartCoroutine(WinEffect());
     }
@@ -91,6 +96,7 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
     {
         yield return new WaitForSeconds(1.0f);
 
+        LevelManager.Instance.LevelCleared();
         InGameMenuManager.Instance.OpenMenu((int)MenuType.WIN_SCREEN);
         SoundManager.Instance.Play("WinScreen");
     }

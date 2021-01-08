@@ -244,7 +244,10 @@ public class KittenDetection : Detection
             if (collider.gameObject.tag == "Prey")
             {
                 // Win the game
-                Debug.LogError("Game ended");
+                //Debug.LogError("Game ended");
+                if (!kittenMovement.m_Stop)
+                    GameLevelManager.Instance.Win();
+
             }
         }
 

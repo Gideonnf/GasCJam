@@ -7,6 +7,7 @@ public class InGameMenuManager : SingletonBase<InGameMenuManager>
 
     //keeps the different type of menus
     public GameObject[] m_MenuType;
+    public GameObject m_InGameMenu;
 
     public void OpenMenu(int type)
     {
@@ -15,6 +16,12 @@ public class InGameMenuManager : SingletonBase<InGameMenuManager>
 
         if (m_MenuType.Length >= type)
             m_MenuType[type].SetActive(true);
+
+        if (type == (int)MenuType.WIN_SCREEN || type == (int)MenuType.LOSE_SCREEN)
+        {
+            if (m_InGameMenu != null)
+                m_InGameMenu.SetActive(false);
+        }
     }
 
     public void CloseMenu(int type)

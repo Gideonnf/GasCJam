@@ -1519,6 +1519,7 @@ MonoBehaviour:
   - {fileID: 4353287977186470572}
   - {fileID: 4353287977910761660}
   - {fileID: 4353287976613070490}
+  m_InGameMenu: {fileID: 4353287976385092568}
 --- !u!1 &4353287977811836884
 GameObject:
   m_ObjectHideFlags: 0
