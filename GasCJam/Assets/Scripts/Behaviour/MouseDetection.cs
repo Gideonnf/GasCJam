@@ -191,6 +191,7 @@ public class MouseDetection : Detection
             //    return false;
 
             // Loop through the detected objects
+            string successfulTag = "";
             foreach (GameObject detectedObj in ObjectsInRange)
             {
                 // It will only look for these two objects
@@ -199,16 +200,27 @@ public class MouseDetection : Detection
                     // Only detect when its idle
                     if (characterState == STATE.IDLE)
                     {
+                        //THIS IS A HACK, STORE PREV DATA
+                        GameObject PREVtargetObject = targetObject;
+                        DIRECTIONS prevTargetDir = targetDir;
+
                         // Get the target object
                         targetObject = detectedObj;
                         // Check for the target direction
                         targetDir = GetTargetDirection();
-         
+
                         // Check if the path to the detected object is clear
                         if (CheckIfClear(targetDir, targetObject.transform.position) == false)
                         {
                             // that target isnt available a danger to the mouse
-                            StopMovement();
+                            if (successfulTag == "") //if theres nothing just reset
+                            {
+                                StopMovement();
+                            }
+
+                            //reset the data
+                            targetObject = PREVtargetObject;
+                            targetDir = prevTargetDir;
 
                             // check the next if there is
                             continue;
@@ -226,8 +238,8 @@ public class MouseDetection : Detection
                                 m_ShockUI.gameObject.SetActive(true);
                         }
 
-                       // Debug.Log("Mouse IsShocked Changed in line 197" + isShocked);
-
+                        // Debug.Log("Mouse IsShocked Changed in line 197" + isShocked);
+                        successfulTag = detectedObj.tag;
                     }
                     // if it is a running state when it detects a enemy
                     else if (characterState == STATE.RUNNING)

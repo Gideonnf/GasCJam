@@ -28,6 +28,8 @@ public class MouseMovement : MonoBehaviour
 
     public bool m_Stop = false;
 
+    bool m_NextTileIsZeroPos = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,7 +82,7 @@ public class MouseMovement : MonoBehaviour
             }
 
             Vector3 nextPos = transform.position + directionVector * moveSpeed * Time.fixedDeltaTime;
-            if (targetTilePosition != Vector2.zero)
+            if (targetTilePosition != Vector2.zero || (targetTilePosition == Vector2.zero && m_NextTileIsZeroPos))
             {
                 // If it is moving along the X Axis
                 if (movingDir == Detection.DIRECTIONS.LEFT)
@@ -139,7 +141,7 @@ public class MouseMovement : MonoBehaviour
             }
 
             // if it has no target vector position to go to now
-            if (targetTilePosition == Vector2.zero)
+            if (targetTilePosition == Vector2.zero && !m_NextTileIsZeroPos)
             {
                 // if it reached the end of the movable tiles
                 // theres no more to move
@@ -160,6 +162,10 @@ public class MouseMovement : MonoBehaviour
 
                 // Set the target tile position to the first index of the list
                 targetTilePosition = ListOfMovableTiles[currentIndex];
+
+                //TODO:: NEED CHECK IF ITS REALLY JUST 0,0
+                m_NextTileIsZeroPos = targetTilePosition == Vector2.zero;
+
 
                 // check this shit
 
@@ -257,6 +263,8 @@ public class MouseMovement : MonoBehaviour
             transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
         else
             targetTilePosition = Vector2Int.zero;
+
+        m_NextTileIsZeroPos = false;
 
         targetReached = false;
         //movingDir = Detection.DIRECTIONS.NONE;
