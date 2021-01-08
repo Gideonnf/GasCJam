@@ -113,12 +113,17 @@ public class MouseDetection : Detection
         Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
         Vector2Int kittenTilePos = MapManager.Instance.GetWorldToTilePos(kittenObject.transform.position);
 
+        int counter = 0;
+
         // Dont check for the kitten if its being chased by the kitten
         if (targetObject == kittenObject)
             return false;
 
         while (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false)
         {
+
+            counter++;
+
             switch (dirToCheck)
             {
                 case Detection.DIRECTIONS.UP:
@@ -139,11 +144,15 @@ public class MouseDetection : Detection
                     break;
             }
 
+            if (counter >= SightDistance)
+                break;
+
             // the kitten is along that direction
             if (currentTilePos == kittenTilePos)
             {
                 return true;
             }
+
 
         }
 
