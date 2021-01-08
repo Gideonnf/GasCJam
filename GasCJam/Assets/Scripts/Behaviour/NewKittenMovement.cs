@@ -170,6 +170,14 @@ public class NewKittenMovement : MonoBehaviour
                             kittenDetection.SetViewDirection(movingDir);
                         }
                     }
+                    else
+                    {
+                        // if it is not in its starting pos
+                        if ((Vector2)transform.position != startingPos)
+                        {
+                            kittenDetection.characterState = Detection.STATE.TIRED;
+                        }
+                    }
 
                     ////Get the moving Direction
                     //if (GetMovingDirection())
