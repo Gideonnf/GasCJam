@@ -290,11 +290,18 @@ public class KittenDetection : Detection
                 continue;
 
             //TODO:: make sure it check through walls
+            // help test ty
 
             // if it collides with the prey
             if (collider.gameObject.tag == "Player")
             {
-                DetectPlayer();
+                DIRECTIONS detectedObjDir = GetTargetDirection(collider.gameObject.transform.position);
+
+                if (CheckIfClear(detectedObjDir, collider.gameObject.transform.position))
+                {
+                    // The path is clear
+
+                }
             }
         }
 
