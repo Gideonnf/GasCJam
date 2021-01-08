@@ -22,7 +22,7 @@ TagManager:
   - Wall
   - PlayerFeetCollider
   - Hole
-  - 
+  - InGameUI
   - 
   - 
   - 
@@ -59,4 +59,7 @@ TagManager:
     locked: 0
   - name: OuterTreeFront
     uniqueID: 688829047
+    locked: 0
+  - name: InGameUI
+    uniqueID: 3252841637
     locked: 0

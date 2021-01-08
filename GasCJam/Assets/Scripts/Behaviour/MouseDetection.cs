@@ -18,6 +18,10 @@ public class MouseDetection : Detection
 
     float elapsedTime;
 
+    [Header("ShockUI")]
+    public ExclaimationMarkUI m_ShockUI;
+    public GameObject m_PlayerShockUI;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -58,6 +62,13 @@ public class MouseDetection : Detection
                 isShocked = false;
 
                 //elapsedTime = 0;
+                if (m_ShockUI != null)
+                    m_ShockUI.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (m_ShockUI != null)
+                    m_ShockUI.UpdateExclaimationMarkUI(1.0f - (shockTime - elapsedTime) / shockTime);
             }
         }
     }
@@ -204,6 +215,16 @@ public class MouseDetection : Detection
                             elapsedTime = 0.0f;
 
                         isShocked = true;
+
+                        if (detectedObj.tag == "Kitten")
+                        {
+                            if (m_ShockUI != null)
+                                m_ShockUI.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            StartCoroutine(PlayerShockUITime());
+                        }
                        // Debug.Log("Mouse IsShocked Changed in line 197" + isShocked);
 
                     }
@@ -224,9 +245,9 @@ public class MouseDetection : Detection
 
                             // it has to be shocked
                             isShocked = true;
-                           // Debug.Log("Mouse IsShocked Changed in line 219" + isShocked);
-
-
+                            // Debug.Log("Mouse IsShocked Changed in line 219" + isShocked);
+                            StartCoroutine(PlayerShockUITime());
+                        
                             StopMovement();
                             mouseMovement.StopMovement();
                             mouseMovement.ResetMovementList();
@@ -374,6 +395,17 @@ public class MouseDetection : Detection
 
             yield return new WaitForSeconds(.1f);
         }
+    }
+
+    IEnumerator PlayerShockUITime()
+    {
+        if (m_PlayerShockUI != null)
+            m_PlayerShockUI.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(.8f);
+
+        if (m_PlayerShockUI != null)
+            m_PlayerShockUI.gameObject.SetActive(false);
     }
 
 }

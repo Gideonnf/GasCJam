@@ -17,6 +17,9 @@ public class KittenDetection : Detection
 
     float elapsedTime;
 
+    [Header("ShockUI")]
+    public ExclaimationMarkUI m_ShockUI;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -90,6 +93,13 @@ public class KittenDetection : Detection
                     }
                 }
 
+                if (m_ShockUI != null)
+                    m_ShockUI.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (m_ShockUI != null)
+                    m_ShockUI.UpdateExclaimationMarkUI(1.0f - (shockTime - elapsedTime) / shockTime);
             }
         }
         else
@@ -154,6 +164,8 @@ public class KittenDetection : Detection
                         }
 
                         isShocked = true;
+                        if (m_ShockUI != null)
+                            m_ShockUI.gameObject.SetActive(true);
 
                         kittenMovement.UpdateAnimation(false, targetDir);
 
@@ -168,8 +180,10 @@ public class KittenDetection : Detection
         else
         {
             isShocked = false;
+            if (m_ShockUI != null)
+                m_ShockUI.gameObject.SetActive(false);
 
-          //  Debug.Log("Cat IsShocked Changed in line 134" + isShocked);
+            //  Debug.Log("Cat IsShocked Changed in line 134" + isShocked);
         }
 
         return false;
