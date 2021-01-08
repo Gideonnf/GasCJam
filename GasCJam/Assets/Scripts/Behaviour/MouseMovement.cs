@@ -382,6 +382,9 @@ public class MouseMovement : MonoBehaviour
                        // Debug.Log("Moving Right 2");
 
                         tempDirection = Detection.DIRECTIONS.RIGHT;
+
+                        if (CheckDirectionSize(Detection.DIRECTIONS.RIGHT) <= 1)
+                            tempDirection = Detection.DIRECTIONS.LEFT;
                         //return Detection.DIRECTIONS.RIGHT;
                     }
                     else
@@ -390,6 +393,9 @@ public class MouseMovement : MonoBehaviour
                        // Debug.Log("Moving Left 2");
 
                         tempDirection = Detection.DIRECTIONS.LEFT;
+
+                        if (CheckDirectionSize(Detection.DIRECTIONS.LEFT) <= 1)
+                            tempDirection = Detection.DIRECTIONS.RIGHT;
 
                         //return Detection.DIRECTIONS.LEFT;
                     }
@@ -418,14 +424,22 @@ public class MouseMovement : MonoBehaviour
                 else
                 {
                     // the target is below
+                    //TODO::DUCTTAPE TO THE MAX, MAKE SURE THERES SPACE BEFORE RUNNING
                     if (targetTilePos.y <= transform.position.y)
                     {
                         tempDirection = Detection.DIRECTIONS.UP;
+
+                        //if up no space
+                        if (CheckDirectionSize(Detection.DIRECTIONS.UP) <= 1)
+                            tempDirection = Detection.DIRECTIONS.DOWN;
                     }
-                // the target is ontop
-                else
+                    // the target is ontop
+                    else
                     {
                         tempDirection = Detection.DIRECTIONS.DOWN;
+
+                        if (CheckDirectionSize(Detection.DIRECTIONS.DOWN) <= 1)
+                            tempDirection = Detection.DIRECTIONS.UP;
                     }
                 }
             }
