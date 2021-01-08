@@ -23,7 +23,9 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
         //pause the player
         m_Player.m_Stop = true;
 
-        //TODO::might need pause the kitten? stop movement
+        //might need pause the kitten? stop movement
+        m_Kitten.m_Stop = true;
+
         //kitten starts crying
         m_Kitten.m_Animator.SetBool("Crying", true);
 
@@ -55,6 +57,7 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
 
         //show the lose UI and restart button
         InGameMenuManager.Instance.OpenMenu((int)MenuType.LOSE_SCREEN);
+        SoundManager.Instance.Play("LoseScreen");
     }
 
     //FOR KITTEN SEEING PLAYER
@@ -68,9 +71,10 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
 
     IEnumerator KittenSeesCatEffects()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
 
         InGameMenuManager.Instance.OpenMenu((int)MenuType.LOSE_SCREEN);
+        SoundManager.Instance.Play("LoseScreen");
     }
 
     //kitten manage to eat the rat
@@ -79,6 +83,15 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
     {
         //TODO:wait for a second or so before showing the win screen?
         //SHOW THE WIN UI
+
+        StartCoroutine(WinEffect());
+    }
+
+    IEnumerator WinEffect()
+    {
+        yield return new WaitForSeconds(1.0f);
+
         InGameMenuManager.Instance.OpenMenu((int)MenuType.WIN_SCREEN);
+        SoundManager.Instance.Play("WinScreen");
     }
 }

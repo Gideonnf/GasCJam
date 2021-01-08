@@ -27,6 +27,15 @@ public class InGameMenuManager : SingletonBase<InGameMenuManager>
             m_MenuType[type].SetActive(false);
     }
 
+    public void TogglePauseMenu()
+    {
+        if (m_BlurEffect != null)
+            m_BlurEffect.SetActive(!m_BlurEffect.activeSelf);
+
+        if (m_MenuType[(int)MenuType.PAUSE_SCREEN] != null)
+            m_MenuType[(int)MenuType.PAUSE_SCREEN].SetActive(!m_MenuType[(int)MenuType.PAUSE_SCREEN].activeSelf);
+    }
+
     public void NextLevel()
     {
         LevelManager.Instance.GoToNextLevel();
@@ -40,6 +49,11 @@ public class InGameMenuManager : SingletonBase<InGameMenuManager>
     public void GoBackToMainMenu()
     {
         LevelManager.Instance.GoBackToMenu();
+    }
+
+    public void PlayButtonClick()
+    {
+        SoundManager.Instance.Play("ButtonClick");
     }
 }
 
