@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   startingPos: {x: 0, y: 0}
-  maxTravelDistance: 8
+  maxTravelDistance: 5
   minTravelDistance: 0
   m_Animator: {fileID: 6793352393782947398}
 --- !u!114 &631104831
@@ -91,9 +91,12 @@ MonoBehaviour:
   viewDir: 4
   startingDir: 2
   characterState: 0
-  shockTime: 1.9
+  playerObject: {fileID: 0}
+  ratObject: {fileID: 0}
+  kittenObject: {fileID: 0}
+  shockTime: 1.2
   isShocked: 0
-  RatDetectionRadius: 0
+  RatDetectionRadius: 0.5
 --- !u!58 &5675176376966360138
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -513,7 +513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 631104831, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
       propertyPath: shockTime
-      value: 2
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 631104831, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
       propertyPath: RatDetectionRadius
@@ -8193,6 +8193,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4334334669019854761, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
+      propertyPath: shockTime
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7281651185554422600, guid: 3dd27e7062d9d6946ba6f23bb7bc1b67, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.53

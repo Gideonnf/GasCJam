@@ -176,8 +176,11 @@ MonoBehaviour:
   viewDir: 4
   startingDir: 0
   characterState: 0
+  playerObject: {fileID: 0}
+  ratObject: {fileID: 0}
+  kittenObject: {fileID: 0}
   playerInSight: 0
-  shockTime: 2
+  shockTime: 1.2
   isShocked: 0
 --- !u!114 &8648553465782317771
 MonoBehaviour:
