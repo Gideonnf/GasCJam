@@ -85,6 +85,42 @@ public class MouseDetection : Detection
         Gizmos.DrawWireSphere(transform.position, CircleRadius);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="character">The character to check for</param>
+    /// <returns>true if it is within a tile spacing</returns>
+    public bool IsEnemyNearby(CHARACTERS character)
+    {
+        Vector2Int characterTilePosition = Vector2Int.zero;
+        Vector2 characterPosition = Vector2.zero ;
+
+        // it is already targetting the player
+        if (targetObject == playerObject)
+            return false;
+
+
+        if (character == CHARACTERS.PLAYER)
+        {
+            characterPosition = playerObject.transform.position;
+            characterTilePosition = MapManager.Instance.GetWorldToTilePos(playerObject.transform.position);
+        }
+
+        Vector2Int currentTilePosition = MapManager.Instance.GetWorldToTilePos(transform.position);
+
+        DIRECTIONS characterDirection = GetTargetDirection(characterPosition);
+
+        // it is within 1 tile
+        if(Vector2Int.Distance(currentTilePosition, characterTilePosition) <= 1)
+        {
+            // check if its through the wall
+            if (CheckIfClear(characterDirection, characterPosition))
+                return true;
+
+        }
+
+        return false;
+    }
 
     /// <summary>
     ///  For checking nearby enemies

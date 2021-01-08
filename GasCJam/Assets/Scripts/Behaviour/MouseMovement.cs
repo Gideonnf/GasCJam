@@ -145,7 +145,7 @@ public class MouseMovement : MonoBehaviour
             {
                 // if it reached the end of the movable tiles
                 // theres no more to move
-                if(currentIndex >= ListOfMovableTiles.Count)
+                if(currentIndex >= ListOfMovableTiles.Count || mouseDetection.IsEnemyNearby(Detection.CHARACTERS.PLAYER))
                 {
                     //transform.position = MapManager.Instance.GetTileToWorldPos(ListOfMovableTiles[currentIndex - 1]);
 
@@ -165,9 +165,6 @@ public class MouseMovement : MonoBehaviour
 
                 //TODO:: NEED CHECK IF ITS REALLY JUST 0,0
                 m_NextTileIsZeroPos = targetTilePosition == Vector2.zero;
-
-
-                // check this shit
 
                 Vector2Int Vec2Direction = (targetTilePosition - MapManager.Instance.GetWorldToTilePos(transform.position));
                 directionVector = new Vector3(Vec2Direction.x, Vec2Direction.y, 0);
