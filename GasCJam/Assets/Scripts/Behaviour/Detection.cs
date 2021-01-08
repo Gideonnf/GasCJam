@@ -105,6 +105,80 @@ public class Detection : MonoBehaviour
         return false;
     }
 
+    public virtual bool CheckForCharacters(CHARACTERS characterToCheck, Vector2Int tilePosition)
+    {
+
+        return false;
+    }
+
+    public virtual bool DetectInView(CHARACTERS characterToCheck)
+    {
+        Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+        bool characterFound = false;
+
+        // Increment it first because you shouldn't check ur own position
+        // thats not a good idea lmao
+        switch (viewDir)
+        {
+            case DIRECTIONS.UP:
+                currentTilePos.y++;
+                break;
+            case DIRECTIONS.DOWN:
+                currentTilePos.y--;
+                break;
+            case DIRECTIONS.LEFT:
+                currentTilePos.x--;
+                break;
+            case DIRECTIONS.RIGHT:
+                currentTilePos.x++;
+                break;
+            default:
+                Debug.Log("It shouldn't reach here lol if it does then fuk we screwed");
+                break;
+        }
+
+        for (int index = 0; index < SightDistance; ++index)
+        {
+            // Checks the tile if any of the objects are here
+            if (MapManager.Instance.IsThereTileOnMap(currentTilePos))
+                 return false;
+
+            // use a function to check
+            characterFound = CheckForCharacters(characterToCheck, currentTilePos);
+
+            // If no character was found
+            // go next
+            // if not then return that character
+            //if (characterFound != CHARACTERS.NONE)
+            //    return characterFound;
+            if (characterFound == true)
+                return true;
+
+            // move on to the next tile position
+            switch (viewDir)
+            {
+                case DIRECTIONS.UP:
+                    currentTilePos.y++;
+                    break;
+                case DIRECTIONS.DOWN:
+                    currentTilePos.y--;
+                    break;
+                case DIRECTIONS.LEFT:
+                    currentTilePos.x--;
+                    break;
+                case DIRECTIONS.RIGHT:
+                    currentTilePos.x++;
+                    break;
+                default:
+                    Debug.Log("It shouldn't reach here lol if it does then fuk we screwed");
+                    break;
+            }
+        }
+
+
+        return false;
+    }
+
     /// <summary>
     /// Checks the area infront of the character
     /// Returns the characters it finds

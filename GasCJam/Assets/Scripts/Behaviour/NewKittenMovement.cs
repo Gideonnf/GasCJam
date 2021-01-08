@@ -48,7 +48,10 @@ public class NewKittenMovement : MonoBehaviour
     {
         kittenDetection = GetComponent<KittenDetection>();
         m_rigidBody = GetComponent<Rigidbody2D>();
-        mouseMovement = kittenDetection.ratObject.GetComponent<MouseMovement>();
+
+        if (kittenDetection.ratObject != null)
+            mouseMovement = kittenDetection.ratObject.GetComponent<MouseMovement>();
+
         startingPos = transform.position;
 
         ListOfTilesTravelled.Add(startingPos);
@@ -78,6 +81,12 @@ public class NewKittenMovement : MonoBehaviour
     {
         if (m_Stop)
             return;
+
+        // theres some issues with restarting
+        // where this ends up being null
+        if (mouseMovement == null)
+            mouseMovement = kittenDetection.ratObject.GetComponent<MouseMovement>();
+
 
         // if the cat is currently chasing 
         if (kittenDetection.characterState == Detection.STATE.CHASING || kittenDetection.characterState == Detection.STATE.TIRED)

@@ -172,6 +172,29 @@ public class KittenDetection : Detection
         return CHARACTERS.NONE;
     }
 
+    public override bool CheckForCharacters(CHARACTERS characterToCheck, Vector2Int tilePosition)
+    {
+        Vector2Int mouseTilePos;
+        Vector2Int playerTilePos;
+
+        if (characterToCheck == CHARACTERS.MOUSE)
+        {
+            mouseTilePos = MapManager.Instance.GetWorldToTilePos(ratObject.transform.position);
+            if (mouseTilePos == tilePosition)
+                return true;
+        }
+        else if (characterToCheck == CHARACTERS.PLAYER)
+        {
+            playerTilePos = MapManager.Instance.GetWorldToTilePos(playerObject.transform.position);
+            if (playerTilePos == tilePosition)
+                return true;
+        }
+
+
+
+        return false;
+    }
+
     public bool DetectRat()
     {
         Collider2D[] ListOfColliders = Physics2D.OverlapCircleAll(transform.position, RatDetectionRadius);
@@ -214,7 +237,7 @@ public class KittenDetection : Detection
     {
         for (; ;)
         {
-            if (DetectInView() == CHARACTERS.PLAYER)
+            if (DetectInView(CHARACTERS.PLAYER) == true)
             {
                 // lose the game
                 targetObject = playerObject;
@@ -229,7 +252,7 @@ public class KittenDetection : Detection
                 GameLevelManager.Instance.KittenSeesCat();
             }
 
-            if (DetectInView() == CHARACTERS.MOUSE)
+            if (DetectInView(CHARACTERS.MOUSE) == true)
             {
                 if (characterState != STATE.TIRED)
                 {
