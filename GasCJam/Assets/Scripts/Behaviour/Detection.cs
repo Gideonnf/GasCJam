@@ -345,7 +345,10 @@ public class Detection : MonoBehaviour
        // Debug.Log("Distance between : " + Vector2Int.Distance(targetTilePos, currentTilePos));
 
          if (Vector2Int.Distance(targetTilePos, currentTilePos) <= 1)
-            return true;
+        {
+            if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false && MapManager.Instance.IsThereTileOnMap(targetTilePos) == false)
+                return true;
+        }
 
 
         //Debug.Log("Direction" + dirToCheck);

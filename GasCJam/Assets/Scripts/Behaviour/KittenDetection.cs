@@ -80,8 +80,14 @@ public class KittenDetection : Detection
                     int diffX = Mathf.Abs(diff.x);
                     for (int i = 1; i <= diffX; ++i)
                     {
-                        kittenMovement.ListOfRatTiles.Add(new Vector2Int(kittenGridPos.x + i * xOffset, kittenGridPos.y));
-  //                      kittenMovement.ListOfTilesTravelled.Add(new Vector2Int(kittenGridPos.x + i * xOffset, kittenGridPos.y));
+                        //Debug.Log("Added rat tile in Detection" + new Vector2Int(kittenGridPos.x + i * xOffset, kittenGridPos.y));
+                        Vector2Int tileToAdd = new Vector2Int(kittenGridPos.x + i * xOffset, kittenGridPos.y);
+                        if (kittenMovement.ListOfRatTiles.Contains(tileToAdd) == false)
+                        {
+                            kittenMovement.ListOfRatTiles.Add(new Vector2Int(kittenGridPos.x + i * xOffset, kittenGridPos.y));
+                        }
+
+                        //                      kittenMovement.ListOfTilesTravelled.Add(new Vector2Int(kittenGridPos.x + i * xOffset, kittenGridPos.y));
                     }
                 }
                 else
@@ -93,8 +99,13 @@ public class KittenDetection : Detection
                     int diffY = Mathf.Abs(diff.y);
                     for (int i = 1; i <= diffY; ++i)
                     {
-                        kittenMovement.ListOfRatTiles.Add(new Vector2Int(kittenGridPos.x, kittenGridPos.y + i * yOffset));
- //                       kittenMovement.ListOfTilesTravelled.Add(new Vector2Int(kittenGridPos.x, kittenGridPos.y + i * yOffset));
+                        //Debug.Log("Added rat tile in Detection" + new Vector2Int(kittenGridPos.x, kittenGridPos.y + i * yOffset));
+                        Vector2Int tileToAdd = new Vector2Int(kittenGridPos.x, kittenGridPos.y + i * yOffset);
+                        if (kittenMovement.ListOfRatTiles.Contains(tileToAdd) == false)
+                        {
+                            kittenMovement.ListOfRatTiles.Add(new Vector2Int(kittenGridPos.x, kittenGridPos.y + i * yOffset));
+                        }
+                        //                       kittenMovement.ListOfTilesTravelled.Add(new Vector2Int(kittenGridPos.x, kittenGridPos.y + i * yOffset));
                     }
                 }
 

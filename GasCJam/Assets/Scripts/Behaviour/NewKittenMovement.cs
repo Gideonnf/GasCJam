@@ -103,11 +103,38 @@ public class NewKittenMovement : MonoBehaviour
                 // it means it has a path
                 if (mouseMovement.targetTilePosition != Vector2.zero)
                 {
-                    // if it doesnt contain the target tile position
-                    if (ListOfRatTiles.Contains(mouseMovement.targetTilePosition) == false)
+                    Vector2Int tileToAdd = mouseMovement.targetTilePosition;
+                    //bool canAdd = true;
+
+                   // bool test = false;
+
+                    //if (tileToAdd.x == -3)
+                    //{
+                    //    test = true;
+                    //}    
+
+                    //for(int i = 0; i <ListOfRatTiles.Count; ++i)
+                    //{
+                    //    if (ListOfRatTiles[i].x == tileToAdd.x && ListOfRatTiles[i].y == tileToAdd.y)
+                    //    {
+                    //        canAdd = false;
+                    //        break;
+                    //    }
+
+                    //}
+
+                    //if (canAdd)
+                    //{
+                    //    ListOfRatTiles.Add(tileToAdd);
+                    //    Debug.Log("Added rat tile in movement" + tileToAdd);
+                    //}
+
+                    //// if it doesnt contain the target tile position
+                    if (ListOfRatTiles.Contains(tileToAdd) == false)
                     {
                         // add it to the list
-                        ListOfRatTiles.Add(mouseMovement.targetTilePosition);
+                        ListOfRatTiles.Add(tileToAdd);
+                        Debug.Log("Added rat tile in movement" + tileToAdd);
                     }
                 }
 
