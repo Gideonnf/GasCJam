@@ -7963,7 +7963,7 @@ MonoBehaviour:
   m_SoundClipList:
   - m_Name: BackgroundMusic
     m_Clip: {fileID: 8300000, guid: f7a8a38b410feeb4f89506364cf88f8c, type: 3}
-    m_Volume: 1
+    m_Volume: 0.4
     m_Pitch: 1
     m_HearingBaseOnDist: 0
     m_Loop: 1
