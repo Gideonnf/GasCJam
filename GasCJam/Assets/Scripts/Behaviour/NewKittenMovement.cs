@@ -8,7 +8,7 @@ public class NewKittenMovement : MonoBehaviour
     [Tooltip("Kitten movement Speed")]
     public float moveSpeed;
     [Tooltip("Starting position of the Cat")]
-    public Vector2 startingPos;
+    public Vector2Int startingPos;
     [Tooltip("The max distance it can travel")]
     public int maxTravelDistance;
     [Tooltip("Minimum travel distance")]
@@ -22,15 +22,15 @@ public class NewKittenMovement : MonoBehaviour
     // Keep Track of mouse movement
     MouseMovement mouseMovement;
     // Keep track of the target tile position
-    Vector2 targetTilePosition = Vector2.zero;
+    Vector2Int targetTilePosition = Vector2Int.zero;
     // Keep track of hte current moving direction
     Detection.DIRECTIONS movingDir;
 
 
-    List<Vector2> ListOfTilesTravelled = new List<Vector2>();
+    List<Vector2Int> ListOfTilesTravelled = new List<Vector2Int>();
 
     // Keep track of the tiles that the rat travelled
-    List<Vector2> ListOfRatTiles = new List<Vector2>();
+    List<Vector2Int> ListOfRatTiles = new List<Vector2Int>();
 
     int currentIndex = 0;
 
@@ -52,7 +52,7 @@ public class NewKittenMovement : MonoBehaviour
         if (kittenDetection.ratObject != null)
             mouseMovement = kittenDetection.ratObject.GetComponent<MouseMovement>();
 
-        startingPos = transform.position;
+        startingPos = MapManager.Instance.GetWorldToTilePos(transform.position);
 
         ListOfTilesTravelled.Add(startingPos);
 
@@ -148,7 +148,7 @@ public class NewKittenMovement : MonoBehaviour
                     // im gonna need to change this later probably
                     if (currentIndex <= 0)
                     {
-                        transform.position = startingPos;
+                        transform.position = MapManager.Instance.GetTileToWorldPos(startingPos);
 
                         UpdateAnimation(false);
                         kittenDetection.characterState = Detection.STATE.IDLE;
@@ -166,7 +166,10 @@ public class NewKittenMovement : MonoBehaviour
                     }
                     // set the target to the last position on the list
                     targetTilePosition = ListOfTilesTravelled[currentIndex - 1];
-                    directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+
+                    Vector2Int Vec2Direction = (targetTilePosition - MapManager.Instance.GetWorldToTilePos(transform.position));
+                    directionVector = new Vector3(Vec2Direction.x, Vec2Direction.y, 0);
+
                     UpdateAnimation(true);
 
                     currentIndex--;
@@ -185,7 +188,8 @@ public class NewKittenMovement : MonoBehaviour
                         {
                             // set the target tiles
                             targetTilePosition = ListOfRatTiles[currentRatIndex];
-                            directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+                            Vector2Int Vec2Direction = (targetTilePosition - MapManager.Instance.GetWorldToTilePos(transform.position));
+                            directionVector = new Vector3(Vec2Direction.x, Vec2Direction.y, 0);
                             UpdateAnimation(true);
 
                             // increment the rat index to keep track 
@@ -205,7 +209,7 @@ public class NewKittenMovement : MonoBehaviour
                     else
                     {
                         // if it is not in its starting pos
-                        if ((Vector2)transform.position != startingPos)
+                        if (MapManager.Instance.GetWorldToTilePos(transform.position) != startingPos)
                         {
                             kittenDetection.characterState = Detection.STATE.TIRED;
                         }
@@ -233,11 +237,12 @@ public class NewKittenMovement : MonoBehaviour
                 if (movingDir == Detection.DIRECTIONS.LEFT)
                 {
                     float targetXPos = targetTilePosition.x;
+                    float currentXPos = MapManager.Instance.GetWorldToTilePos(transform.position).x;
 
                     //Debug.Log("kitten target tile position" + targetTilePosition);
                     //Debug.Log("kitten position" + transform.position);
 
-                    if (transform.position.x <= targetXPos)
+                    if (currentXPos <= targetXPos)
                     {
                         // it reached the tile
                         targetReached = true;
@@ -246,8 +251,9 @@ public class NewKittenMovement : MonoBehaviour
                 else if (movingDir == Detection.DIRECTIONS.RIGHT)
                 {
                     float targetXPos = targetTilePosition.x;
+                    float currentXPos = MapManager.Instance.GetWorldToTilePos(transform.position).x;
 
-                    if (transform.position.x >= targetXPos)
+                    if (currentXPos >= targetXPos)
                     {
                         // it reached the tile
                         targetReached = true;
@@ -256,8 +262,9 @@ public class NewKittenMovement : MonoBehaviour
                 else if (movingDir == Detection.DIRECTIONS.UP)
                 {
                     float targetYPos = targetTilePosition.y;
+                    float currentYPos = MapManager.Instance.GetWorldToTilePos(transform.position).y;
 
-                    if (transform.position.y >= targetYPos)
+                    if (currentYPos >= targetYPos)
                     {
                         targetReached = true;
                     }
@@ -265,8 +272,9 @@ public class NewKittenMovement : MonoBehaviour
                 else if (movingDir == Detection.DIRECTIONS.DOWN)
                 {
                     float targetYPos = targetTilePosition.y;
+                    float currentYPos = MapManager.Instance.GetWorldToTilePos(transform.position).y;
 
-                    if (transform.position.y <= targetYPos)
+                    if (currentYPos <= targetYPos)
                     {
                         targetReached = true;
                     }
@@ -274,13 +282,13 @@ public class NewKittenMovement : MonoBehaviour
                 else if (movingDir == Detection.DIRECTIONS.NONE)
                 {
                     // it shouldn't reach here lol
-                    targetTilePosition = Vector2.zero;
+                    targetTilePosition = Vector2Int.zero;
                 }
 
                 if (targetReached == true)
                 {
                     // it reached the tile
-                    transform.position = targetTilePosition;
+                   // transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
                     StopMovement();
                 }
 
@@ -299,7 +307,7 @@ public class NewKittenMovement : MonoBehaviour
     {
         targetReached = false;
         movingDir = Detection.DIRECTIONS.NONE;
-        targetTilePosition = Vector2.zero;
+        targetTilePosition = Vector2Int.zero;
     }
 
     /// <summary>

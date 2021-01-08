@@ -147,7 +147,7 @@ public class KittenDetection : Detection
 
         //characterState = STATE.TIRED;
 
-        targetObject.transform.position = kittenMovement.startingPos;
+        targetObject.transform.position = MapManager.Instance.GetTileToWorldPos(kittenMovement.startingPos);
 
         targetDir = GetTargetDirection();
     }

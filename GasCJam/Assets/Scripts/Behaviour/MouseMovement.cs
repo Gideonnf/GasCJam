@@ -13,12 +13,12 @@ public class MouseMovement : MonoBehaviour
     // Keep track of the detection script
     MouseDetection mouseDetection;
     // Keep track of the target tile position
-    [System.NonSerialized] public Vector2 targetTilePosition = Vector2.zero;
+    [System.NonSerialized] public Vector2Int targetTilePosition = Vector2Int.zero;
     // Keep track of the current moving direction
     public Detection.DIRECTIONS movingDir;
 
     // Store a list of tiles movable in the moving direction
-    List<Vector2> ListOfMovableTiles = new List<Vector2>();
+    List<Vector2Int> ListOfMovableTiles = new List<Vector2Int>();
     int currentIndex;
 
     Vector3 directionVector;
@@ -66,6 +66,8 @@ public class MouseMovement : MonoBehaviour
                 // theres no more to move
                 if(currentIndex >= ListOfMovableTiles.Count)
                 {
+                    transform.position = MapManager.Instance.GetTileToWorldPos(ListOfMovableTiles[currentIndex - 1]);
+
                     ListOfMovableTiles.Clear();
                     currentIndex = 0;
                     StopMovement();
@@ -83,8 +85,8 @@ public class MouseMovement : MonoBehaviour
 
                 // check this shit
 
-
-                directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+                Vector2Int Vec2Direction = (targetTilePosition - MapManager.Instance.GetWorldToTilePos(transform.position));
+                directionVector = new Vector3(Vec2Direction.x, Vec2Direction.y, 0);
                 UpdateAnimation(true);
 
                 // increment the index
@@ -98,8 +100,12 @@ public class MouseMovement : MonoBehaviour
                 if (movingDir == Detection.DIRECTIONS.LEFT)
                 {
                     float targetXPos = targetTilePosition.x;
+                    float currentXPos = MapManager.Instance.GetWorldToTilePos(transform.position).x;
 
-                    if (transform.position.x <= targetXPos)
+                    //Debug.Log("kitten target tile position" + targetTilePosition);
+                    //Debug.Log("kitten position" + transform.position);
+
+                    if (currentXPos <= targetXPos)
                     {
                         // it reached the tile
                         targetReached = true;
@@ -108,11 +114,9 @@ public class MouseMovement : MonoBehaviour
                 else if (movingDir == Detection.DIRECTIONS.RIGHT)
                 {
                     float targetXPos = targetTilePosition.x;
+                    float currentXPos = MapManager.Instance.GetWorldToTilePos(transform.position).x;
 
-                    //Debug.Log("target's x position" + targetTilePosition.x);
-                   // Debug.Log("fuc poop pee" + transform.position.x);
-
-                    if (transform.position.x >= targetXPos)
+                    if (currentXPos >= targetXPos)
                     {
                         // it reached the tile
                         targetReached = true;
@@ -121,8 +125,9 @@ public class MouseMovement : MonoBehaviour
                 else if (movingDir == Detection.DIRECTIONS.UP)
                 {
                     float targetYPos = targetTilePosition.y;
+                    float currentYPos = MapManager.Instance.GetWorldToTilePos(transform.position).y;
 
-                    if (transform.position.y >= targetYPos)
+                    if (currentYPos >= targetYPos)
                     {
                         targetReached = true;
                     }
@@ -130,20 +135,21 @@ public class MouseMovement : MonoBehaviour
                 else if (movingDir == Detection.DIRECTIONS.DOWN)
                 {
                     float targetYPos = targetTilePosition.y;
+                    float currentYPos = MapManager.Instance.GetWorldToTilePos(transform.position).y;
 
-                    if (transform.position.y <= targetYPos)
+                    if (currentYPos <= targetYPos)
                     {
                         targetReached = true;
                     }
                 }
                 else if (movingDir == Detection.DIRECTIONS.NONE)
                 {
-                    targetTilePosition = Vector2.zero;
+                    targetTilePosition = Vector2Int.zero;
                 }
                 // it reached the tile
                 if (targetReached == true)
                 {
-                    transform.position = targetTilePosition;
+                    //transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
                     StopMovement();
                 }
 
@@ -291,9 +297,9 @@ public class MouseMovement : MonoBehaviour
         // Keep on checking until it finds the wall
         while(MapManager.Instance.IsThereTileOnMap(currentTile) == false)
         {
-            Vector2 tileWorldPosition = MapManager.Instance.GetTileToWorldPos(currentTile);
+            //Vector2 tileWorldPosition = MapManager.Instance.GetTileToWorldPos(currentTile);
             // Add the tile to the list
-            ListOfMovableTiles.Add(tileWorldPosition);
+            ListOfMovableTiles.Add(currentTile);
 
             // Increment again by one
             // to check the next tile
@@ -324,9 +330,9 @@ public class MouseMovement : MonoBehaviour
     public void StopMovement(bool SetToTargetPosition = false)
     {
         if (SetToTargetPosition)
-            transform.position = targetTilePosition;
+            transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
         else
-            targetTilePosition = Vector2.zero;
+            targetTilePosition = Vector2Int.zero;
 
         targetReached = false;
         //movingDir = Detection.DIRECTIONS.NONE;
