@@ -262,7 +262,11 @@ public class KittenDetection : Detection
                 // Win the game
                 //Debug.LogError("Game ended");
                 if (!kittenMovement.m_Stop)
+                {
+                    kittenMovement.m_rigidBody.MovePosition(collider.gameObject.transform.position);
+                    SoundManager.Instance.Play("CaughtRat");
                     GameLevelManager.Instance.Win();
+                }
 
             }
         }

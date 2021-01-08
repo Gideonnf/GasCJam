@@ -16,7 +16,7 @@ public class NewKittenMovement : MonoBehaviour
     // Keep track if it reached the tile
     bool targetReached = false;
     // Keep track of the rigid body
-    Rigidbody2D m_rigidBody;
+    [HideInInspector] public Rigidbody2D m_rigidBody;
     // Keep track of the kitten detection script
     KittenDetection kittenDetection;
     // Keep Track of mouse movement

@@ -20,6 +20,8 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
     //FOR RAT ENTERING HOLE
     public void RatEnterHole()
     {
+        SoundManager.Instance.Play("RatInHole");
+
         //pause the player
         m_Player.m_Stop = true;
 

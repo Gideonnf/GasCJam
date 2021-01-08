@@ -126,3 +126,17 @@ MonoBehaviour:
     m_HearingBaseOnDist: 0
     m_Loop: 0
     m_Source: {fileID: 0}
+  - m_Name: RatInHole
+    m_Clip: {fileID: 8300000, guid: 868f87e539d575242a2d172484e1073f, type: 3}
+    m_Volume: 1
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 0
+    m_Source: {fileID: 0}
+  - m_Name: CaughtRat
+    m_Clip: {fileID: 8300000, guid: 36ebcce725fd70d4bada932dce25489b, type: 3}
+    m_Volume: 1
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 0
+    m_Source: {fileID: 0}
