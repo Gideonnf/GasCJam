@@ -58,7 +58,7 @@ public class MouseDetection : Detection
 
             if (elapsedTime >= shockTime || targetObject.tag == "Player")
             {
-                if (characterState != STATE.RUNNING)
+                if (characterState != STATE.RUNNING && targetObject.tag == "Player")
                     StartCoroutine(PlayerShockUITime());
 
                 characterState = STATE.RUNNING;
@@ -226,10 +226,6 @@ public class MouseDetection : Detection
                             continue;
                         }
 
-                        // reset it if it tracks the player
-                        if (detectedObj.tag == "Player")
-                            elapsedTime = 0.0f;
-
                         isShocked = true;
 
                         if (detectedObj.tag == "Kitten")
@@ -237,6 +233,19 @@ public class MouseDetection : Detection
                             if (m_ShockUI != null)
                                 m_ShockUI.gameObject.SetActive(true);
                         }
+
+                        ////HACK PRIROTIZE KITTEN
+                        //if (successfulTag == "Kitten" && detectedObj.tag == "Player")
+                        //{
+                        //    targetObject = PREVtargetObject;
+                        //    targetDir = prevTargetDir;
+                        //}
+                        //else
+                        //{
+                        //    // reset it if it tracks the player
+                        //    if (detectedObj.tag == "Player")
+                        //        elapsedTime = 0.0f;
+                        //}
 
                         // Debug.Log("Mouse IsShocked Changed in line 197" + isShocked);
                         successfulTag = detectedObj.tag;
