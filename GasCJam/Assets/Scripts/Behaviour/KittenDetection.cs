@@ -310,16 +310,18 @@ public class KittenDetection : Detection
         Vector2Int playerTilePosition = MapManager.Instance.GetWorldToTilePos(playerObject.transform.position);
         //Vector2 playerPosition;
         // get the current tile position
-        Vector2Int currentTilePosition = MapManager.Instance.GetWorldToTilePos(transform.position);
+        Vector2Int kittenTilePosition = MapManager.Instance.GetWorldToTilePos(transform.position);
 
         DIRECTIONS playerDirection = GetTargetDirection(playerObject.transform.position);
 
         if (CheckIfClear(playerDirection, playerObject.transform.position))
         {
+
             // if within 1 tiles 
-            if (Vector2Int.Distance(playerTilePosition, currentTilePosition) <= 1)
+            if (Vector2Int.Distance(playerTilePosition, kittenTilePosition) <= 1)
             {
-                //Debug.LogError("test");
+                if (MapManager.Instance.IsThereTileOnMap(playerTilePosition) == false)
+                    DetectPlayerBehvaiour();
             }
         }
 
