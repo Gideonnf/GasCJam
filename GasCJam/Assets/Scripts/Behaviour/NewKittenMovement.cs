@@ -104,30 +104,6 @@ public class NewKittenMovement : MonoBehaviour
                 if (mouseMovement.targetTilePosition != Vector2.zero)
                 {
                     Vector2Int tileToAdd = mouseMovement.targetTilePosition;
-                    //bool canAdd = true;
-
-                   // bool test = false;
-
-                    //if (tileToAdd.x == -3)
-                    //{
-                    //    test = true;
-                    //}    
-
-                    //for(int i = 0; i <ListOfRatTiles.Count; ++i)
-                    //{
-                    //    if (ListOfRatTiles[i].x == tileToAdd.x && ListOfRatTiles[i].y == tileToAdd.y)
-                    //    {
-                    //        canAdd = false;
-                    //        break;
-                    //    }
-
-                    //}
-
-                    //if (canAdd)
-                    //{
-                    //    ListOfRatTiles.Add(tileToAdd);
-                    //    Debug.Log("Added rat tile in movement" + tileToAdd);
-                    //}
 
                     //// if it doesnt contain the target tile position
                     if (ListOfRatTiles.Contains(tileToAdd) == false)
@@ -149,12 +125,7 @@ public class NewKittenMovement : MonoBehaviour
                     kittenDetection.StopMovement();
 
                     kittenDetection.characterState = Detection.STATE.TIRED;
-                    
-                    // Take away the last tile 
-                    // the last tile is its last position
-                    //currentIndex -= 2;
 
-                    //currentIndex = ListOfTilesTravelled.Count - 1;
 
                     StopMovement();
 

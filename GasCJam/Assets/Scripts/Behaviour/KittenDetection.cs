@@ -297,33 +297,9 @@ public class KittenDetection : Detection
 
     public bool DetectPlayer()
     {
-        // Collider2D[] ListOfColliders = Physics2D.OverlapCircleAll(transform.position, PlayerDetectionRadius);
-
-        //foreach (Collider2D collider in ListOfColliders)
-        //{
-        //    // don't check for itself
-        //    if (collider.gameObject == this.gameObject)
-        //        continue;
-
-        //    //TODO:: make sure it check through walls
-        //    // help test ty
-
-        //    // if it collides with the prey
-        //    if (collider.gameObject.tag == "Player")
-        //    {
-        //        DIRECTIONS detectedObjDir = GetTargetDirection(collider.gameObject.transform.position);
-
-        //        if (CheckIfClear(detectedObjDir, collider.gameObject.transform.position))
-        //        {
-        //            // The path is clear
-        //            Debug.LogError("testing");
-        //        }
-        //    }
-        //}
-        
         // get the tile position
         Vector2Int playerTilePosition = MapManager.Instance.GetWorldToTilePos(playerObject.transform.position);
-        //Vector2 playerPosition;
+
         // get the current tile position
         Vector2Int kittenTilePosition = MapManager.Instance.GetWorldToTilePos(transform.position);
 
