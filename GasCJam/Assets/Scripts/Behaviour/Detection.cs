@@ -60,6 +60,7 @@ public class Detection : MonoBehaviour
 
     protected List<GameObject> ObjectsInRange;
 
+
     public virtual void Start()
     {
         ObjectsInRange = new List<GameObject>();

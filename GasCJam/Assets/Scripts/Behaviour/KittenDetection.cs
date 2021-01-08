@@ -272,8 +272,9 @@ public class KittenDetection : Detection
                     SoundManager.Instance.Play("CaughtRat");
                     GameLevelManager.Instance.Win();
                 }
-
             }
+
+
         }
 
         return false;
@@ -281,29 +282,47 @@ public class KittenDetection : Detection
 
     public bool DetectPlayer()
     {
-        Collider2D[] ListOfColliders = Physics2D.OverlapCircleAll(transform.position, PlayerDetectionRadius);
+        // Collider2D[] ListOfColliders = Physics2D.OverlapCircleAll(transform.position, PlayerDetectionRadius);
 
-        foreach (Collider2D collider in ListOfColliders)
+        //foreach (Collider2D collider in ListOfColliders)
+        //{
+        //    // don't check for itself
+        //    if (collider.gameObject == this.gameObject)
+        //        continue;
+
+        //    //TODO:: make sure it check through walls
+        //    // help test ty
+
+        //    // if it collides with the prey
+        //    if (collider.gameObject.tag == "Player")
+        //    {
+        //        DIRECTIONS detectedObjDir = GetTargetDirection(collider.gameObject.transform.position);
+
+        //        if (CheckIfClear(detectedObjDir, collider.gameObject.transform.position))
+        //        {
+        //            // The path is clear
+        //            Debug.LogError("testing");
+        //        }
+        //    }
+        //}
+        
+        // get the tile position
+        Vector2Int playerTilePosition = MapManager.Instance.GetWorldToTilePos(playerObject.transform.position);
+        //Vector2 playerPosition;
+        // get the current tile position
+        Vector2Int currentTilePosition = MapManager.Instance.GetWorldToTilePos(transform.position);
+
+        DIRECTIONS playerDirection = GetTargetDirection(playerObject.transform.position);
+
+        if (CheckIfClear(playerDirection, playerObject.transform.position))
         {
-            // don't check for itself
-            if (collider.gameObject == this.gameObject)
-                continue;
-
-            //TODO:: make sure it check through walls
-            // help test ty
-
-            // if it collides with the prey
-            if (collider.gameObject.tag == "Player")
+            // if within 1 tiles 
+            if (Vector2Int.Distance(playerTilePosition, currentTilePosition) <= 1)
             {
-                DIRECTIONS detectedObjDir = GetTargetDirection(collider.gameObject.transform.position);
-
-                if (CheckIfClear(detectedObjDir, collider.gameObject.transform.position))
-                {
-                    // The path is clear
-
-                }
+                //Debug.LogError("test");
             }
         }
+
 
         return false;
     }
