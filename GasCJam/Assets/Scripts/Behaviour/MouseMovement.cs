@@ -71,6 +71,9 @@ public class MouseMovement : MonoBehaviour
                     StopMovement();
                     mouseDetection.StopMovement();
                     movingDir = Detection.DIRECTIONS.NONE;
+
+                    UpdateAnimation(false);
+
                     return;
                 }
 
@@ -82,6 +85,7 @@ public class MouseMovement : MonoBehaviour
 
 
                 directionVector = (targetTilePosition - (Vector2)transform.position).normalized;
+                UpdateAnimation(true);
 
                 // increment the index
                 currentIndex++;
