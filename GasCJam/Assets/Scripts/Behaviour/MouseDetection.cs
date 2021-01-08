@@ -21,6 +21,7 @@ public class MouseDetection : Detection
     [Header("ShockUI")]
     public ExclaimationMarkUI m_ShockUI;
     public GameObject m_PlayerShockUI;
+    public float m_PlayerShockUITime = 0.6f;
 
     // Start is called before the first frame update
     public override void Start()
@@ -57,13 +58,18 @@ public class MouseDetection : Detection
 
             if (elapsedTime >= shockTime || targetObject.tag == "Player")
             {
+                if (characterState != STATE.RUNNING)
+                    StartCoroutine(PlayerShockUITime());
+
                 characterState = STATE.RUNNING;
 
                 isShocked = false;
 
                 //elapsedTime = 0;
                 if (m_ShockUI != null)
+                {
                     m_ShockUI.gameObject.SetActive(false);
+                }
             }
             else
             {
@@ -197,9 +203,7 @@ public class MouseDetection : Detection
                         targetObject = detectedObj;
                         // Check for the target direction
                         targetDir = GetTargetDirection();
-
-          
-
+         
                         // Check if the path to the detected object is clear
                         if (CheckIfClear(targetDir, targetObject.transform.position) == false)
                         {
@@ -221,10 +225,7 @@ public class MouseDetection : Detection
                             if (m_ShockUI != null)
                                 m_ShockUI.gameObject.SetActive(true);
                         }
-                        else
-                        {
-                            StartCoroutine(PlayerShockUITime());
-                        }
+
                        // Debug.Log("Mouse IsShocked Changed in line 197" + isShocked);
 
                     }
@@ -302,6 +303,12 @@ public class MouseDetection : Detection
 
                 //}
             }
+
+            //if (isShocked && characterState == STATE.IDLE)
+            //{
+            //    if (targetObject.tag == "Player")
+            //        StartCoroutine(PlayerShockUITime());
+            //}
         }
         else
         {
@@ -378,6 +385,9 @@ public class MouseDetection : Detection
                 // later it'll change to having a shock animation
                 // instead of running straight away
 
+                if (characterState != STATE.RUNNING)
+                    StartCoroutine(PlayerShockUITime());
+
                 // running
                 characterState = STATE.RUNNING;
 
@@ -402,7 +412,7 @@ public class MouseDetection : Detection
         if (m_PlayerShockUI != null)
             m_PlayerShockUI.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(.8f);
+        yield return new WaitForSeconds(m_PlayerShockUITime);
 
         if (m_PlayerShockUI != null)
             m_PlayerShockUI.gameObject.SetActive(false);
