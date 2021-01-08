@@ -40,7 +40,7 @@ public class KittenDetection : Detection
     {
         if (isShocked)
         {
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
             elapsedTime += Time.deltaTime;
 
             //Debug.Log(elapsedTime);
@@ -118,30 +118,10 @@ public class KittenDetection : Detection
                         }
 
                         isShocked = true;
+
+                        Debug.Log("Cat IsShocked Changed in line 123" + isShocked);
+
                     }
-
-
-                    //// Set the mouse object as it's current target
-                    //targetObject = detectedObj;
-
-                    //// Get the target's direc tion
-                    //targetDir = GetTargetDirection();
-
-                    //// Check the direction if its clear
-                    //// if it isn't then they detected an enemy through the wall
-                    ////if (CheckIfClear(targetDir) == false)
-                    ////{
-                    ////    StopMovement();
-                    ////    return false;
-                    ////}
-                    //// if they are already chasing
-                    //// they cant really get shocked
-                    //if (characterState != STATE.CHASING)
-                    //    isShocked = true;
-
-                    //// Set the character state
-                    ////characterState = STATE.CHASING;
-
 
                     return true;
                 }
@@ -149,9 +129,9 @@ public class KittenDetection : Detection
         }
         else
         {
-           // Debug.Log("Not in range");
-            // if theres nothing in it's range anymore
             isShocked = false;
+
+            Debug.Log("Cat IsShocked Changed in line 134" + isShocked);
         }
 
         return false;
@@ -205,7 +185,7 @@ public class KittenDetection : Detection
             if (collider.gameObject.tag == "Prey")
             {
                 // Win the game
-                //Debug.LogError("Game ended");
+                Debug.LogError("Game ended");
             }
         }
 
@@ -244,15 +224,13 @@ public class KittenDetection : Detection
                 {
                     isShocked = true;
 
+                    Debug.Log("Cat IsShocked Changed in line 227" + isShocked);
+
                     targetObject = ratObject;
 
                     targetDir = GetTargetDirection();
                 }
             }
-            //else
-            //{
-            //    isShocked = false;
-            //}
 
             yield return new WaitForSeconds(.2f);
         }
