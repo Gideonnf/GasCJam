@@ -269,8 +269,12 @@ public class KittenDetection : Detection
                 if (!kittenMovement.m_Stop)
                 {
                     kittenMovement.m_rigidBody.MovePosition(collider.gameObject.transform.position);
-                    SoundManager.Instance.Play("CaughtRat");
-                    GameLevelManager.Instance.Win();
+
+                    //if(DetectPlayer())
+                    //{
+                        SoundManager.Instance.Play("CaughtRat");
+                        GameLevelManager.Instance.Win();
+                    //}
                 }
             }
 
@@ -321,7 +325,10 @@ public class KittenDetection : Detection
             if (Vector2Int.Distance(playerTilePosition, kittenTilePosition) <= 1)
             {
                 if (MapManager.Instance.IsThereTileOnMap(playerTilePosition) == false)
+                {
                     DetectPlayerBehvaiour();
+                    return true;
+                }
             }
         }
 
@@ -337,10 +344,12 @@ public class KittenDetection : Detection
     {
         for (; ; )
         {
+
+            DetectPlayer();
+
             // Check if the rat is touching the cat
             DetectRat();
 
-            DetectPlayer();
             // If it successfully detected something in it's radius
             // Check for what direction it is in
             DetectRadius();

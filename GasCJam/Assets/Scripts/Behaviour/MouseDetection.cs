@@ -233,6 +233,10 @@ public class MouseDetection : Detection
                             if (m_ShockUI != null)
                                 m_ShockUI.gameObject.SetActive(true);
                         }
+                        else
+                        {
+                            elapsedTime = 0.0f;
+                        }
 
                         ////HACK PRIROTIZE KITTEN
                         //if (successfulTag == "Kitten" && detectedObj.tag == "Player")
