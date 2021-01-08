@@ -9,7 +9,8 @@ public class MainMenuUI : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+            Application.Quit();
     }
 
     public void TransitionPage()
