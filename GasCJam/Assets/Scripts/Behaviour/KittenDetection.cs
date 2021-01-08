@@ -44,6 +44,11 @@ public class KittenDetection : Detection
     {
         if (isShocked)
         {
+            if (characterState == STATE.TIRED)
+            {
+                isShocked = false;
+            }
+
             //Debug.Log(elapsedTime);
             elapsedTime += Time.deltaTime;
 
