@@ -41,6 +41,8 @@ public class NewKittenMovement : MonoBehaviour
     [Header("Visual")]
     public Animator m_Animator;
 
+    public bool m_Stop = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,6 +76,9 @@ public class NewKittenMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (m_Stop)
+            return;
+
         // if the cat is currently chasing 
         if (kittenDetection.characterState == Detection.STATE.CHASING || kittenDetection.characterState == Detection.STATE.TIRED)
         {
@@ -136,6 +141,7 @@ public class NewKittenMovement : MonoBehaviour
                     {
                         transform.position = startingPos;
 
+                        UpdateAnimation(false);
                         kittenDetection.characterState = Detection.STATE.IDLE;
 
                         //Clear the list
@@ -146,8 +152,6 @@ public class NewKittenMovement : MonoBehaviour
                         //currentIndex = 1;
 
                         StopMovement();
-
-                        UpdateAnimation(false);
 
                         return;
                     }

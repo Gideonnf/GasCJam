@@ -206,7 +206,7 @@ public class KittenDetection : Detection
             DetectRadius();
 
 
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.1f);
         }
     }
 
@@ -217,7 +217,16 @@ public class KittenDetection : Detection
             if (DetectInView() == CHARACTERS.PLAYER)
             {
                 // lose the game
+                targetObject = playerObject;
+                targetDir = GetTargetDirection();
 
+                kittenMovement.m_Stop = true;
+
+                //show animation
+                kittenMovement.UpdateAnimation(false, targetDir);
+                kittenMovement.m_Animator.SetTrigger("Shock");
+
+                GameLevelManager.Instance.KittenSeesCat();
             }
 
             if (DetectInView() == CHARACTERS.MOUSE)

@@ -57,13 +57,19 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
         InGameMenuManager.Instance.OpenMenu((int)MenuType.LOSE_SCREEN);
     }
 
-    //lose
+    //FOR KITTEN SEEING PLAYER
     public void KittenSeesCat()
     {
-        //TODO::
-        //FOR KITTEN SEEING PLAYER
         //pause the player
-        //immediately show kitten shock
+        m_Player.m_Stop = true;
+
+        StartCoroutine(KittenSeesCatEffects());
+    }
+
+    IEnumerator KittenSeesCatEffects()
+    {
+        yield return new WaitForSeconds(0.5f);
+
         InGameMenuManager.Instance.OpenMenu((int)MenuType.LOSE_SCREEN);
     }
 
