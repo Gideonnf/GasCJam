@@ -59,8 +59,67 @@ public class MouseMovement : MonoBehaviour
                 }
             }
 
+            Vector3 nextPos = transform.position + directionVector * moveSpeed * Time.fixedDeltaTime;
+            if (targetTilePosition != Vector2.zero)
+            {
+                // If it is moving along the X Axis
+                if (movingDir == Detection.DIRECTIONS.LEFT)
+                {
+                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
+
+                    //Debug.Log("kitten target tile position" + targetTilePosition);
+                    //Debug.Log("kitten position" + transform.position);
+
+                    if (nextPos.x <= targetXPos)
+                    {
+                        // it reached the tile
+                        targetReached = true;
+                    }
+                }
+                else if (movingDir == Detection.DIRECTIONS.RIGHT)
+                {
+                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
+
+                    if (nextPos.x >= targetXPos)
+                    {
+                        // it reached the tile
+                        targetReached = true;
+                    }
+                }
+                else if (movingDir == Detection.DIRECTIONS.UP)
+                {
+                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
+
+                    if (nextPos.y >= targetYPos)
+                    {
+                        targetReached = true;
+                    }
+                }
+                else if (movingDir == Detection.DIRECTIONS.DOWN)
+                {
+                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
+
+                    if (nextPos.y <= targetYPos)
+                    {
+                        targetReached = true;
+                    }
+                }
+                else if (movingDir == Detection.DIRECTIONS.NONE)
+                {
+                    targetTilePosition = Vector2Int.zero;
+                }
+                // it reached the tile
+                if (targetReached == true)
+                {
+                    //transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
+                    m_rigidBody.MovePosition(MapManager.Instance.GetTileToWorldPos(targetTilePosition));
+                    StopMovement();
+                    return;
+                }
+            }
+
             // if it has no target vector position to go to now
-            if(targetTilePosition == Vector2.zero)
+            if (targetTilePosition == Vector2.zero)
             {
                 // if it reached the end of the movable tiles
                 // theres no more to move
@@ -79,7 +138,6 @@ public class MouseMovement : MonoBehaviour
                     return;
                 }
 
-
                 // Set the target tile position to the first index of the list
                 targetTilePosition = ListOfMovableTiles[currentIndex];
 
@@ -91,68 +149,10 @@ public class MouseMovement : MonoBehaviour
 
                 // increment the index
                 currentIndex++;
-
-
-            }
-            else
-            {
-                // If it is moving along the X Axis
-                if (movingDir == Detection.DIRECTIONS.LEFT)
-                {
-                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
-
-                    //Debug.Log("kitten target tile position" + targetTilePosition);
-                    //Debug.Log("kitten position" + transform.position);
-
-                    if (transform.position.x <= targetXPos)
-                    {
-                        // it reached the tile
-                        targetReached = true;
-                    }
-                }
-                else if (movingDir == Detection.DIRECTIONS.RIGHT)
-                {
-                    float targetXPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).x;
-
-                    if (transform.position.x >= targetXPos)
-                    {
-                        // it reached the tile
-                        targetReached = true;
-                    }
-                }
-                else if (movingDir == Detection.DIRECTIONS.UP)
-                {
-                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
-
-                    if (transform.position.y >= targetYPos)
-                    {
-                        targetReached = true;
-                    }
-                }
-                else if (movingDir == Detection.DIRECTIONS.DOWN)
-                {
-                    float targetYPos = MapManager.Instance.GetTileToWorldPos(targetTilePosition).y;
-
-                    if (transform.position.y <= targetYPos)
-                    {
-                        targetReached = true;
-                    }
-                }
-                else if (movingDir == Detection.DIRECTIONS.NONE)
-                {
-                    targetTilePosition = Vector2Int.zero;
-                }
-                // it reached the tile
-                if (targetReached == true)
-                {
-                    transform.position = MapManager.Instance.GetTileToWorldPos(targetTilePosition);
-                    StopMovement();
-                }
-
-                // move it move it to the limit limit
-                m_rigidBody.MovePosition(transform.position + directionVector * moveSpeed * Time.fixedDeltaTime);
             }
 
+             // move it move it to the limit limit
+             m_rigidBody.MovePosition(transform.position + directionVector * moveSpeed * Time.fixedDeltaTime);
         }
     }
 
