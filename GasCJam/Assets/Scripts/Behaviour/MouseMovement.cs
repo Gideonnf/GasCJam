@@ -30,6 +30,8 @@ public class MouseMovement : MonoBehaviour
 
     bool m_NextTileIsZeroPos = false;
 
+    bool isTrappedMovement = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,14 +74,36 @@ public class MouseMovement : MonoBehaviour
             // if the list is currently empty
             if (ListOfMovableTiles.Count <= 0)
             {
-                // Get the direction to move towards
-                if (GetMovingDirection())
+                if (mouseDetection.isTrapped)
                 {
-                    // If it managed to find a direction
-                    // Fill up the list of tiles in that direction
-                    GetDirectionalTiles(movingDir);
+                    // it found an alternate path to run to
+                    if (GetTrappedMovingDirection())
+                    {
+                        GetDirectionalTiles(movingDir);
+                        // no trapped movement
+                        isTrappedMovement = false;
+                    }
+
+                    // if is trapped movement
+                    // means we bounce
+                    if (isTrappedMovement)
+                    {
+                        GetNextTrapTilePosition(movingDir);
+                    }
+                }
+                else
+                {
+                    // Get the direction to move towards
+                    if (GetMovingDirection())
+                    {
+                        // If it managed to find a direction
+                        // Fill up the list of tiles in that direction
+                        GetDirectionalTiles(movingDir);
+                    }
                 }
             }
+
+          
 
             Vector3 nextPos = transform.position + directionVector * moveSpeed * Time.fixedDeltaTime;
             if (targetTilePosition != Vector2.zero || (targetTilePosition == Vector2.zero && m_NextTileIsZeroPos))
@@ -506,11 +530,144 @@ public class MouseMovement : MonoBehaviour
         return Detection.DIRECTIONS.NONE;
     }
 
+    Detection.DIRECTIONS GetTrappedRunningDir(Detection.DIRECTIONS playerDirection, Detection.DIRECTIONS kittenDirection)
+    {
+
+        Detection.DIRECTIONS tempDirection = Detection.DIRECTIONS.NONE;
+        // Detection.DIRECTIONS tempDirection = Detection.DIRECTIONS.NONE;
+        int tempDirectionSize = 0;
+
+        Vector2Int currentTilePos = MapManager.Instance.GetWorldToTilePos(transform.position);
+
+        // loop through all the 4 directions
+        for (int index = 0; index < (int)Detection.DIRECTIONS.NONE; ++index)
+        {
+            // dont check the other 2 directions
+            if (index == (int)playerDirection)
+                continue;
+            else if (index == (int)kittenDirection)
+                continue;
+
+            // the current direction being checked
+            Detection.DIRECTIONS currDirection = (Detection.DIRECTIONS)index;
+            int currDirectionSize = 0;
+
+            currDirectionSize = CheckDirectionSize(currDirection);
+
+            // if theres more spaces in this direction
+            if (currDirectionSize >= tempDirectionSize)
+            {
+                // set the direction size
+                tempDirectionSize = currDirectionSize;
+                tempDirection = currDirection;
+            }
+        }
+
+        // if tempDirectionSize is too small
+        if (tempDirectionSize > 1)
+            return tempDirection;
+
+        return Detection.DIRECTIONS.NONE;
+    }
+
+
     /// <summary>
-    /// Checks which direction to move before it starst to move to the next tile
-    /// 
+    /// only used for when it is trapped
     /// </summary>
-    bool GetMovingDirection()
+    /// <returns></returns>
+    bool GetTrappedMovingDirection()
+    {
+        Detection.DIRECTIONS kittenDirection = mouseDetection.GetTargetDirection(mouseDetection.kittenObject.transform.position);
+        Detection.DIRECTIONS playerDirection = mouseDetection.GetTargetDirection(mouseDetection.playerObject.transform.position);
+
+        Detection.DIRECTIONS tempDir = Detection.DIRECTIONS.NONE;
+
+        tempDir = GetTrappedRunningDir(playerDirection, kittenDirection);
+
+        // theres no other path
+        if (tempDir == Detection.DIRECTIONS.NONE)
+        {
+            // idk what to do here yet
+            // this is where it needs to do bouncing back and forth
+            isTrappedMovement = true;
+
+            // set a random moving direction to start the bounce
+            movingDir = playerDirection;
+        }
+        else
+        {
+            movingDir = tempDir;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// This is for the bouncing back
+    /// </summary>
+    /// <param name="currentDirection"></param>
+    void GetNextTrapTilePosition(Detection.DIRECTIONS currentDirection)
+    {
+        // Get the first tile in that direction
+        // i repeated the lines just in case lol
+        Vector2Int targetTilePosition = MapManager.Instance.GetWorldToTilePos(transform.position);
+        Vector2Int currentTilePosition = MapManager.Instance.GetWorldToTilePos(transform.position);
+
+        switch (currentDirection)
+        {
+            case Detection.DIRECTIONS.UP:
+                targetTilePosition.y++;
+                break;
+            case Detection.DIRECTIONS.DOWN:
+                targetTilePosition.y--;
+                break;
+            case Detection.DIRECTIONS.LEFT:
+                targetTilePosition.x--;
+                break;
+            case Detection.DIRECTIONS.RIGHT:
+                targetTilePosition.x++;
+                break;
+            case Detection.DIRECTIONS.NONE:
+                break;
+            default:
+                break;
+        }
+
+        // set it to that tile
+        // Add the tile that it needs to move to
+        ListOfMovableTiles.Add(targetTilePosition);
+        // add the original tile it was in
+        ListOfMovableTiles.Add(currentTilePosition);
+
+        Detection.DIRECTIONS kittenDirection = mouseDetection.GetTargetDirection(mouseDetection.kittenObject.transform.position);
+        Detection.DIRECTIONS playerDirection = mouseDetection.GetTargetDirection(mouseDetection.playerObject.transform.position);
+
+        // change to the next direction
+        // loop through all the 4 directions
+        for (int index = 0; index < (int)Detection.DIRECTIONS.NONE; ++index)
+        {
+            // dont check the other 2 directions
+            if (index == (int)playerDirection)
+                continue;
+            else if (index == (int)kittenDirection)
+                continue;
+            else if (index == (int)movingDir)
+                continue;
+
+            // set the direction
+            movingDir = (Detection.DIRECTIONS)index;
+
+            break;
+        }
+    }
+
+
+        /// <summary>
+        /// Checks which direction to move before it starst to move to the next tile
+        /// 
+        /// </summary>
+        bool GetMovingDirection()
     {
         switch (mouseDetection.targetDir)
         {
