@@ -349,58 +349,6 @@ public class Detection : MonoBehaviour
             if (MapManager.Instance.IsThereTileOnMap(currentTilePos) == false && MapManager.Instance.IsThereTileOnMap(targetTilePos) == false)
                 return true;
         }
-        else if (Vector2Int.Distance(targetTilePos, currentTilePos) <= 2)
-        {
-            // check diagonals
-            if (targetTilePos.y < currentTilePos.y)
-            {
-                Vector2Int tileToCheck = currentTilePos;
-                tileToCheck.y -= 1;
-                if (MapManager.Instance.IsThereTileOnMap(tileToCheck) == false)
-                {
-                    if (MapManager.Instance.IsThereTileOnMap(targetTilePos) == false)
-                    {
-                        return true;
-                    }
-                }
-            }
-            if (targetTilePos.y > currentTilePos.y)
-            {
-                Vector2Int tileToCheck = currentTilePos;
-                tileToCheck.y += 1;
-                if (MapManager.Instance.IsThereTileOnMap(tileToCheck) == false)
-                {
-                    if (MapManager.Instance.IsThereTileOnMap(targetTilePos) == false)
-                    {
-                        return true;
-                    }
-                }
-            }
-            if (targetTilePos.x < currentTilePos.x)
-            {
-                Vector2Int tileToCheck = currentTilePos;
-                tileToCheck.x = 1;
-                if (MapManager.Instance.IsThereTileOnMap(tileToCheck) == false)
-                {
-                    if (MapManager.Instance.IsThereTileOnMap(targetTilePos) == false)
-                    {
-                        return true;
-                    }
-                }
-            }
-            if (targetTilePos.x > currentTilePos.x)
-            {
-                Vector2Int tileToCheck = currentTilePos;
-                tileToCheck.x += 1;
-                if (MapManager.Instance.IsThereTileOnMap(tileToCheck) == false)
-                {
-                    if (MapManager.Instance.IsThereTileOnMap(targetTilePos) == false)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
 
         //Debug.Log("Direction" + dirToCheck);
         //Debug.Log("Original Position : " + currentTilePos);
