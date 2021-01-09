@@ -68,7 +68,9 @@ MonoBehaviour:
   - TestLevel 1
   - Level5
   - Level6
-  - LevelSelection
+  - Level7
+  - Level8
+  - The End
   m_MainMenuName: MainMenu
   m_MidLevelStory: 4
 --- !u!1 &6840578391496820635
