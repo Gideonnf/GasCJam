@@ -65,11 +65,13 @@ MonoBehaviour:
   - TestLevel
   - Level2
   - Level3
-  - TestLevel 1
+  - Level4
   - Level5
   - Level6
   - Level7
   - Level8
+  - Level9
+  - Level10
   - The End
   m_MainMenuName: MainMenu
   m_MidLevelStory: 4
