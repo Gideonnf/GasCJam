@@ -15,6 +15,8 @@ public class KittenDetection : Detection
     [Tooltip("Detection circle for Player")]
     public float PlayerDetectionRadius;
 
+    bool mouseInSight = false;
+
     float elapsedTime;
 
     [Header("ShockUI")]
@@ -195,9 +197,12 @@ public class KittenDetection : Detection
         }
         else
         {
-            isShocked = false;
-            if (m_ShockUI != null)
-                m_ShockUI.gameObject.SetActive(false);
+            if (mouseInSight == false)
+            {
+                isShocked = false;
+                if (m_ShockUI != null)
+                    m_ShockUI.gameObject.SetActive(false);
+            }
 
             //  Debug.Log("Cat IsShocked Changed in line 134" + isShocked);
         }
@@ -359,6 +364,9 @@ public class KittenDetection : Detection
             {
                 if (characterState != STATE.TIRED)
                 {
+
+                    mouseInSight = true;
+
                     isShocked = true;
 
                     //Debug.Log("Cat IsShocked Changed in line 227" + isShocked);
@@ -372,7 +380,10 @@ public class KittenDetection : Detection
                     //TODO:: put the exlaimation mark here
                 }
             }
-
+            else
+            {
+                mouseInSight = false;
+            }
             yield return new WaitForSeconds(.2f);
         }
     }
