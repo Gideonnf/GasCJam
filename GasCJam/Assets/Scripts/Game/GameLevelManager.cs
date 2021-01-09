@@ -73,6 +73,8 @@ public class GameLevelManager : SingletonBase<GameLevelManager>
 
     IEnumerator KittenSeesCatEffects()
     {
+        SoundManager.Instance.Play("ShockedKitten");
+
         yield return new WaitForSeconds(0.7f);
 
         InGameMenuManager.Instance.OpenMenu((int)MenuType.LOSE_SCREEN);

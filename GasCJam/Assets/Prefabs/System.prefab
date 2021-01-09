@@ -140,3 +140,10 @@ MonoBehaviour:
     m_HearingBaseOnDist: 0
     m_Loop: 0
     m_Source: {fileID: 0}
+  - m_Name: ShockedKitten
+    m_Clip: {fileID: 8300000, guid: a258c97ff4c626a49b8172664e771fb3, type: 3}
+    m_Volume: 0.7
+    m_Pitch: 1
+    m_HearingBaseOnDist: 0
+    m_Loop: 0
+    m_Source: {fileID: 0}
