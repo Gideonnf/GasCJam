@@ -7,7 +7,7 @@ public class StoryManager : MonoBehaviour
     public void Start()
     {
         //play song
-        //SoundManager.Instance
+        SoundManager.Instance.Play("Background");
     }
 
     public void StartLevel()
