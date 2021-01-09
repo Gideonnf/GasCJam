@@ -2014,11 +2014,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 631104831, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
       propertyPath: SightDistance
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 631104831, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
       propertyPath: startingDir
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6120036834013358926, guid: 764794e8d3e296a4c984bda5e0865a98, type: 3}
       propertyPath: m_LocalPosition.x
