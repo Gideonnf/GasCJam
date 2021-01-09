@@ -322,6 +322,46 @@ public class KittenDetection : Detection
                     return true;
                 }
             }
+            // Checking for the diagonal
+            else if (Vector2Int.Distance(playerTilePosition, kittenTilePosition) <= 2)
+            {
+                // Check if its above or below
+                // if player  is less than the kitten y pos
+                if (playerTilePosition.y < kittenTilePosition.y)
+                {
+                    // player is below
+                    // Check if the tile below is empty
+                    Vector2Int tileToCheck = kittenTilePosition;
+                    tileToCheck.y -= 1;
+                    if (MapManager.Instance.IsThereTileOnMap(tileToCheck) == false)
+                    {
+                        // if that tile is clear
+                        // check if the player tile is clear
+                        if (MapManager.Instance.IsThereTileOnMap(playerTilePosition) == false)
+                        {
+                            DetectPlayerBehvaiour();
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                    // it is ontop
+                    Vector2Int tileToCheck = kittenTilePosition;
+                    tileToCheck.y += 1;
+                    if (MapManager.Instance.IsThereTileOnMap(tileToCheck) == false)
+                    {
+                        // if that tile is clear
+                        // check if the player tile is clear
+                        if (MapManager.Instance.IsThereTileOnMap(playerTilePosition) == false)
+                        {
+                            DetectPlayerBehvaiour();
+                            return true;
+                        }
+                    }
+                }
+                Debug.Log("its 2");
+            }
         }
 
 
