@@ -344,11 +344,43 @@ public class KittenDetection : Detection
                         }
                     }
                 }
-                else
+                if (playerTilePosition.y > kittenTilePosition.y)
                 {
                     // it is ontop
                     Vector2Int tileToCheck = kittenTilePosition;
                     tileToCheck.y += 1;
+                    if (MapManager.Instance.IsThereTileOnMap(tileToCheck) == false)
+                    {
+                        // if that tile is clear
+                        // check if the player tile is clear
+                        if (MapManager.Instance.IsThereTileOnMap(playerTilePosition) == false)
+                        {
+                            DetectPlayerBehvaiour();
+                            return true;
+                        }
+                    }
+                }
+                if (playerTilePosition.x < kittenTilePosition.x)
+                {
+                    // it is ontop
+                    Vector2Int tileToCheck = kittenTilePosition;
+                    tileToCheck.x -= 1;
+                    if (MapManager.Instance.IsThereTileOnMap(tileToCheck) == false)
+                    {
+                        // if that tile is clear
+                        // check if the player tile is clear
+                        if (MapManager.Instance.IsThereTileOnMap(playerTilePosition) == false)
+                        {
+                            DetectPlayerBehvaiour();
+                            return true;
+                        }
+                    }
+                }
+                if (playerTilePosition.x > kittenTilePosition.x)
+                {
+                    // it is ontop
+                    Vector2Int tileToCheck = kittenTilePosition;
+                    tileToCheck.x += 1;
                     if (MapManager.Instance.IsThereTileOnMap(tileToCheck) == false)
                     {
                         // if that tile is clear
