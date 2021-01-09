@@ -777,4 +777,35 @@ public class MouseMovement : MonoBehaviour
     {
         SoundManager.Instance.Play("RatWalk");
     }
+
+    // TODO: Add a On collide enter with the rock
+    // if the rat collides
+    // then clear the movable tiles and set its position to the last position
+    // this is cause hte cat will keep trying to move into the rock
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // if it collided with an obstacle
+        if (collision.gameObject.tag == "Obstacles")
+        {
+            // onl yif it is running
+            if (mouseDetection.characterState == Detection.STATE.RUNNING)
+            {
+                // set the position to the last tile
+                // - 1 cause the current index is gonna be pointing to the next tile
+                Vector2Int LastTilePosition = ListOfMovableTiles[currentIndex - 1];
+                m_rigidBody.MovePosition(MapManager.Instance.GetTileToWorldPos(LastTilePosition));
+
+                // clear the list of movable tiles
+                ListOfMovableTiles.Clear();
+                currentIndex = 0;
+                StopMovement();
+                mouseDetection.StopMovement();
+                movingDir = Detection.DIRECTIONS.NONE;
+
+                UpdateAnimation(false);
+
+            }
+        }
+    }
 }
