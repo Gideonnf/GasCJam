@@ -539,7 +539,7 @@ Transform:
   m_GameObject: {fileID: 204911616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.39, y: 2.63, z: 0}
-  m_LocalScale: {x: 5.01, y: 4.93, z: 8.077633}
+  m_LocalScale: {x: 5.28, y: 4.93, z: 8.077633}
   m_Children: []
   m_Father: {fileID: 442489272}
   m_RootOrder: 1
@@ -9389,7 +9389,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: f819064515f3be7418ce920f3421d34c, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 7f634551c35c2a64da57568d035d773e, type: 2}
 --- !u!1001 &1119521893618367821
 PrefabInstance:
   m_ObjectHideFlags: 0
