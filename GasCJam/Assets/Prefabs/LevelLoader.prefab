@@ -63,6 +63,11 @@ MonoBehaviour:
   m_LevelUnlocked: 0
   m_LevelSceneNames:
   - TestLevel
+  - Level2
+  - Level3
+  - TestLevel 1
+  - Level5
+  - Level6
   - LevelSelection
   m_MainMenuName: MainMenu
 --- !u!1 &6840578391496820635
