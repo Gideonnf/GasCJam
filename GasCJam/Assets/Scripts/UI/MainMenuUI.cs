@@ -27,4 +27,9 @@ public class MainMenuUI : MonoBehaviour
     {
         SoundManager.Instance.Play("ButtonClick");
     }
+
+    public void GoToScene(string sceneName)
+    {
+        LevelManager.Instance.OpenScene(sceneName);
+    }
 }

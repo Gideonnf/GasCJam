@@ -49,6 +49,11 @@ public class LevelManager : SingletonBase<LevelManager>
         m_LevelChanger.TransitionScene(m_LevelSceneNames[levelNumber]);
     }
 
+    public void OpenScene(string sceneName)
+    {
+        m_LevelChanger.TransitionScene(sceneName);
+    }
+
     public void GoBackToMenu()
     {
         m_LevelChanger.TransitionScene(m_MainMenuName);
