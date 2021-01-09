@@ -9,6 +9,8 @@ public class LevelManager : SingletonBase<LevelManager>
     public List<string> m_LevelSceneNames = new List<string>();
     public string m_MainMenuName;
 
+    public int m_MidLevelStory = 5;
+
     // Start is called before the first frame update
     public override void Awake()
     {
@@ -39,7 +41,15 @@ public class LevelManager : SingletonBase<LevelManager>
         LevelCleared();
 
         m_CurrLevel = m_CurrLevel + 1;
-        m_LevelChanger.TransitionScene(m_LevelSceneNames[m_CurrLevel]);
+
+        if (m_CurrLevel == m_MidLevelStory)
+        {
+            OpenScene("StoryMode2");
+        }
+        else
+        {
+            m_LevelChanger.TransitionScene(m_LevelSceneNames[m_CurrLevel]);
+        }
     }
 
     //going to a specific level

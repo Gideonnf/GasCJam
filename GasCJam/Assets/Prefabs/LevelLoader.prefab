@@ -70,6 +70,7 @@ MonoBehaviour:
   - Level6
   - LevelSelection
   m_MainMenuName: MainMenu
+  m_MidLevelStory: 4
 --- !u!1 &6840578391496820635
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,11 +7,16 @@ public class StoryManager : MonoBehaviour
     public void Start()
     {
         //play song
-        //SoundManager.Instance
+        SoundManager.Instance.Play("Background");
     }
 
     public void StartLevel()
     {
         LevelManager.Instance.GoToLevel(m_Level);
+    }
+
+    public void ButtonClickSound()
+    {
+        SoundManager.Instance.Play("ButtonClick");
     }
 }
