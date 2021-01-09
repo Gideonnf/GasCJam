@@ -31,14 +31,16 @@ public class InstructionScreenUI : MonoBehaviour
     {
         m_CurrPanel = 0;
 
-        foreach(GameObject panel in m_InstructionPanels)
+        foreach (GameObject panel in m_InstructionPanels)
         {
             panel.SetActive(false);
         }
 
         m_InstructionPanels[m_CurrPanel].SetActive(true);
-        m_LeftButton.interactable = false;
-        m_RightButton.interactable = true;
+        if (m_LeftButton != null)
+            m_LeftButton.interactable = false;
+        if (m_RightButton != null)
+            m_RightButton.interactable = true;
     }
 
     public void NextPanel()
@@ -51,8 +53,11 @@ public class InstructionScreenUI : MonoBehaviour
         }
 
         //enable left button
-        if (!m_LeftButton.interactable)
-            m_LeftButton.interactable = true;
+        if (m_LeftButton != null)
+        {
+            if (!m_LeftButton.interactable)
+                m_LeftButton.interactable = true;
+        }
 
         if (m_CurrPanel - 1 >= 0)
             m_InstructionPanels[m_CurrPanel - 1].SetActive(false);
@@ -79,4 +84,19 @@ public class InstructionScreenUI : MonoBehaviour
         m_InstructionPanels[m_CurrPanel].SetActive(true);
     }
 
+    public void NextPanelTransitionScene()
+    {
+        ++m_CurrPanel;
+        if (m_CurrPanel >= m_InstructionPanels.Count)
+        {
+            //go to next scene
+            LevelManager.Instance.GoToLevel(0);
+            return;
+        }
+
+        if (m_CurrPanel - 1 >= 0)
+            m_InstructionPanels[m_CurrPanel - 1].SetActive(false);
+
+        m_InstructionPanels[m_CurrPanel].SetActive(true);
+    }
 }
