@@ -921,8 +921,8 @@ MonoBehaviour:
     m_Loop: 0
     m_Source: {fileID: 0}
   - m_Name: Background
-    m_Clip: {fileID: 0}
-    m_Volume: 1
+    m_Clip: {fileID: 8300000, guid: 63ac34607795d4c4bb4b2e67305d9fae, type: 3}
+    m_Volume: 0.2
     m_Pitch: 1
     m_HearingBaseOnDist: 0
     m_Loop: 1
