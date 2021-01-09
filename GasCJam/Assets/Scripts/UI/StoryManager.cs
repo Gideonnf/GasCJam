@@ -14,4 +14,9 @@ public class StoryManager : MonoBehaviour
     {
         LevelManager.Instance.GoToLevel(m_Level);
     }
+
+    public void ButtonClickSound()
+    {
+        SoundManager.Instance.Play("ButtonClick");
+    }
 }
