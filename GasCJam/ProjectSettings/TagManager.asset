@@ -8,6 +8,7 @@ TagManager:
   - Prey
   - Walls
   - Kitten
+  - Obstacles
   layers:
   - Default
   - TransparentFX

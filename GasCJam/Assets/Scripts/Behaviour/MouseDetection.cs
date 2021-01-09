@@ -15,6 +15,9 @@ public class MouseDetection : Detection
     public float shockTime;
     [Tooltip("If it is shocked or not")]
     public bool isShocked = false;
+    [Tooltip("If both are in targets are nearby ")]
+    public bool isTrapped = false;
+    Vector2Int TrappedTilePosition = Vector2Int.zero;
 
     float elapsedTime;
 
@@ -56,25 +59,49 @@ public class MouseDetection : Detection
 
             //Debug.Log(elapsedTime);
 
-            if (elapsedTime >= shockTime || targetObject.tag == "Player")
+            if(isTrapped)
             {
-                if (characterState != STATE.RUNNING && targetObject.tag == "Player")
-                    StartCoroutine(PlayerShockUITime());
-
-                characterState = STATE.RUNNING;
-
-                isShocked = false;
-
-                //elapsedTime = 0;
-                if (m_ShockUI != null)
+                if (elapsedTime >= shockTime)
                 {
-                    m_ShockUI.gameObject.SetActive(false);
+                    elapsedTime = 0.0f;
+                    isShocked = false;
+
+                    characterState = STATE.RUNNING;
+
+                    if (m_ShockUI != null)
+                    {
+                        m_ShockUI.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    if(m_ShockUI != null)
+                        m_ShockUI.UpdateExclaimationMarkUI(1.0f - (shockTime - elapsedTime) / shockTime);
+
                 }
             }
             else
             {
-                if (m_ShockUI != null)
-                    m_ShockUI.UpdateExclaimationMarkUI(1.0f - (shockTime - elapsedTime) / shockTime);
+                if (elapsedTime >= shockTime || targetObject.tag == "Player")
+                {
+                    if (characterState != STATE.RUNNING && targetObject.tag == "Player")
+                        StartCoroutine(PlayerShockUITime());
+
+                    characterState = STATE.RUNNING;
+
+                    isShocked = false;
+
+                    //elapsedTime = 0;
+                    if (m_ShockUI != null)
+                    {
+                        m_ShockUI.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    if (m_ShockUI != null)
+                        m_ShockUI.UpdateExclaimationMarkUI(1.0f - (shockTime - elapsedTime) / shockTime);
+                }
             }
         }
     }
@@ -222,6 +249,50 @@ public class MouseDetection : Detection
         // If it detects any objects in it's radius
         if (base.DetectRadius())
         {
+            // if both are in the list at the same time
+            // check if they are both within range to chase the cat
+            if (ObjectsInRange.Contains(playerObject) && ObjectsInRange.Contains(kittenObject))
+            {
+                DIRECTIONS playerDirection = GetTargetDirection(playerObject.transform.position);
+                DIRECTIONS kittenDirection = GetTargetDirection(kittenObject.transform.position);
+
+                // if both are clear
+                //  then both can chase the cat
+                if (CheckIfClear(playerDirection, playerObject.transform.position) && CheckIfClear(kittenDirection, kittenObject.transform.position))
+                {
+
+                    // set the kitten object as the target
+                    // it should prioritise the kitten
+                    targetObject = kittenObject;
+                    targetDir = GetTargetDirection();
+
+                    // is shocked should only trigger once
+                    // to stop it from repeating multiple times
+                    if (isTrapped == false)
+                    {
+                        isShocked = true;
+                        TrappedTilePosition = MapManager.Instance.GetWorldToTilePos(transform.position);
+                    }
+
+                    if (m_ShockUI != null)
+                        m_ShockUI.gameObject.SetActive(true);
+
+                    isTrapped = true;
+                }
+                else
+                {
+                    isTrapped = false;
+                }
+            }
+            else
+            {
+                isTrapped = false;
+            }
+
+            // if it is trapped, it shouldnt be able to do anything else
+            if (isTrapped)
+                return false;
+
             //// If it already has a target that it is running from
             //if (targetObject != null)
             //    return false;
@@ -374,7 +445,6 @@ public class MouseDetection : Detection
         else
         {
             isShocked = false;
-           // Debug.Log("Mouse IsShocked Changed in line 277" + isShocked);
         }
         //else
         //{
